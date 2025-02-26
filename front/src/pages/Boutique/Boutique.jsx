@@ -56,16 +56,18 @@ const Boutique = () => {
                     // console.log("URL de l'API:", URL.ITEM_ALL);
                     const response = await axiosInstance.get(URL.ITEM_ALL);
                     console.log(response.data)
-                    setItems(response.data);
 
-                    // On extrait les valeurs de chaque collection (category).
-                    // "Set" est un objet JS qui stocke uniquement les valeurs uniques en supprimant les doublons.
-                    // La fonction map parcours tous les "item" récupérés et en extrait la category, qui sont ensuite stockés dans "collections", qui appartient à la même lignée que "setCollections"
-                    setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
-                    setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
-                    setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
-                    setCouleurs([...new Set(response.data.map(item => item.color))].sort())
+                    if (Array.isArray(response.data)) {
+                        setItems(response.data);
 
+                        // On extrait les valeurs de chaque collection (category).
+                        // "Set" est un objet JS qui stocke uniquement les valeurs uniques en supprimant les doublons.
+                        // La fonction map parcours tous les "item" récupérés et en extrait la category, qui sont ensuite stockés dans "collections", qui appartient à la même lignée que "setCollections"
+                        setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
+                        setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
+                        setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
+                        setCouleurs([...new Set(response.data.map(item => item.color))].sort())
+                    }
                 } catch (error) {
                     console.log("Erreur lors de l'appel API", error)
                     setError(error.message);
@@ -226,7 +228,7 @@ const Boutique = () => {
                         {/* On appelle ici la fonction de filtrage pour les items en fonction de l'opti,on sélectionnée. */}
                         {/* {console.log(filtreItems)} */}
                         {/* {console.log(filtreItems.slice(0, itemsAffiches))} */}
-                        {/* {filtreItems?.slice(0, itemsAffiches).map(item => (
+                        {filtreItems?.slice(0, itemsAffiches).map(item => (
                             <div className={boutique.carte} key={item._id}>
                                 <div className={boutique.contientDivImg}>
                                     <Link className={boutique.imgCliquable} to={{ pathname: `/details/${item._id}` }}>
@@ -252,7 +254,7 @@ const Boutique = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))} */}
+                        ))}
                     </div>
                     <div>
                         {itemsAffiches < filtreItems.length && (
