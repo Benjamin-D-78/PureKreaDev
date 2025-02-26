@@ -54,7 +54,7 @@ const Boutique = () => {
                 try {
                     console.log("URL complète:", axiosInstance.defaults.baseURL + URL.ITEM_ALL);
                     // console.log("URL de l'API:", URL.ITEM_ALL);
-                    const response = await axios.get("https://pure-krea-dev-muz5.vercel.app"+URL.ITEM_ALL);
+                    const response = await axiosInstance.get(URL.ITEM_ALL);
                     console.log(response)
 
                     if (Array.isArray(response.data)) {
