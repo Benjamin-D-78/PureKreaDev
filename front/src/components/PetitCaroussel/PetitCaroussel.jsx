@@ -54,7 +54,7 @@ const PetitCaroussel = () => {
 
                     <div>
                         <span className={caroussel.spanBoutique}>Boutique</span>
-                        {images.map((image, index) => (
+                        {images?.map((image, index) => (
                             <Link key={image._id} to={{ pathname: `/details/${image._id}` }}>
                                 <img
                                     className={slide === index ? caroussel.slide : `${caroussel.slide} ${caroussel.slideCachee}`}
