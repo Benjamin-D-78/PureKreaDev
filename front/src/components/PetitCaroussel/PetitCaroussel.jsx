@@ -25,8 +25,10 @@ const PetitCaroussel = () => {
             if (URL.ITEM_ALL) {
                 try {
                     const response = await axios.get(URL.ITEM_ALL)
-                    setImages(response.data);
-                    // console.log(response.data)
+                    if (Array.isArray(response.data)) {
+                        setImages(response.data);
+                        // console.log(response.data)
+                    }
                 } catch (error) {
                     setError("Problème lors de la récupération des articles", error.message)
                 }
