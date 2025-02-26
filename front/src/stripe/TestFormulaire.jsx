@@ -66,7 +66,7 @@ const TestFormulaire = () => {
             // on envoie le token au back
             try {
                 const { id } = paymentMethod;
-                const response = await axios.post(URL.CHARGEMENT, {
+                const response = await axiosInstance.post(URL.CHARGEMENT, {
                     montant: prixTotal * 100,
                     id: id
                 })
