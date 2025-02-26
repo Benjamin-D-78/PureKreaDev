@@ -43,6 +43,7 @@ const TestFormulaire = () => {
                 try {
                     const response = await axiosInstance.get(`${URL.USER_BY_ID}/${auth._id}`);
                     if (response.data) {
+                        console.log(response.data)
                         setUtilisateur(response.data)
                     }
                 } catch (error) {
