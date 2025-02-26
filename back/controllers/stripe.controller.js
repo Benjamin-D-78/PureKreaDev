@@ -13,7 +13,7 @@ export const paiementStripe = async (req, res) => {
             description: "Paiement réceptionné.",
             payment_method: id,
             confirm: true,
-            return_url: "https://pure-krea-dev-u8t9.vercel.app"
+            return_url: "http://localhost:8000"
         })
         res.status(201).json({
             Message: "Paiement réalisé avec succès.", 
