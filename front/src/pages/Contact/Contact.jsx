@@ -5,6 +5,7 @@ import axios from "axios"
 // RACCOURCIS
 import { URL } from '../../utils/Constantes'
 import { PATTERN, RGXR } from '../../utils/Regixr'
+import axiosInstance from '../../utils/axiosInstance'
 
 // ICONES
 import telephone from "../../images/Icones/telephone.png"
@@ -122,7 +123,7 @@ const Contact = () => {
 
         if (URL.MESSAGE_CREATION) {
             try {
-                const response = await axios.post(URL.MESSAGE_CREATION, message)
+                const response = await axiosInstance.post(URL.MESSAGE_CREATION, message)
                 if (response.status === 201) {
                     toast.success("Message envoyé avec succès.", { autoClose: 1000 })
 

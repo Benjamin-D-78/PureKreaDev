@@ -3,6 +3,7 @@ import axios from "axios"
 import { toast } from 'react-toastify'
 import { AuthContext } from '../../context/AuthContext'
 import { URL } from '../../utils/Constantes'
+import axiosInstance from '../../utils/axiosInstance'
 
 // CSS
 import monProfil from "../../pages/MonProfil/monprofil.module.css"
@@ -16,7 +17,7 @@ const ModalSuppression = () => {
     const deleteUser = async () => {
         if (URL.USER_DELETE) {
             try {
-                const response = await axios.delete(`${URL.USER_DELETE}/${auth._id}`, { withCredentials: true })
+                const response = await axiosInstance.delete(`${URL.USER_DELETE}/${auth._id}`, { withCredentials: true })
                 // console.log(response)
                 if (response.status === 200) {
                     toast.success("Compte supprimé avec succès.", { autoClose: 2000 })

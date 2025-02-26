@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import { useParams, } from 'react-router-dom';
 import axios from "axios"
 import { toast } from 'react-toastify';
+
+// EXTERNALISATION
 import { URL } from '../../utils/Constantes.jsx';
 import { RGXR, PATTERN } from '../../utils/Regixr.jsx';
+import axiosInstance from '../../utils/axiosInstance.js';
 
 // ICONES
 import voir from "../../images/Icones/voir.png"
@@ -84,9 +87,10 @@ const MonProfil = () => {
         const userById = async () => {
             if (URL.USER_BY_ID) {
                 try {
-                    const response = await axios.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true })
-                    setUtilisateur(response.data);
-
+                    const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true })
+                    if (Array.isArray(response.data)) {
+                        setUtilisateur(response.data);
+                    }
                 } catch (error) {
                     console.error("Erreur lors de la recherche de l'utilisateur", error.message)
                 }
@@ -236,7 +240,7 @@ const MonProfil = () => {
 
         if (URL.USER_UPDATE) {
             try {
-                const response = await axios.put(`${URL.USER_UPDATE}/${id}`, updateUser, { withCredentials: true }
+                const response = await axiosInstance.put(`${URL.USER_UPDATE}/${id}`, updateUser, { withCredentials: true }
                 );
                 console.log(response)
                 if (response.status === 200) {

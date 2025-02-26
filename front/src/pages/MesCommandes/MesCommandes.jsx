@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from "axios"
 import { URL } from '../../utils/Constantes.jsx';
+import axiosInstance from '../../utils/axiosInstance.js';
 
 // COMPOSANTS
 import NavBar from '../../components/NavBar/NavBar'
@@ -33,8 +34,10 @@ const MesCommandes = () => {
             const commandesByUser = async () => {
                 if (URL.COMMANDE_BY_USER) {
                     try {
-                        const response = await axios.get(`${URL.COMMANDE_BY_USER}/${id}`, { withCredentials: true })
-                        setCommandes(response.data)
+                        const response = await axiosInstance.get(`${URL.COMMANDE_BY_USER}/${id}`, { withCredentials: true })
+                        if (Array.isArray(response.data)) {
+                            setCommandes(response.data)
+                        }
                     } catch (error) {
                         console.error("Erreur lors de la recherche des commandes", error.message)
                     }
@@ -71,7 +74,7 @@ const MesCommandes = () => {
                                 <p className={mesCommandes.ent4}>Facture</p>
                             </div>
 
-                            {commandes.map((commande, index) => (
+                            {commandes?.map((commande, index) => (
                                 <div className={mesCommandes.contientDetails} key={index}>
                                     <p className={mesCommandes.date}>{new Date(commande.date).toLocaleDateString()}</p>
                                     <p className={mesCommandes.total}>{commande.prixTotal} €</p>

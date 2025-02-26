@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 import coin from "./coin.module.css"
 import axios from "axios"
 import { toast } from 'react-toastify'
+
+// EXTERNALISATION
 import { URL } from '../../utils/Constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
+import axiosInstance from '../../utils/axiosInstance'
 
 // COMPOSANTS
 import NavBar from '../../components/NavBar/NavBar'
@@ -51,7 +54,7 @@ const Renvoi = () => {
 
         if (URL.EMAIL_VERIFICATION_BIS) {
             try {
-                const response = await axios.post(URL.EMAIL_VERIFICATION_BIS, { email })
+                const response = await axiosInstance.post(URL.EMAIL_VERIFICATION_BIS, { email })
                 setReponseMessage(response.data.message)
                 toast.success("Email envoyé avec succès, pensez à le valider pour pouvoir vous connecter.")
 

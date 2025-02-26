@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios"
 import { URL } from "../../utils/Constantes.jsx";
+import axiosInstance from "../../utils/axiosInstance.js";
 
 // CSS
 import boutique from "../Boutique/Boutique.module.css"
@@ -20,11 +21,8 @@ import Accordeon from "../../components/Accordeon/accordeon.jsx";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { PanierContext } from "../../context/PanierContext.jsx";
 
+
 const Details = () => {
-
-
-
-
 
     const { auth } = useContext(AuthContext)
     const { ajouterArticle } = useContext(PanierContext)
@@ -48,8 +46,10 @@ const Details = () => {
         const detailsItem = async () => {
             if (URL.ITEM_BY_ID) {
                 try {
-                    const { data, status } = await axios.get(`${URL.ITEM_BY_ID}/${id}`)
-                    setItem(data);
+                    const { data, status } = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
+                    if (Array.isArray(data)) {
+                        setItem(data)
+                    };
                 } catch (error) {
                     setError("Erreur lors de la réception des données", error)
                 }

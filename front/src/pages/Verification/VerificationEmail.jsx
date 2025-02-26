@@ -3,6 +3,7 @@ import axios from "axios"
 import { useParams, Link } from "react-router-dom";
 import notfound from "../NotFound/notfound.module.css"
 import { URL } from '../../utils/Constantes';
+import axiosInstance from '../../utils/axiosInstance';
 
 const VerificationEmail = () => {
 
@@ -15,7 +16,7 @@ const VerificationEmail = () => {
         const updateVerification = async () => {
             try {
                 // On envoie la requête au serveur pour vérifier l'email
-                const { data } = await axios.put(`${URL.EMAIL_VERIFICATION}/${token}`)
+                const { data } = await axiosInstance.put(`${URL.EMAIL_VERIFICATION}/${token}`)
                 setMessage(data.message);
             } catch ({ response }) {
                 const { message } = response.data;

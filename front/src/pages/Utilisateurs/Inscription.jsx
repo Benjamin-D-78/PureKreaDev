@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
 import { URL } from '../../utils/Constantes'
+import axiosInstance from '../../utils/axiosInstance'
 
 // ICONES
 import voir from "../../images/Icones/voir.svg"
@@ -110,7 +111,7 @@ const Inscription = () => {
 
         if (URL.USER_INSCRIPTION) {
             try {
-                const response = await axios.post(URL.USER_INSCRIPTION, user)
+                const response = await axiosInstance.post(URL.USER_INSCRIPTION, user)
                 if (response.status === 201) {
                     navigate("/");
                     toast.success("Inscription effectuée avec succès.", { autoClose: 1000 })

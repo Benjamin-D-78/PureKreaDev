@@ -6,6 +6,7 @@ import { URL } from '../../utils/Constantes'
 import { toast } from 'react-toastify'
 import { PATTERN, RGXR } from '../../utils/Regixr'
 import ModalePolitique from '../ModalPolitique/ModalePolitique'
+import axiosInstance from '../../utils/axiosInstance'
 
 // ICONES
 import linkedin from "../../images/Reseaux/linkedin.png"
@@ -65,7 +66,7 @@ export default function Footer() {
 
     if (URL.ABONNE_CREATION) {
       try {
-        const response = await axios.post(URL.ABONNE_CREATION, abonne)
+        const response = await axiosInstance.post(URL.ABONNE_CREATION, abonne)
         console.log(response)
         if (response.status === 201) {
           toast.success("Merci de vous être abonné !", { autoClose: 3000 })
