@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { toast } from "react-toastify";
 import { URL } from "../utils/Constantes";
+import axiosInstance from "../utils/axiosInstance";
 
 export const PanierContext = createContext()
 
@@ -188,7 +189,7 @@ export const PanierProvider = ({ children }) => {
                 statut: "En attente"
             };
 
-            const response = await axios.post(URL.COMMANDE_CREATION, commandeData);
+            const response = await axiosInstance.post(URL.COMMANDE_CREATION, commandeData);
 
             if (response.status === 201) {
                 toast.success("Commande validée avec succès!", { autoClose: 2000 });
@@ -197,7 +198,7 @@ export const PanierProvider = ({ children }) => {
 
                 for (let item of panier) {
                     try {
-                        const majStock = await axios.put(`${URL.ITEM_UPDATE}/${item._id}`, {stock: item.stock - item.quantite})
+                        const majStock = await axiosInstance.put(`${URL.ITEM_UPDATE}/${item._id}`, {stock: item.stock - item.quantite})
                         if(majStock.status === 200){
                             console.log("Stock des items mis à jour avec succès.")
                         }
