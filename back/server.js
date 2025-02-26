@@ -29,7 +29,7 @@ mongoose
 
 // MIDDLEWARE
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3000", "https://pure-krea-dev-muz5.vercel.app",
     methods: 'GET, POST, DELETE, PUT',
     credentials: true,
     allowedHeaders: ['Content-Type','Authorization','Cookie'],
