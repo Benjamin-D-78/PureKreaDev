@@ -55,7 +55,7 @@ const Boutique = () => {
                     console.log("URL complète:", axiosInstance.defaults.baseURL + URL.ITEM_ALL);
                     // console.log("URL de l'API:", URL.ITEM_ALL);
                     const response = await axiosInstance.get(URL.ITEM_ALL);
-                    console.log(response.data)
+                    console.log(response)
 
                     if (Array.isArray(response.data)) {
                         setItems(response.data);
