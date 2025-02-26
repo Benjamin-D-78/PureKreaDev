@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "cra-template": "1.2.0",
     "postcss": "^8.5.1",
