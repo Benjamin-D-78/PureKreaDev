@@ -3,7 +3,10 @@ import axios from "axios"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
+
+// EXTERNALISATION
 import { URL } from '../utils/Constantes'
+import axiosInstance from '../utils/axiosInstance'
 
 // CONTEXT
 import { PanierContext } from '../context/PanierContext'
@@ -38,8 +41,10 @@ const TestFormulaire = () => {
         if (auth) {
             const userById = async () => {
                 try {
-                    const response = await axios.get(`${URL.USER_BY_ID}/${auth._id}`);
-                    setUtilisateur(response.data)
+                    const response = await axiosInstance.get(`${URL.USER_BY_ID}/${auth._id}`);
+                    if (response.data) {
+                        setUtilisateur(response.data)
+                    }
                 } catch (error) {
                     console.error("Erreur lors de la recherche d'utilisateur", error)
                 }
