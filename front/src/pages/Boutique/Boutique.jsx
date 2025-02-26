@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import boutique from "./Boutique.module.css"
 import { URL } from "../../utils/Constantes.jsx";
+import axiosInstance from "../../utils/axiosInstance.js";
 
 // COMPOSANTS
 import NavBar from "../../components/NavBar/NavBar.jsx";
@@ -51,7 +52,7 @@ const Boutique = () => {
         const depart = async () => {
             if (URL.ITEM_ALL) {
                 try {
-                    const response = await axios.get(URL.ITEM_ALL);
+                    const response = await axiosInstance.get(URL.ITEM_ALL);
                     console.log(response.data)
                     setItems(response.data);
 
