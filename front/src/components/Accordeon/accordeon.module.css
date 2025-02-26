@@ -1,0 +1,85 @@
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.contientAccordeon {
+    width: 100%;
+    background-color: #193E61;
+    margin-bottom: 5rem ;
+
+    .pOnVousDitTout{
+        height: 4rem;
+        line-height: 4rem;
+        text-align: center;
+        color: white;
+        font-family: "Marko One", Arial, Helvetica, sans-serif;
+        margin-bottom: 0;
+        font-size: 2rem;}
+
+    .accordeon {
+        background-color: white;
+        border-radius: 1rem;
+        
+        .teteAccordeon {
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            padding: 0.5rem;
+            margin-bottom: 1px;
+
+            .plusMoins {
+                /* float: right; */
+                display: inline;
+                /* margin: auto; */
+                margin-right: 1rem;
+                font-size: 1.4rem;
+                font-weight: 900;}
+        }
+    }
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .contientAccordeon{
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+    }
+}
+
+
+
+
+.nomsChapitres {
+    margin: auto;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1.4rem;
+    display: inline;
+    cursor: pointer;}
+
+/* Texte - corps */
+.pAccordeon {
+    padding: 0 1rem 1rem 0.5rem;
+    margin: 0 0 1px 0;
+    font-size: 1.4rem;
+    text-align: justify;}
+
+/* EFFETS */
+.teteAccordeon:hover {
+    background-color: #eee;}
+.teteAccordeon:focus {
+    background-color: #eee;}
+
+
+@media screen and (min-width: 768px) {
+    .nomsChapitres {font-size: 1.2rem;}
+    .pAccordeon{font-size: 1.2rem;}
+}

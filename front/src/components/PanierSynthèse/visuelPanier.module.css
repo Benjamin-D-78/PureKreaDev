@@ -1,0 +1,227 @@
+*, ::before, ::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;}
+
+/* Section */
+.containerPanier{
+    background-color: #265E92;
+    margin-bottom: 5rem;}
+/* Fin Section */
+
+
+
+
+/* Début de gestion de profil utilisateur */
+.gestionUtilisateur{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    margin-bottom: 1rem;}
+
+.contientSelect{
+    width: 100%;
+}
+
+.contientSelect select{
+    appearance: none; /* On désactive l'apparence classique du select */
+    -webkit-appearance: none; /* Pour Safari */
+    -moz-appearance: none; /* Pour Firefox */
+    outline: none;
+    border: none;
+    background-color: #193E61;
+    color: white;
+    width: 100%;
+    height: 4rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+option::after {
+    content: '  ▼'; /* Ajouter la flèche comme contenu après le texte */
+  }
+
+.contientSelect select option{font-size: 1.6rem;}
+
+.contientBtnDeconnexion{display: none;}
+
+/* Fin de gestion de profil utilisateur */
+
+
+
+
+
+.nom{
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: auto;
+    margin-top: 0;
+    padding-top: 2rem;
+    font-size: 2rem;}
+.prenom{
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: auto;
+    padding-bottom: 2rem;
+    font-size: 2rem;}
+.hr{
+    margin: 0 0 2rem 0;
+    border: solid 1px white;}
+
+
+
+
+
+
+
+/* Début du panier */
+.pMonPanier{
+    color: white;
+    font-family: "Marko One" ,Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    margin-left: 1rem;}
+
+.synthesePanier{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr 0.5fr;
+    text-align: center;
+    color: white;
+
+    /* Entête */
+    .pQte{
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        color: #C6E60F;
+        text-decoration: underline;
+        text-decoration-color: #C6E60F;}
+
+    .pPrix{
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        color: #C6E60F;
+        text-decoration: underline;
+        text-decoration-color: #C6E60F;}
+
+    /* Résultats */
+    .totalArticle{
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;}
+
+    .prixTotal{
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 3;
+        grid-column-end: 4;}
+}
+
+
+
+.detailsPanier{
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 0.5fr;
+
+    .nomArticle{
+        font-family: "Linden Hill" ,Arial, Helvetica, sans-serif;
+        font-size: 1.5rem;
+        align-self:flex-end;
+        color: white;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        margin: 0 0 0 1rem;
+    }
+
+
+
+    .selectQTE{
+        width: 4rem;
+        height: 2rem;
+        margin: auto;
+        text-align: center;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+
+    .prixArticle{
+        text-align: center;
+        color: white;
+        margin: 0;
+        margin: 0.5rem 0;
+        grid-column-start: 3;
+        grid-column-end: 4;
+    }
+
+    .contientIconeSuppression{
+        display: flex;
+        align-self: center;
+        margin: 0;
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+    }
+}
+
+.contientBoutonCommande{
+    display: flex;
+    justify-content: center;
+    padding: 0 5rem;}
+
+.contientBoutonCommande a{
+    width: 90%;
+    color: black}
+
+.boutonPasserCommande{
+    width: 100%;
+    height: 3rem;
+    margin: 4rem 0;
+    background-color: #C6E60F;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    white-space: nowrap; /* On empêche le texte de se couper en plusieurs lignes */
+    overflow: hidden; /* Ensuite on masque le texte qui dépasse */
+    text-overflow: ellipsis; /* Et on affiche des points de suspension si le texte dépasse */
+}
+
+@media screen and (min-width: 768px) {
+    .containerPanier{
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;}
+
+    .gestionUtilisateur{width: 100%;}
+    
+    .contientSelect{
+        width: 90%;
+        border-radius: 0.5rem;}
+    
+    .contientSelect select{
+        width: 95%;
+        border-radius: 0.5rem;}
+
+    .contientBtnDeconnexion{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 4rem;
+        height: auto;
+        background-color: rgba(255, 0, 0, 0.5);
+        border-radius: 0.5rem;}
+    
+    .contientBtnDeconnexion img{
+        height: 90%;
+        width: 90%;
+        padding: 0;
+        cursor: pointer;}
+}

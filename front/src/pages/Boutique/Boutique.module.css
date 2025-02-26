@@ -1,0 +1,288 @@
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;}
+
+
+
+.h1Boutique {
+    text-align: center;
+    margin: 2rem 0;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 2.2rem;}
+
+
+
+
+/* Conteneurs principaux */
+.conteneurGlobal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;}
+
+.conteneurG {
+    order: 2;}
+/* Fin conteneur principaux */
+
+
+
+
+/* Entête */
+.blocEntete1 {
+    background-image: url("../../images/NavBar/fond_NavBar.jpg");}
+
+.pStock {
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding-top: 1rem;
+}
+
+.conteneurSelect {
+    width: 95%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.selectEntete {
+    width: 7.5rem;
+    height: 2rem;
+    margin: 0.5rem 0.7rem;
+    font-size: 1.2rem;}
+
+.refresh{
+    width: 2rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+/* Fin entête */
+
+
+@media screen and (min-width: 768px) {
+    /* Conteneurs principaux */
+    .conteneurGlobal {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 2fr;
+        width: 98%;
+        margin: auto;
+
+        .conteneurG {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            display: flex;
+            flex-direction: column;
+            min-width: 30rem;
+        }
+    }
+
+    .conteneurCartes{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;}
+
+    /* Bloc Paragraphe et Select */
+    .blocEntete1 {
+        display: flex;
+        border-radius: 0.5rem;
+
+        .entete1 {
+            display: flex;
+            flex-shrink: 0;
+
+            .pStock {padding: 1rem 0 0 1rem;}
+        }
+    }
+    .conteneurSelect {
+        display: flex;
+        justify-content:end;
+        flex-wrap: wrap;
+        margin: auto;
+        padding: 0 0.5rem 0 0;
+    }
+}
+
+
+@media screen and (min-width: 1100px){
+    .conteneurGlobal {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 3fr;
+        width: 98%;
+        margin: auto;}
+
+    .refresh{margin-bottom: 0;}
+}
+
+/* Conteneur Carte principaux */
+.conteneurCartes {
+    display: flex;
+    overflow-x: auto;
+    margin-bottom: 4rem;}
+
+.carte {
+    background-color: #265E92;
+    width: 16rem;
+    height: 30rem;
+    margin: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0.8rem 0.8rem 0.8rem;}
+/* Fin conteneur Carte principaux */
+
+
+/* Carte : Image et nom */
+.contientDivImg {
+    width: 100%;
+    height: 75%;
+
+    .divImg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+
+        .divApercuImg {
+            width: 100%;
+            height: 100%;
+            padding: 0.5rem;
+            /* background-color: red; */
+
+
+            .apercuImg {
+                width: 100%;
+                height: 90%;
+                object-fit: cover;
+                border-radius: 0.5rem;
+            }
+
+            .pRef {
+                /* background-color: #ADFF2F; */
+                text-align: center;
+                height: 10%;
+                color: white;
+                font-weight: 600;
+                font-size: 1.6rem;
+                text-decoration: none;
+                transform: translateY(-100%);
+                background-color: rgba(0, 0, 204, 0.3);
+                border-radius: 0 0 0.5rem 0.5rem;}
+        }
+    }
+}
+
+/* Link Image */
+.imgCliquable {
+    text-decoration: none;
+    cursor: pointer;}
+
+/*-------- Prix + Panier + Détails ---------*/
+/* Prix */
+.apercuCravate {
+    width: 100%;
+    height: 25%;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    color: white;
+
+    .divContientPrix {
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        display: flex;
+        justify-content: center;
+
+        .apercuPrix {
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+    }
+}
+
+/* Panier */
+.divIconAchat {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    width: 2.7rem;
+    height: 2.7rem;
+    display: flex;
+    border-radius: 0.6rem;
+    background-color: #ADFF2F;
+    box-shadow: 0 0 1rem black;
+
+    .iconeAchat {
+        width: 100%;
+        height: 100%;
+        padding: 0.5rem;
+        cursor: pointer;}
+}
+
+/* Plus de détails */
+.divButtonDetails {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: flex;
+    width: 100%;
+    margin: auto;
+
+    .btnCliquable {
+        list-style-type: none;
+        text-decoration: none;
+        display: flex;
+        width: 100%;
+        color: black;
+
+        .buttonDetails {
+            background-color: #FFFFF0;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            width: 98%;
+            margin: auto;
+            margin-top: 1rem;
+            margin-bottom: 0.2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;}
+    }
+}
+
+.divBtnToutVoir{
+    display: flex;
+    justify-content: center;
+}
+
+.toutVoir{
+    border: none;
+    width: 30%;
+    margin: auto;
+    font-family: "Marko One" ,Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 4rem;
+    background-image: url("../../images/NavBar/fond_NavBar.jpg");
+    background-size: cover; /* On recouvre entièrement le texte avec l'image */
+    background-clip: text; /* On applique l'image au texte */
+    color: transparent; /* On rend le texte transparent pour voir que l'image */
+    cursor: pointer;
+}

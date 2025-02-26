@@ -1,0 +1,273 @@
+.informationsContact{
+    background-color: #193E61;
+    padding: 3rem;
+    margin-bottom: 5rem;
+
+    @media screen and (min-width: 768px) {
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+    }
+}
+
+
+
+.informationsContact p{
+    color: white;
+    font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+}
+
+.h2Contact{
+    text-align: center;
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.h2ContactBis{
+    text-align: center;
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+}
+.h3Contact{
+    text-align: center;
+    color: white;
+    font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+
+.divHoraire{
+    width: 80%;
+    margin: auto;
+}
+
+.ulContact li{
+    list-style-type: disc;
+    color: white;
+    margin-left: 2rem;
+    font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+}
+
+.hrContact{
+    border: solid 2px white;
+    width: 80%;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.entete1{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.pStock {
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding-top: 1rem;
+}
+
+
+.contientInfoPhone{
+    display: flex;
+    align-items: center;
+}
+.contientPhone{
+    width: 2.5rem;
+    margin-right: 1rem;
+}
+
+
+
+/* Conteneur Droite */
+.conteneurD {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;}
+
+.contientFormulaire{
+    width: 98%;
+    margin: auto;
+    padding: 2rem;
+    background-color: #265E92;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+
+    @media screen and (min-width: 768px){
+        width: 100%;
+    }
+
+    @media screen and (min-width: 1100px){
+        width: 70%;
+    }
+}
+
+.h4Contact{
+    text-align: center;
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+
+/* Label et Input */
+.contientMotif{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contientMotif label{
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+.contientMotif select{
+    width: 15rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+}
+
+/* Première ligne */
+.premiereLigne{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.contientLabelInput{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 20rem;
+    margin: 0 2rem;
+}
+
+.contientLabelInput label{
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+}
+
+.contientLabelInput input{
+    width: 100%;
+    /* max-width: 20rem; */
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+
+
+
+.contientLabelInputArea{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contientLabelInputArea label{
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    margin-top: 3rem;
+}
+
+.span {
+    color: red;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;}
+
+.textarea{
+    padding: 0.5rem;
+    width: 50%;
+    max-width: 30rem;
+    border-radius: 0.5rem;
+}
+
+.contientLabelInputRadio{
+    margin: 3rem 0rem;
+    display: flex;
+    justify-content: center;
+}
+
+.contientLabelInputRadio label{
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+}
+
+.contientLabelInputRadio input{
+    margin-left: 2rem;
+}
+
+.contientLabelInputRadio p{
+    display: inline;
+    color: white;
+    margin-left: 1rem;
+}
+
+/* Bouton de confirmation */
+.contientConfirmation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contientConfirmation p{
+    display: inline;
+    color: white;
+    font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+    margin-left: 2rem;
+}
+
+.contientBtnValidation{
+    display: flex;
+    justify-content: center;
+}
+
+.btnValidation {
+    width: 50%;
+    max-width: 25rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    background-color: #C6E60F;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-radius: 1.5rem;
+    cursor: pointer;}
+
+@media screen and (min-width: 768px){
+    .entete1{width: 80%;}
+}
+
+@media screen and (min-width: 1100px){
+    .entete1{width: 50%;}
+}
+
+.calendly-inline-widget{
+    width: 100%;
+    height: 100%;
+}

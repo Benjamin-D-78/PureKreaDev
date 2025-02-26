@@ -1,0 +1,72 @@
+.conteneurD {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;}
+
+.conteneurGeneralRecap {
+    width: 98%;
+    border: double #265E92;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 5rem;}
+
+
+.entete2{
+    display: grid;
+    grid-template-columns: 0.8fr 0.5fr 2fr 0.8fr;
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    font-weight: 600;
+    background-color: gainsboro;
+    margin-bottom: 1rem;}
+
+.contientDetails{
+    display: grid;
+    grid-template-columns: 0.8fr 0.5fr 2fr 0.8fr;
+    text-align: center;}
+
+
+
+.ent1, .date{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    font-size: 1.2rem;}
+
+.ent2, .total{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    font-size: 1.2rem;}
+
+.ent3, .commande{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    font-size: 1.2rem;}
+
+.ent4, .facture{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    font-size: 1.2rem;}
+
+
+@media screen and (min-width: 768px) {
+    .conteneurGeneralRecap {
+        align-self: center;
+        width: 100%;
+        border: double #265E92;
+        margin: 2rem 0 5rem 0;
+        flex-shrink: 0;}
+}
+
+@media screen and (min-width: 1100px) {
+    .conteneurGeneralRecap {
+        align-self: center;
+        width: 80%;
+        border: double #265E92;
+        margin: 2rem 0 5rem 0;
+        flex-shrink: 0;}
+}
+
+

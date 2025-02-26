@@ -1,0 +1,126 @@
+.contientDonnees{display: flex;}
+
+.labelsProfil{
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    width: 55%;}
+
+.labelsProfil label{
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;}
+
+.labelsSepare, .inputsSepare{margin-bottom: 0.3rem;}
+
+.inputsProfil{
+    display: flex;
+    flex-direction: column;
+    text-align: left;}
+
+.inputsProfil input {
+    display: flex;
+    width: 15rem;
+    height: 1.9rem;
+    border: solid 1px;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;}
+
+
+
+.contientDonneesMDP{display: flex;}
+
+.contientInputImg{display: flex}
+
+.inputsMDP{
+    display: flex;
+    flex-direction: column;}
+.inputsMDP input{
+    height: 1.9rem;
+    border: solid 1px;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;}
+
+
+.contientVoir{
+    height: 1.9rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    margin-left: 0.3rem;
+}
+
+.voir{
+    height: 1.4rem;
+    width: 1.4rem;
+    cursor: pointer;
+}
+
+.pUtilisateur {
+    max-width: 15rem;
+    text-align: left;
+    color: black;
+    font-size: 1.4rem;
+    font-family: "Linden hill", 'Courier New', Courier, monospace;
+    white-space: nowrap; /* On empêche le texte de se couper en plusieurs lignes */
+    overflow: hidden; /* Ensuite on masque le texte qui dépasse */
+    text-overflow: ellipsis; /* Et on affiche des points de suspension si le texte dépasse */
+}
+
+.hr{
+    width: 96%;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: black;}
+
+.nomEntete{
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #265E92;
+    margin: 2rem 0 2rem 1rem;}
+
+.contientBtn{
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0 0rem 0;
+
+    .btnEnvoi{
+        width: 40%;
+        min-width: 27rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        background-color: #265E92;
+        color: white;
+        font-family: "Marko One", Arial, Helvetica, sans-serif;
+        border-radius: 1.4rem;}
+    }
+
+.contientBtn2{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+
+    .btnSuppression{
+        background-color: white;
+        width: 40%;
+        min-width: 27rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        border: solid 2px #265E92;
+        text-align: center;
+        font-family: "Marko One", Arial, Helvetica, sans-serif;
+        border-radius: 1.4rem;
+        margin-top: 1rem;}
+}
+
+
+/* ERREURS */
+.spanError{
+    display: block;
+    width: 100%;
+    max-width: 15em;
+    margin-bottom: 0.5rem;
+    padding-left: 0.2rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    color: red;}
+/* FIN ERREURS */

@@ -1,0 +1,40 @@
+.divContientConfirmation{
+    display: flex;
+    justify-content: center;
+    width: 100%;}
+
+.confirmationCommande{
+    background-color: #265E92;
+    color: white;
+    width: 100%;
+    margin: auto;
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+    padding: 2rem;
+    text-align: justify;}
+
+.confirmationCommande h1{
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;}
+
+.confirmationCommande p{margin: 2rem 0;}
+
+.a{
+    color: #C6E60F;
+    font-weight: 600;}
+
+.numCommande{
+    text-align: center;
+    font-size: 1.5rem;
+    color: #C6E60F;}
+
+
+
+
+@media screen and (min-width:768px) {
+    .confirmationCommande{
+        width: 50%;
+        border-radius: 0.5rem;
+    }
+}

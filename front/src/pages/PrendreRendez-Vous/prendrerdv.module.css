@@ -1,0 +1,88 @@
+.conteneur{
+    display: flex;
+    justify-content: center;
+}
+
+.h1 {
+    text-align: center;
+    margin: 2rem 0;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 2.2rem;}
+
+.conteneur div{
+    /* width: 50%; */
+    /* display: flex; */
+    /* justify-content: space-around; */
+    /* align-items: center; */
+    /* margin-top: 3rem; */
+    /* margin-bottom: 5rem; */
+    /* padding: 2rem; */
+    /* background-color: antiquewhite; */
+}
+
+.divImg{
+    width: 98%;
+    margin: auto;
+    margin-bottom: 5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divImg a{
+    width: 60%;
+    height: 5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    position: absolute;
+}
+
+.divBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divBtn a{
+    width: 70%;
+    height: 5rem;
+    border-radius: 0.5rem;
+    display: none;
+}
+
+.button{
+    width: 100%;
+    height: 100%;
+    background-color: #C6E60F;
+    border-radius: 0.5rem;
+    color: black;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+
+
+}
+
+@media screen and (min-width:768px) {
+    .divImg a{
+        display: none;
+    }
+
+    .divBtn a{
+        display: block;
+    }
+
+    .conteneur div{
+        width: 70%;
+        display: flex;
+    }
+
+    .divImg{
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+    }
+
+    .divImg img{
+        border-radius: 0.5rem;
+    }
+}

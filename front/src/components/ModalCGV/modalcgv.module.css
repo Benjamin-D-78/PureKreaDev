@@ -1,0 +1,197 @@
+.span{
+    all: unset;
+    font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    margin: auto;
+    text-decoration: underline;
+    cursor: pointer;
+    }
+
+.conteneurPrincipal, .contientModal{
+width: 100%;
+height: 100%;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+position: fixed;}
+
+.conteneurPrincipalCookie{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    z-index: 10;
+}
+
+.contientModal{background-color: rgba(211, 211, 211, 0.83);}
+
+.modalCGV{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background-color: white;
+    padding: 1.5rem 3rem;
+    border-radius: 3px;
+    width: 60%;
+    max-height: 50%;
+    overflow-y: auto;}
+
+
+
+/* TEXTE CGV */
+.titreH1{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: 600;
+    font-size: 2.4rem;
+    color: black;
+    margin: 2rem}
+
+.divPreambule p{
+    margin: 0;
+    color: black;}
+
+.divCookies p {
+    margin: 0;
+    color: black;
+    text-align: center;
+
+}
+
+.titre{
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin: 3rem;}
+
+.divA1, .divA2, .divA3, .divA4, .divA5, .divA6, .divA62, .divA7, .divA8, .divA9, .divA10, .divA11, .divA12, .divA13, .divA14{
+    margin: 0;
+    color: black;}
+
+.li{
+    font-size: 1.3rem;
+    list-style-type: disc;
+    margin: 0;
+    margin-left: 2rem;
+}
+
+
+.contientBtnFermer{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;}
+
+.btnFermer{
+    margin: 5rem auto 0;
+    text-align: center;
+    color: white;
+    background-color: #193E61;
+    border-radius: 1.5rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    width: 10rem;
+    height: 3rem;
+    cursor: pointer;}
+
+
+
+
+
+
+
+
+/* MODAL SUPPRESSION */
+.modalSuppression{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background-color: white;
+    padding: 1.5rem 1rem;
+    border-radius: 3px;
+    width: 60%;
+    max-height: 50%;
+    overflow-y: auto;}
+
+.divSuppression p{
+    margin-bottom: 3rem;
+    text-align: center;}
+
+.pSur{color: red;}
+
+.contientBtnSuppression{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btnRevenir{
+    margin-top: 5rem auto 0;
+    text-align: center;
+    color: white;
+    background-color: #193E61;
+    border-radius: 1.5rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    width: 100%;
+    height: 3rem;
+    cursor: pointer;}
+
+.btnSuppression{
+    margin-top: 0.5rem;
+    text-align: center;
+    border: solid 2px #193E61;
+    background-color: white;
+    border-radius: 1.5rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    width: 100%;
+    height: 3rem;
+    cursor: pointer;}
+
+
+
+@media screen and (min-width: 768px) {
+    .btnRevenir, .btnSuppression {
+        width: 70%;
+    font-size: 1.2rem; }
+}
+
+/* COOKIES */
+.divBtnCookies{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+}
+
+.Accepter{
+    width: 100%;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    background-color: #C6E60F;
+    border-radius: 0.5rem;
+    margin: 2rem 0 1rem 0;
+}
+
+.Refuser{
+    width: 100%;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    border: solid 1px #C6E60F;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+/* 
+.divBtnCookies button{
+    margin: 2rem 0;
+} */

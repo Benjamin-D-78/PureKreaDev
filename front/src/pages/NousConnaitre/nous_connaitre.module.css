@@ -1,0 +1,67 @@
+.accordeon{
+    margin-bottom: 5rem;
+
+    @media screen and (min-width: 768px) {
+        margin-bottom: 2rem;
+    }
+}
+
+.pName {
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 1rem 0;
+    margin-bottom: 5rem;
+
+    @media screen and (min-width: 768px){
+        margin-bottom: 1rem;
+    }
+}
+
+.teteAccordeon{
+    background-color: #265E92;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 1rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+
+    @media screen and (min-width: 768px){
+        width: 70%;
+    }
+}
+
+.teteAccordeon p{
+    width: 100%;
+    margin: auto;
+    margin-left: 2rem;
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;}
+
+.plusMoins{
+    color: white;
+    font-size: 2.6rem;
+    margin-right: 2rem;
+}
+
+.corpsAccordeon{
+    width: 80%;
+    margin: auto;
+    padding: 0.5rem;
+
+    @media screen and (min-width: 768px){
+        width: 70%;
+    }
+}
+
+.corpsAccordeon p{
+    padding: 0 1rem 1rem 0.5rem;
+    margin: 0 0 1px 0;
+    font-size: 1.4rem;
+    text-align: justify;
+}

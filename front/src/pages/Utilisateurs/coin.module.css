@@ -1,0 +1,177 @@
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container inscription */
+.divContainerIn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;}
+
+.boxIn1 {
+    width: 80%;
+    margin: auto;}
+
+
+.formIn {
+    background-color: #265E92;
+    padding: 4rem;
+    margin: 4rem 0 5rem 0;
+    border-radius: 1.5rem;}
+
+
+
+
+/* Formulaire de connexion / inscription */
+.titreCoIn {
+    text-align: center;
+    color: white;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.labelCoIn {
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    padding-left: 0.2rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    color: white;}
+
+.spanInscription{
+    color: red;}
+
+.inputCoIn {
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;}
+
+
+
+
+
+
+
+.contientSubmit{
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+.submitCoIn {
+    width: 18rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    background-color: #C6E60F;
+    border-radius: 1.5rem;
+    cursor: pointer;
+}
+
+.connexion, .inscription {
+    width: 100%;
+    list-style-type: none;
+    text-decoration: none;
+    text-align: center;}
+
+.alternatif{
+    width: 18rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    background-color: #265E92;
+    border: solid 1px #C6E60F;
+    color: white;
+    font-size: 1.4rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    border-radius: 1.5rem;
+    cursor: pointer;
+}
+/* Fin de formulaire de connexion / inscription */
+
+
+.submitCoIn:hover, .alternatif:hover {
+    transform: scale(1.05); /* Légère animation d'agrandissement */
+    transition: all 0.3s ease; 
+}
+
+.linkValidation{color: white;}
+.linkValidation:hover{
+    color: orange;
+    text-decoration: none;}
+.validation{
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+
+@media screen and (min-width: 768px) {
+    .boxIn1 {width: 50%;}
+}
+
+
+
+
+
+/* ERREURS */
+.spanError{
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    padding-left: 0.2rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    color: red;}
+/* FIN ERREURS */
+
+
+
+/* Afficher MDP */
+.contientInputImg{
+    display: flex;
+    width: 100%;
+    max-width: 30rem;
+    margin: auto;}
+
+.inputsMDP{width: 100%;}
+.inputMDP {
+    display: block;
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;}
+
+.contientVoir{
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    margin-left: 0.3rem;}
+
+.voir{
+    height: 1.4rem;
+    width: 1.4rem;
+    cursor: pointer;}

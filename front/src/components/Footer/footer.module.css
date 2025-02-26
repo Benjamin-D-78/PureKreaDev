@@ -1,0 +1,186 @@
+*, ::before, ::after{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;}
+    
+    
+/* Début gros bloc principal */
+footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: auto;}
+/* Fin gros bloc principal */
+
+
+
+/* Bloc Gauche */
+.gauche{
+    width: 100%;
+}
+
+   .pGauche, .pCentre{
+        height: 4rem;
+        line-height: 4rem;
+        text-align: center;
+        background-color: #193E61;
+        color: white;
+        font-family: 'Marko One', Arial, Helvetica, sans-serif;
+        font-size: 2rem;
+        margin-bottom: 0rem;
+    }
+    
+    .contientReseaux{
+        width: 100%;
+        height: 12rem;
+        background-color: #FCF7FF;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Linkedin et GitHub */
+    .lg{
+        padding-top: 1rem;
+        margin: 0 1rem;
+        width: 6rem;}
+
+
+/* Bloc Centre */
+.centre{
+    width: 100%;
+
+    .contientTexteEtForm{
+        background-color: #FCF7FF;
+    }
+}
+
+    .divTexteNewsletter{
+        padding: 1.5rem 1.5rem 0 1.5rem;
+    
+        .pTexteNewsletter{
+        text-align: center;
+        font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+        font-size: 2rem;
+        font-weight: 600;}
+    }
+
+    .divFormNewsletterH, .divFormNewsletterB{
+        width: 100%;
+        display: inline-block;
+        text-align: center;}
+
+    .inputFormNewsletterH, .inputFormNewsletterB{
+        color: grey;
+        width: 12rem;
+        height: 3rem;
+        font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+        font-size: 2rem;
+        margin: 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        padding-left: 1.5rem;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1)}
+
+    .btnEnvoiFormNewsletter{
+        color: white;
+        background-image: url("../../images/NavBar/fond_NavBar.jpg");
+        width: 12rem;
+        height: 3rem;
+        font-family: "Linden Hill", Arial, Helvetica, sans-serif;
+        font-size: 2rem;
+        margin: 1rem;
+        border-radius: 0.5rem;
+        border: none;
+    }
+    
+    .inputFormNewsletterB{margin-bottom: 3rem;}
+
+
+
+
+
+/* Bloc Droite */
+.droite{
+    width: 100%;
+    background-color: #193E61;
+    color: white;
+    font-size: 1.1rem;}
+
+    .texteH, .texteB{
+        margin: 1rem 0;
+        font-family: 'Linden Hill', Arial, Helvetica, sans-serif;
+        text-align: center;}
+
+    .texteB {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .footerLI{
+        text-align: center;
+        margin: 0.4rem 0 0.4rem 0;
+        list-style-type: none;}
+    .footerA{
+        color: white;
+        font-family: 'Linden Hill', Arial, Helvetica, sans-serif;}
+    .footerA:hover{
+        text-decoration: none;
+        color: orange;
+    }
+
+
+
+/* MediaQuery */
+@media screen and (min-width: 768px) {
+    /* Gros bloc principal */
+    footer{
+        background-color: #193E61;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items:flex-start;
+        flex-wrap: wrap;
+        flex-direction: row;
+        margin-top: auto;}
+
+    /* Bloc gauche */
+    .gauche{
+        flex-basis: 28%;}
+
+        .contientReseaux{
+            background-color: #193E61;
+        
+            .lg{width: 5rem;}
+        }
+
+    /* Bloc centre */
+    .centre{
+        flex-basis: 44%;
+        text-align: center;
+        flex-wrap: nowrap;
+    
+        .contientTexteEtForm{
+            border-radius: 0.5rem;}
+    }
+
+        .divFormNewsletterH, .divFormNewsletterB{display: inline;}
+
+        .inputFormNewsletterH, .inputFormNewsletterB{
+            width: 10rem;
+            margin: 0.6rem;
+            font-size: 1.8rem;}
+
+        .btnEnvoiFormNewsletter{
+            width: 10rem;
+            font-size: 1.8rem;}
+
+    /* Bloc droite */
+    .droite{
+        flex-basis: 28%;
+        padding-left: 2rem;
+        justify-content: center;
+        align-items: center;}
+}
