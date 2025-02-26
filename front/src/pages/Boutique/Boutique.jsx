@@ -52,6 +52,7 @@ const Boutique = () => {
             if (URL.ITEM_ALL) {
                 try {
                     const response = await axios.get(URL.ITEM_ALL);
+                    console.log(response.data)
                     setItems(response.data);
 
                     // On extrait les valeurs de chaque collection (category).
