@@ -26,6 +26,7 @@ export const URL = {
     COMMANDE_ALL: "/api/commande/all",
     COMMANDE_UPDATE: "/api/commande/update",
     COMMANDE_DELETE: "/api/commande/delete",
+    COMMANDE_CONFIRMATION: "/api/commande/paiement/confirmation",
 
     // MESSAGES
     MESSAGE_CREATION: "/api/contact/creation",

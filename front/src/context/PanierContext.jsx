@@ -226,7 +226,7 @@ export const PanierProvider = ({ children }) => {
         if (idCommande) {
             // On s'assure ensuite que le localStorage est bien vide avant de rediriger, d'où le temps de latence avec SetTimeOut. On attend 500 millisecondes.
             setTimeout(() => {
-                navigate(`/commande/paiement/confirmation/${idCommande}`);
+                navigate(`${URL.COMMANDE_CONFIRMATION}/${idCommande}`);
                 //Je suis obligé de réinitialiser la valeur de idCommande sinon je rentre dans une boucle infinie.
                 setIdCommande("");
             }, 500)
