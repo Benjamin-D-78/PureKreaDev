@@ -40,5 +40,5 @@ export const URL = {
     ABONNE_DELETE: "/api/abonnement/delete",
 
     // PAIEMENT
-    CHARGEMENT: "/api/paiement/chargement"
+    CHARGEMENT: "/api/paiement/chargement",
 }
