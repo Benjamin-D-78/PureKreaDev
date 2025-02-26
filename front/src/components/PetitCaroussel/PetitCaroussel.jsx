@@ -5,6 +5,7 @@ import gauche from "../../images/Icones/gauche.png";
 import droite from "../../images/Icones/droite.png";
 import caroussel from "./petitcaroussel.module.css";
 import { URL } from '../../utils/Constantes';
+import axiosInstance from '../../utils/axiosInstance';
 
 const PetitCaroussel = () => {
 
@@ -24,10 +25,9 @@ const PetitCaroussel = () => {
         const pictures = async () => {
             if (URL.ITEM_ALL) {
                 try {
-                    const response = await axios.get(URL.ITEM_ALL)
+                    const response = await axiosInstance.get(URL.ITEM_ALL)
                     if (Array.isArray(response.data)) {
                         setImages(response.data);
-                        // console.log(response.data)
                     }
                 } catch (error) {
                     setError("Problème lors de la récupération des articles", error.message)
