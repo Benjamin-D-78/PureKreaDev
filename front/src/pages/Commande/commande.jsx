@@ -2,8 +2,11 @@ import { React, useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { toast } from 'react-toastify'
+
+// EXTERNALISATION
 import { URL } from '../../utils/Constantes'
 import { PATTERN } from '../../utils/Regixr'
+import axiosInstance from '../../utils/axiosInstance'
 
 // CSS
 import boutique from "../Boutique/Boutique.module.css"
@@ -68,7 +71,7 @@ const Commande = () => {
       const userById = async () => {
         if (URL.USER_BY_ID) {
           try {
-            const response = await axios.get(`${URL.USER_BY_ID}/${auth._id}`);
+            const response = await axiosInstance.get(`${URL.USER_BY_ID}/${auth._id}`);
             setUtilisateur(response.data)
           } catch (error) {
             console.error("Erreur lors de la recherche de l'utilisateur", error)
