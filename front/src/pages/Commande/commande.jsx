@@ -72,7 +72,9 @@ const Commande = () => {
         if (URL.USER_BY_ID) {
           try {
             const response = await axiosInstance.get(`${URL.USER_BY_ID}/${auth._id}`);
-            setUtilisateur(response.data)
+            if (Array.isArray(response.data)) {
+              setUtilisateur(response.data)
+            }
           } catch (error) {
             console.error("Erreur lors de la recherche de l'utilisateur", error)
           }
@@ -171,7 +173,7 @@ const Commande = () => {
                   <p className={commande.pPrix}>Total</p>
                 </div>
 
-                {panier.map((article, index) => (
+                {panier?.map((article, index) => (
                   <div key={index} className={commande.detailsPanier}>
                     <p className={commande.nomArticle}>{article.name}</p>
                     <p className={commande.largeurArticle}>{article.width} cm</p>
