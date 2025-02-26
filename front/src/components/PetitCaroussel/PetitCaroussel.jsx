@@ -26,7 +26,7 @@ const PetitCaroussel = () => {
             if (URL.ITEM_ALL) {
                 try {
                     const response = await axiosInstance.get(URL.ITEM_ALL)
-                    console.log("Réponse de l'API:", response.data);
+                    // console.log("Réponse de l'API:", response.data);
                     if (Array.isArray(response.data)) {
                         setImages(response.data);
                     }
