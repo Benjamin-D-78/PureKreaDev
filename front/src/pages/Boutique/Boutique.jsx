@@ -74,7 +74,7 @@ const Boutique = () => {
 
     // On créer une fonction de filtrage pour les items en fonction de l'option sélectionnée.
     // Avec filter, on va créer un nouveau tableau contenant seulement les éléments "items" qui passent le test de filtrage :
-    const filtreItems = items.filter(item => {
+    const filtreItems = Array.isArray(items) ? items.filter(item => {
         // Si "selectionCollection" (qui contient la valeur de la catégorie sélectionnée) a une valeur définie et si cette valeur n'est pas une chaîne vide (car si aucun champ n'est sélectionné, alors c'est une chaîne vide).
         // Si la condition précédente est true, alors on compare la catégorie de l'item avec la catégorie sélectionnée (convertie en nombre car selectCollections est une chaîne de caractère, or, "category" est un nombre.)
         // Si aucune collection n'a été sélectionnée, alors la partie après ":" est exécutée et on retourne simplement "true", ce qui affiche donc tous les items par défauts.
@@ -85,7 +85,7 @@ const Boutique = () => {
 
         return testCollection && testPrix && testLargeur && testCouleur
     }
-    )
+    ) : [];
 
 
     // On utilise "..." pour créer un nouveau tableau à partir de l'objet Set (qui supprime les doublons)
