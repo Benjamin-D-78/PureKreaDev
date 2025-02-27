@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { useState } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify'
 import items from "./css/items.module.css"

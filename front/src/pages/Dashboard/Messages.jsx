@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import supprimer from "../../images/Icones/supprimer.png"
 import { toast } from 'react-toastify'

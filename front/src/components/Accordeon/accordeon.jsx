@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import accordeon from "./accordeon.module.css"
 
 

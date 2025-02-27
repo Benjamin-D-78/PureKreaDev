@@ -1,4 +1,3 @@
-import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import NavBar from '../../components/NavBar/NavBar'
 import dashboard from "./css/dashboard.module.css"

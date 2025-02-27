@@ -1,4 +1,4 @@
-import { React, useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import axios from "axios"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Link } from "react-router-dom"

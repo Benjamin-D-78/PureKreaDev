@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink } from "react-router-dom"
 import footerCSS from "./footer.module.css"
 import axios from "axios"

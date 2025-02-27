@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { useState } from 'react'
 
 // CSS
 import boutique from "../Boutique/Boutique.module.css"
