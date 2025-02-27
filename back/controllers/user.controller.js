@@ -261,12 +261,12 @@ export const deleteUser = async (req, res) => {
 
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });
         console.log("req.user.role : ", req.user);
-        // if (req.user.id !== response._id.toString() && req.user.role !== 'admin') {
-        //     return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
-        // }
+        if (req.user.id !== response._id.toString() && req.user.role !== 'admin') {
+            return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
+        }
 
         // Suppression de l'utilisateur
-        // await userModel.findByIdAndDelete(req.params.id);
+        await userModel.findByIdAndDelete(req.params.id);
         res.status(200).json({ message: "Utilisateur supprimé avec succès." });
 
     } catch (error) {
