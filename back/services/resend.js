@@ -1,4 +1,4 @@
-import Resend from 'resend';
+import { Resend } from 'resend';
 import { env } from '../config/index.js'; // Assurez-vous de charger votre .env
 
 const resend = new Resend(env.EMAIL_PASS);
