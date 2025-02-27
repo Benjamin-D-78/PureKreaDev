@@ -30,10 +30,10 @@ mongoose
 // MIDDLEWARE
 app.use(cors({
     origin: ["http://localhost:3000", "https://pure-krea-benjamind.vercel.app"],
-    // methods: 'GET, POST, DELETE, PUT',
+    methods: 'GET, POST, DELETE, PUT',
     credentials: true,
-    // allowedHeaders: ['Content-Type','Authorization','Cookie'],
-    // exposedHeaders: ['Set-Cookies']
+    allowedHeaders: ['Content-Type','Authorization','Cookie'],
+    exposedHeaders: ['Set-Cookies']
 }));
 app.use(express.json());
 app.use(cookieParser());
