@@ -2,7 +2,7 @@ import userModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "../config/index.js";
-import { sendEmail } from "../services/nodemailer.js";
+import { sendEmail } from "../services/resend.js";
 import { RGXR } from "../utils/regex.js";
 
 
