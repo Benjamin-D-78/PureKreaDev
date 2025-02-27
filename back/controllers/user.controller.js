@@ -130,7 +130,7 @@ export const connexion = async (req, res, next) => {
         res.cookie("access_token", tokenUser, {
             httpOnly: true,
             secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
-            sameSite: "Lax", // Protège des attaques CSRF (usurpation d'identité, etc.)
+            sameSite: "None", // Protège des attaques CSRF (usurpation d'identité, etc.)
             //Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
         })
@@ -260,13 +260,13 @@ export const deleteUser = async (req, res) => {
         const response = await userModel.findById(req.params.id);
 
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });
-        // console.log("req.user.role : ", req.user);
+        console.log("req.user.role : ", req.user);
         // if (req.user.id !== response._id.toString() && req.user.role !== 'admin') {
         //     return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         // }
 
         // Suppression de l'utilisateur
-        await userModel.findByIdAndDelete(req.params.id);
+        // await userModel.findByIdAndDelete(req.params.id);
         res.status(200).json({ message: "Utilisateur supprimé avec succès." });
 
     } catch (error) {
