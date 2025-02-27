@@ -47,10 +47,7 @@ const Details = () => {
             if (URL.ITEM_BY_ID) {
                 try {
                     const { data, status } = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
-                    // if (Array.isArray(data)) {
-                        console.log(data)
                         setItem(data)
-                    // };
                 } catch (error) {
                     setError("Erreur lors de la réception des données", error)
                 }

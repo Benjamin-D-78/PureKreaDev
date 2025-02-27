@@ -35,9 +35,7 @@ const MesCommandes = () => {
                 if (URL.COMMANDE_BY_USER) {
                     try {
                         const response = await axiosInstance.get(`${URL.COMMANDE_BY_USER}/${id}`, { withCredentials: true })
-                        if (Array.isArray(response.data)) {
                             setCommandes(response.data)
-                        }
                     } catch (error) {
                         console.error("Erreur lors de la recherche des commandes", error.message)
                     }
