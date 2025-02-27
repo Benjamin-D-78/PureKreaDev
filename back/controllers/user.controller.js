@@ -260,10 +260,10 @@ export const deleteUser = async (req, res) => {
         const response = await userModel.findById(req.params.id);
 
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });
-        console.log("req.user.role : ", req.user);
-        if (req.user.id !== response._id.toString() && req.user.role !== 'admin') {
-            return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
-        }
+        // console.log("req.user.role : ", req.user);
+        // if (req.user.id !== response._id.toString() && req.user.role !== 'admin') {
+        //     return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
+        // }
 
         // Suppression de l'utilisateur
         await userModel.findByIdAndDelete(req.params.id);
