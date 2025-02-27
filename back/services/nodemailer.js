@@ -34,7 +34,7 @@ export const sendEmail = async (user, verifieToken) => {
     ? `http://localhost:3000/verification/${verifieToken}` 
     : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
     
-    const verificationLink = `<a href="${verificationURL}">${verifieToken}</a>`;
+    const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
     // Maintenant, on va utiliser notre configuration nodemailer
     // pour envoyer l'email
     await transporter.sendMail({
