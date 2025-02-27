@@ -13,6 +13,7 @@ import modalcgv from "../ModalCGV/modalcgv.module.css"
 const ModalSuppression = () => {
 
     const { auth, deconnexion } = useContext(AuthContext);
+    console.log(auth)
 
     const deleteUser = async () => {
         if (URL.USER_DELETE) {
