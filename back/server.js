@@ -36,6 +36,7 @@ app.use(cors({
     exposedHeaders: ['Set-Cookies'],
     preflightContinue: true,
 }));
+app.options('*', cors()); // Ajoute un gestionnaire pour toutes les requêtes options
 app.use(express.json());
 app.use(cookieParser());
 
