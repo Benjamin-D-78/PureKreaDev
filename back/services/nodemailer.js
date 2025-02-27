@@ -28,9 +28,12 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = async (user, verifieToken) => {
     // On crée un lien de vérification que l'utilisateur pourra cliquer
     // Le ${verifieToken} sera remplacé par le vrai token généré précédemment
-    const verificationLink = `
-    <a href='https://pure-krea-benjamind.vercel.app/verification/${verifieToken}'>${verifieToken}</a>
-    `;
+
+    // const verificationLink = `<a href='https://pure-krea-benjamind.vercel.app/verification/${verifieToken}'>${verifieToken}</a>`;
+
+    const verificationURL = process.env.NODE_ENV === 'development' 
+        ? `http://localhost:3000/verification/${verifieToken}` 
+        : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
     // Maintenant, on va utiliser notre configuration nodemailer
     // pour envoyer l'email
     await transporter.sendMail({
@@ -43,7 +46,7 @@ export const sendEmail = async (user, verifieToken) => {
         // Le message en version texte simple (au cas où l'HTML ne marche pas)
         text: `Bienvenue ${user.name}.\n\nMerci de vous être inscrit.\n\nCordialement.`,
         // La version en HTML avec notre lien de vérification
-        html: `Cliquez sur ce lien pour vérifier votre email : ${verificationLink}`,
+        html: `Cliquez sur ce lien pour vérifier votre email : ${verificationURL}`,
     });
 };
 
