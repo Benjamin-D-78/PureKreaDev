@@ -1,55 +1,62 @@
 import nodemailer from "nodemailer";
-import { env } from "../config/index.js"
+import { env } from "../config/index.js";
 
-
-// TLS Transport Layer Security) et SSL Secure Sockets Layer) sont des protocoles de sécurité qui permettent de crypter les communications sur Internet :
-// SSL C'est l'ancien protocole de sécurité, maintenant considéré comme obsolète. Il utilise généralement le port 465 pour les connexions email sécurisées.
-// TLS C'est le successeur de SSL, plus moderne et plus sécurisé. Il utilise généralement le port 587 pour les connexions email.
-// Dans le contexte de l'envoi d'emails avec Nodemailer, ces protocoles assurent que les communications entre notre application et le serveur SMTP de Gmail sont chiffrées et sécurisées.
-const transporter = nodemailer.createTransport({
-    // Configuration du serveur SMTP de Gmail
-    host: "smtp.gmail.com",
-    // Port standard pour TLS
-    port: 465,
-    // false pour TLS (port 587), true pour SSL (port 465)
-    secure: true,
-    // Authentification avec les identifiants Gmail
-    auth: {
-        // l'email configuré dans .env
-        user: env.EMAIL_USER,
-        // mot de passe configuré dans .env
-        pass: env.EMAIL_PASS,
-    },
-});
-
-
-
-// Cette fonction va nous permettre d'envoyer un email de vérification
+// Fonction pour envoyer un email de vérification
 export const sendEmail = async (user, verifieToken) => {
-    // On crée un lien de vérification que l'utilisateur pourra cliquer
-    // Le ${verifieToken} sera remplacé par le vrai token généré précédemment
+    // Créer l'URL de vérification en fonction de l'environnement
+    const verificationURL = process.env.NODE_ENV === 'development'
+        ? `http://localhost:3000/verification/${verifieToken}`
+        : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
 
-    
-    const verificationURL = process.env.NODE_ENV === 'development' 
-    ? `http://localhost:3000/verification/${verifieToken}` 
-    : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
-    
-    const verificationLink = `<a href="${verificationURL}">${verifieToken}</a>`;
-    // Maintenant, on va utiliser notre configuration nodemailer
-    // pour envoyer l'email
-    await transporter.sendMail({
-        // C'est nous qui envoyons l'email (comme l'adresse de l'expéditeur)
-        from: env.EMAIL_USER,
-        // L'adresse email de notre nouvel utilisateur
-        to: user.email,
-        // Le sujet du mail (ce que verra l'utilisateur en premier)
-        subject: "Vérifiez votre email",
-        // Le message en version texte simple (au cas où l'HTML ne marche pas)
-        text: `Bienvenue ${user.name}.\n\nMerci de vous être inscrit.\n\nCordialement.`,
-        // La version en HTML avec notre lien de vérification
-        html: `Cliquez sur ce lien pour vérifier votre email : ${verificationLink}`,
+    // Créer le lien de vérification au format HTML
+    const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
+
+    // Configuration du transporteur Nodemailer
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",  // Serveur SMTP de Gmail
+        port: 465,  // Port SSL
+        secure: true,  // Utilisation de SSL
+        auth: {
+            user: env.EMAIL_USER,  // L'adresse email configurée dans .env
+            pass: env.EMAIL_PASS,  // Le mot de passe configuré dans .env
+        },
     });
+
+    // Vérification de la connexion au serveur SMTP
+    await new Promise((resolve, reject) => {
+        transporter.verify((error, success) => {
+            if (error) {
+                console.error("Erreur de connexion au serveur SMTP:", error);
+                reject(error);  // On rejette la promesse si la connexion échoue
+            } else {
+                console.log("Le serveur SMTP est prêt à envoyer des messages");
+                resolve(success);  // On résout la promesse si la connexion réussit
+            }
+        });
+    });
+
+    // Configuration des détails de l'email
+    const mailData = {
+        from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
+        to: user.email,  // Destinataire (l'email de l'utilisateur)
+        subject: "Vérifiez votre email",  // Sujet de l'email
+        text: `Bienvenue ${user.name}.\n\nMerci de vous être inscrit.\n\nCliquez sur ce lien pour vérifier votre email : ${verificationURL}`,
+        html: `Cliquez sur ce lien pour vérifier votre email : ${verificationLink}`,
+    };
+
+    // Envoi de l'email de vérification
+    await new Promise((resolve, reject) => {
+        transporter.sendMail(mailData, (err, info) => {
+            if (err) {
+                console.error("Erreur lors de l'envoi de l'email:", err);
+                reject(err);  // On rejette la promesse si l'envoi échoue
+            } else {
+                console.log("Email envoyé avec succès:", info);
+                resolve(info);  // On résout la promesse si l'email est envoyé avec succès
+            }
+        });
+    });
+
+    // Retourner un statut de succès une fois l'email envoyé
+    console.log("Email de vérification envoyé à", user.email);
 };
-
-
-
