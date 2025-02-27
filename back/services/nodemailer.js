@@ -10,9 +10,9 @@ const transporter = nodemailer.createTransport({
     // Configuration du serveur SMTP de Gmail
     host: "smtp.gmail.com",
     // Port standard pour TLS
-    port: 587,
+    port: 465,
     // false pour TLS (port 587), true pour SSL (port 465)
-    secure: false,
+    secure: true,
     // Authentification avec les identifiants Gmail
     auth: {
         // l'email configuré dans .env
@@ -29,7 +29,7 @@ export const sendEmail = async (user, verifieToken) => {
     // On crée un lien de vérification que l'utilisateur pourra cliquer
     // Le ${verifieToken} sera remplacé par le vrai token généré précédemment
     const verificationLink = `
-    <a href='http://localhost:3000/verification/${verifieToken}'>${verifieToken}</a>
+    <a href='https://pure-krea-benjamind.vercel.app/verification/${verifieToken}'>${verifieToken}</a>
     `;
     // Maintenant, on va utiliser notre configuration nodemailer
     // pour envoyer l'email
