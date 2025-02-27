@@ -13,13 +13,13 @@ import modalcgv from "../ModalCGV/modalcgv.module.css"
 const ModalSuppression = () => {
 
     const { auth, deconnexion } = useContext(AuthContext);
-    console.log(auth)
+    // console.log(auth)
 
     const deleteUser = async () => {
         if (URL.USER_DELETE) {
             try {
                 const response = await axiosInstance.delete(`${URL.USER_DELETE}/${auth._id}`)
-                console.log(response)
+                // console.log(response)
                 if (response.status === 200) {
                     toast.success("Compte supprimé avec succès.", { autoClose: 2000 })
                     deconnexion();

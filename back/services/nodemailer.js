@@ -29,7 +29,7 @@ export const sendEmail = async (user, verifieToken) => {
     // On crée un lien de vérification que l'utilisateur pourra cliquer
     // Le ${verifieToken} sera remplacé par le vrai token généré précédemment
     const verificationLink = `
-    <a href='http://localhost:3000/verification/${verifieToken}'>${verifieToken}</a>
+    <a href='https://pure-krea-benjamind.vercel.app/${verifieToken}'>${verifieToken}</a>
     `;
     // Maintenant, on va utiliser notre configuration nodemailer
     // pour envoyer l'email
