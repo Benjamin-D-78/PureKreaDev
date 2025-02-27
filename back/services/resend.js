@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { env } from '../config/index.js'; // Assurez-vous de charger votre .env
+import { env } from '../config/index.js';
 
 const resend = new Resend(env.RESEND_API_KEY);
 
@@ -8,7 +8,6 @@ export const sendEmail = async (user, verifieToken) => {
         ? `http://localhost:3000/verification/${verifieToken}` 
         : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
     
-    // Vous pouvez personnaliser ce message selon vos besoins
     const htmlContent = `
         <p>Bonjour ${user.name},</p>
         <p>Merci de vous être inscrit ! Cliquez sur le lien ci-dessous pour vérifier votre email.</p>
@@ -16,7 +15,7 @@ export const sendEmail = async (user, verifieToken) => {
     `;
 
     try {
-        // Envoyer l'email
+        // On envoie l'email
         const response = await resend.emails.send({
             from: 'desmonet.idf@gmail.com',
             to: user.email,
