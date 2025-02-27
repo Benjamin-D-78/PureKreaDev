@@ -52,7 +52,7 @@ const Boutique = () => {
         const depart = async () => {
             if (URL.ITEM_ALL) {
                 try {
-                    console.log("URL de l'API:", URL.ITEM_ALL);
+                    // console.log("URL de l'API:", URL.ITEM_ALL);
                     const response = await axiosInstance.get(URL.ITEM_ALL);
 
                     if (Array.isArray(response.data)) {
