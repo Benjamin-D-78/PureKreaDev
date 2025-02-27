@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import items from "../Dashboard/css/items.module.css"
 
 // CONSTANTES
+import axiosInstance from "../../utils/axiosInstance";
 import { URL } from "../../utils/Constantes";
 import { RGXR, PATTERN } from "../../utils/Regixr";
 
@@ -134,7 +135,7 @@ const AjoutUtilisateur = () => {
 
         if (URL.USER_INSCRIPTION) {
             try {
-                const response = await axios.post(URL.USER_INSCRIPTION, utilisateur)
+                const response = await axiosInstance.post(URL.USER_INSCRIPTION, utilisateur)
                 console.log(response)
                 if (response.status === 201) {
                     toast.success("Utilisateur ajouté avec succès.", { autoClose: 1000 })

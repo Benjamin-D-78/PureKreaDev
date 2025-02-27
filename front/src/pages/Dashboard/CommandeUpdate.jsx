@@ -1,9 +1,12 @@
 import { React, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from "axios"
-import { URL } from '../../utils/Constantes'
 import items from "../Dashboard/css/items.module.css"
 import { toast } from 'react-toastify'
+
+// EXTERNALISATION
+import axiosInstance from '../../utils/axiosInstance'
+import { URL } from '../../utils/Constantes'
 
 
 const CommandeUpdate = () => {
@@ -22,7 +25,7 @@ const CommandeUpdate = () => {
 
     const commandeById = async () => {
       try {
-        const response = await axios.get(`${URL.COMMANDE_BY_ID}/${id}`)
+        const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
         setCommande(response.data)
         const data = response.data
 
@@ -109,7 +112,7 @@ const CommandeUpdate = () => {
     console.log("Réponse avant envoie", updateCommande)
 
     try {
-      const response = await axios.put(`${URL.COMMANDE_UPDATE}/${id}`, updateCommande)
+      const response = await axiosInstance.put(`${URL.COMMANDE_UPDATE}/${id}`, updateCommande)
       console.log("Réponse de l'API", response.data)
       if (response.status === 200) {
         navigate("/dashboard/commande")

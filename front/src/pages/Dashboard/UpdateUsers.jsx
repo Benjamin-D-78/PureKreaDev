@@ -2,6 +2,9 @@ import { React, useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { toast } from 'react-toastify';
+
+// EXTERNALISATION
+import axiosInstance from '../../utils/axiosInstance';
 import { URL } from '../../utils/Constantes';
 import { RGXR, PATTERN } from '../../utils/Regixr';
 
@@ -12,9 +15,9 @@ function UpdateUsers() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [ancienMDP, setAncienMDP] = useState("");
-  const [newMDP, setNewMDP] = useState("");
-  const [repeteMDP, setRepeteMDP] = useState("");
+  // const [ancienMDP, setAncienMDP] = useState("");
+  // const [newMDP, setNewMDP] = useState("");
+  // const [repeteMDP, setRepeteMDP] = useState("");
 
   const [utilisateur, setUtilisateur] = useState({
     firstname: "",
@@ -41,7 +44,7 @@ function UpdateUsers() {
     const userById = async () => {
       if (URL.USER_BY_ID) {
         try {
-          const response = await axios.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true });
+          const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true });
           setUtilisateur({
             firstname: response.data.firstname || "",
             lastname: response.data.lastname || "",
@@ -171,7 +174,7 @@ function UpdateUsers() {
     if (auth.role === "admin")
       if (URL.USER_UPDATE) {
         try {
-          const response = await axios.put(`${URL.USER_UPDATE}/${id}`, updateUser, { withCredentials: true })
+          const response = await axiosInstance.put(`${URL.USER_UPDATE}/${id}`, updateUser, { withCredentials: true })
           if (response.status === 200) {
             navigate("/dashboard/utilisateurs")
             toast.success("Informations utilisateur mises à jour avec succès.", { autoClose: 1000 })

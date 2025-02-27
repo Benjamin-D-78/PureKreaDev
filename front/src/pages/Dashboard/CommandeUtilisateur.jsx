@@ -1,9 +1,11 @@
 import { React, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { URL } from '../../utils/Constantes';
 import axios from "axios"
 import items from "../Dashboard/css/items.module.css"
 
+// EXTERNALISATION
+import { URL } from '../../utils/Constantes';
+import axiosInstance from '../../utils/axiosInstance';
 
 const CommandeUtilisateur = () => {
 
@@ -13,7 +15,7 @@ const CommandeUtilisateur = () => {
   useEffect(() => {
     const userById = async () => {
       try {
-        const response = await axios.get(`${URL.USER_BY_ID}/${id}`)
+        const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`)
         setUtilisateur(response.data)
       } catch (error) {
         console.error("Erreur lors de la recherche de l'utilisateur.")

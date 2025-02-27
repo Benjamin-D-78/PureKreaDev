@@ -1,11 +1,13 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { toast } from 'react-toastify'
 import items from "./css/items.module.css"
+
+// EXTERNALISATION
 import { URL } from '../../utils/Constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
+import axiosInstance from '../../utils/axiosInstance'
 
 const UpdateItems = () => {
 
@@ -142,7 +144,7 @@ const UpdateItems = () => {
         const itemById = async () => {
             if (URL.ITEM_BY_ID) {
                 try {
-                    const response = await axios.get(`${URL.ITEM_BY_ID}/${id}`)
+                    const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
                     // console.log(response.data)
                     setItem(response.data)
                 } catch (error) {
@@ -180,7 +182,7 @@ const UpdateItems = () => {
 
         if (URL.ITEM_UPDATE) {
             try {
-                const response = await axios.put(`${URL.ITEM_UPDATE}/${id}`, item);
+                const response = await axiosInstance.put(`${URL.ITEM_UPDATE}/${id}`, item);
                 console.log(response)
                 // if (response.status === 200) {
                     navigate("/dashboard/items")
@@ -359,7 +361,7 @@ const UpdateItems = () => {
                         />
                     {error.price && <span className={items.spanError}>{error.price}</span>}
 
-                    {images.map((imgName, index) => (
+                    {images?.map((imgName, index) => (
                         <div key={index}>
                             <label htmlFor={`image${index}`}>
                                 {index === 0 ? 'Image principale : ' : `Image ${index + 1}`}

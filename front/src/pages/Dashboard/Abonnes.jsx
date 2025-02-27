@@ -4,6 +4,7 @@ import supprimer from "../../images/Icones/supprimer.png"
 import { toast } from 'react-toastify'
 import axios from "axios"
 import { URL } from '../../utils/Constantes'
+import axiosInstance from '../../utils/axiosInstance'
 
 
 const Abonnes = () => {
@@ -13,8 +14,10 @@ const Abonnes = () => {
 
   const allAbonnes = async () => {
     try {
-      const response = await axios.get(URL.ABONNE_ALL)
-      setAbonnes(response.data);
+      const response = await axiosInstance.get(URL.ABONNE_ALL)
+      if (Array.isArray(response.data)) {
+        setAbonnes(response.data)
+      }
     } catch (error) {
       console.log("Erreur lors du chargement des abonnés.", error)
       setError(error.message);
@@ -25,7 +28,7 @@ const Abonnes = () => {
 
   const updateAbonne = async (id, statut) => {
     try {
-      const response = await axios.put(`${URL.ABONNE_UPDATE}/${id}`, { statut })
+      const response = await axiosInstance.put(`${URL.ABONNE_UPDATE}/${id}`, { statut })
       console.log(response);
       if (response.status === 200) {
         // Avec prevMessages on récupère la valeur précédente du state messages avant la MAJ. C'est l'état actuel de message au moment où on appelle la fonction.
@@ -47,7 +50,7 @@ const Abonnes = () => {
 
   const deleteAbonne = async (id) => {
     try {
-      const response = await axios.delete(`${URL.ABONNE_DELETE}/${id}`)
+      const response = await axiosInstance.delete(`${URL.ABONNE_DELETE}/${id}`)
       if (response.status === 200) {
         console.log(response.data)
         toast.success("Abonné supprimé avec succès.", { autoClose: 1000 })
@@ -74,7 +77,7 @@ const Abonnes = () => {
           </tr>
         </thead>
         <tbody>
-          {abonnes.map(abonne => (
+          {abonnes?.map(abonne => (
             <tr key={abonne._id}>
               <td className={boutique_dashboard.autresTD}>{abonne.lastname}</td>
               <td className={boutique_dashboard.autresTD}>{abonne.firstname}</td>

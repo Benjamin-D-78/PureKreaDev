@@ -4,6 +4,7 @@ import supprimer from "../../images/Icones/supprimer.png"
 import { toast } from 'react-toastify'
 import axios from "axios"
 import { URL } from '../../utils/Constantes'
+import axiosInstance from '../../utils/axiosInstance'
 
 
 const Messages = () => {
@@ -13,8 +14,10 @@ const Messages = () => {
 
     const allMessages = async () => {
         try {
-            const response = await axios.get(URL.MESSAGE_ALL)
-            setMessages(response.data)
+            const response = await axiosInstance.get(URL.MESSAGE_ALL)
+            if (Array.isArray(response.data)) {
+                setMessages(response.data)
+            }
         } catch (error) {
             console.log("Erreur lors du chargement des messages.", error)
             setError(error.message)
@@ -25,7 +28,7 @@ const Messages = () => {
 
     const updateStatut = async (id, statut) => {
         try {
-            const response = await axios.put(`${URL.MESSAGE_UPDATE}/${id}`, { statut })
+            const response = await axiosInstance.put(`${URL.MESSAGE_UPDATE}/${id}`, { statut })
             console.log(response)
             if (response.status === 200) {
                 // Avec prevMessages on récupère la valeur précédente du state messages avant la MAJ. C'est l'état actuel de message au moment où on appelle la fonction.
@@ -48,7 +51,7 @@ const Messages = () => {
 
     const deleteMessage = async (id) => {
         try {
-            const response = await axios.delete(`${URL.MESSAGE_DELETE}/${id}`)
+            const response = await axiosInstance.delete(`${URL.MESSAGE_DELETE}/${id}`)
             if (response.status === 200) {
                 console.log(response.data)
                 toast.success("Message supprimé avec succès.", { autoClose: 1000 })
@@ -80,7 +83,7 @@ const Messages = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {messages.map(message => (
+                    {messages?.map(message => (
                         <tr key={message._id}>
                             <td className={boutique_dashboard.autresTD}>{message.lastname}</td>
                             <td className={boutique_dashboard.autresTD}>{message.firstname}</td>

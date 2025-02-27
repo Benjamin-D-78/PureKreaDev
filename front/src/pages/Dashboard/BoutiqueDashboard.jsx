@@ -4,6 +4,7 @@ import axios from "axios"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { URL } from "../../utils/Constantes";
+import axiosInstance from "../../utils/axiosInstance";
 
 // ICONES
 import supprimer from "../../images/Icones/supprimer.png"
@@ -18,7 +19,7 @@ const Items = () => {
 
     const deleteItem = async (id) => {
         try {
-            const response = await axios.delete(`${URL.ITEM_DELETE}/${id}`);
+            const response = await axiosInstance.delete(`${URL.ITEM_DELETE}/${id}`);
 
             if (response.status === 200) {
                 console.log(response.data)
@@ -35,8 +36,10 @@ const Items = () => {
 
     const depart = async () => {
         try {
-            const response = await axios.get(URL.ITEM_ALL);
-            setItems(response.data);
+            const response = await axiosInstance.get(URL.ITEM_ALL);
+            if (Array.isArray(response.data)) {
+                setItems(response.data)
+            }
         } catch (error) {
             setError(error.message);
         }
@@ -65,7 +68,7 @@ const Items = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map((item) => (
+                    {items?.map((item) => (
                         <tr key={item._id}>
                             <td className={boutique_dashboard.autresTD}>{item.name}</td>
                             <td className={boutique_dashboard.autresTDcache}>{item.width}cm</td>

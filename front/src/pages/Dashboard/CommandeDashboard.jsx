@@ -1,12 +1,15 @@
-import React from 'react';
-import { useEffect, useState } from 'react'
-import { Fragment } from 'react';
+import { React, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import { toast } from 'react-toastify';
+
+// EXTERNALISATION
+import { URL } from '../../utils/Constantes';
+import axiosInstance from '../../utils/axiosInstance';
+
+// CSS
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import items from "./css/items.module.css"
-import { URL } from '../../utils/Constantes';
 
 // ICONES
 import supprimer from "../../images/Icones/supprimer.png"
@@ -24,7 +27,7 @@ const CommandeDashboard = () => {
 
     if (auth.role === "admin") {
       try {
-        const response = await axios.delete(`${URL.COMMANDE_DELETE}/${id}`, { withCredentials: true })
+        const response = await axiosInstance.delete(`${URL.COMMANDE_DELETE}/${id}`, { withCredentials: true })
         if (response.status === 200) {
           console.log(response)
           toast.success("Commande supprimée avec succès.", { autoClose: 1000 })
@@ -40,8 +43,10 @@ const CommandeDashboard = () => {
 
   const depart = async () => {
     try {
-      const response = await axios.get(URL.COMMANDE_ALL)
-      setCommandes(response.data)
+      const response = await axiosInstance.get(URL.COMMANDE_ALL)
+      if (Array.isArray(response.data)) {
+        setCommandes(response.data)
+      }
     } catch (error) {
       console.log("Erreur lors du chargement des commandes.", error)
       setError(error.message)
@@ -66,7 +71,7 @@ const CommandeDashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {commandes.map(commande => (
+          {commandes?.map(commande => (
             <tr key={commande._id}>
               <td className={boutique_dashboard.autresTD}>
                 {commande.panier.map(item => (

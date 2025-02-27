@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import axios from "axios"
 import { toast } from 'react-toastify'
+
+// EXTERNALISATION
+import axiosInstance from '../../utils/axiosInstance'
 import { URL } from '../../utils/Constantes'
 
 // ICONES
@@ -24,7 +27,7 @@ const Utilisateurs = () => {
 
     if (auth.role === "admin") {
       try {
-        const response = await axios.delete(`${URL.USER_DELETE}/${id}`, { withCredentials: true })
+        const response = await axiosInstance.delete(`${URL.USER_DELETE}/${id}`, { withCredentials: true })
         if (response.status === 200) {
           console.log(response)
           toast.success("Utilisateur supprimé avec succès.", { autoClose: 1000 })
@@ -39,7 +42,7 @@ const Utilisateurs = () => {
 
   const depart = async () => {
     try {
-      const response = await axios.get(URL.USER_ALL, { withCredentials: true });
+      const response = await axiosInstance.get(URL.USER_ALL, { withCredentials: true });
       setUsers(response.data);
     } catch (error) {
       console.log("Erreur lors du chargement des utilisateurs.", error)

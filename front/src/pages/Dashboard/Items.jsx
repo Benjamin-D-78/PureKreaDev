@@ -3,6 +3,9 @@ import axios from "axios"
 import { toast } from 'react-toastify'
 import items from "./css/items.module.css"
 import BoutiqueDashboard from './BoutiqueDashboard'
+
+// EXTERNALISATION
+import axiosInstance from '../../utils/axiosInstance'
 import { URL } from '../../utils/Constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
 
@@ -158,7 +161,7 @@ const AjoutItem = () => {
 
     if (URL.ITEM_CREATION) {
       try {
-        const response = await axios.post(URL.ITEM_CREATION, item)
+        const response = await axiosInstance.post(URL.ITEM_CREATION, item)
           console.log(response)
           toast.success("Item créé avec succès.", { autoClose: 1000 })
       } catch (error) {
