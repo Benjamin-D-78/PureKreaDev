@@ -33,7 +33,7 @@ app.use(cors({
     methods: 'GET, POST, DELETE, PUT',
     credentials: true,
     allowedHeaders: ['Content-Type','Authorization','Cookie'],
-    exposedHeaders: ['Set-Cookies'],
+    exposedHeaders: ['Set-Cookie'],
     preflightContinue: true,
 }));
 app.options('*', cors()); // Ajoute un gestionnaire pour toutes les requêtes options
