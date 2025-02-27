@@ -18,7 +18,7 @@ const ModalSuppression = () => {
         if (URL.USER_DELETE) {
             try {
                 const response = await axiosInstance.delete(`${URL.USER_DELETE}/${auth._id}`, { withCredentials: true })
-                // console.log(response)
+                console.log(response)
                 if (response.status === 200) {
                     toast.success("Compte supprimé avec succès.", { autoClose: 2000 })
                     deconnexion();
