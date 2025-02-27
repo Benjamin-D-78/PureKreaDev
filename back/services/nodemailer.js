@@ -10,9 +10,9 @@ const transporter = nodemailer.createTransport({
     // Configuration du serveur SMTP de Gmail
     host: "smtp.gmail.com",
     // Port standard pour TLS
-    port: 587,
+    port: 465,
     // false pour TLS (port 587), true pour SSL (port 465)
-    secure: false,
+    secure: true,
     // Authentification avec les identifiants Gmail
     auth: {
         // l'email configuré dans .env
