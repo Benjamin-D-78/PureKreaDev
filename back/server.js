@@ -33,7 +33,8 @@ app.use(cors({
     methods: 'GET, POST, DELETE, PUT',
     credentials: true,
     allowedHeaders: ['Content-Type','Authorization','Cookie'],
-    exposedHeaders: ['Set-Cookies']
+    exposedHeaders: ['Set-Cookies'],
+    preflightContinue: true,
 }));
 app.use(express.json());
 app.use(cookieParser());

@@ -8,6 +8,6 @@ export const env = {
     DB_NAME: process.env.DB_NAME,
     TOKEN: process.env.TOKEN,
     EMAIL_USER: process.env.EMAIL_USER,
-    EMAIL_PASS: process.env.EMAIL_PASS,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
     STRIPE_SECRET_TEST: process.env.STRIPE_SECRET_TEST
 }
