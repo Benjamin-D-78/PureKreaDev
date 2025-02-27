@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import { toast } from 'react-toastify';
@@ -73,7 +73,7 @@ const CommandeDashboard = () => {
         <tbody>
           {commandes?.map(commande => (
             <tr key={commande._id}>
-              <td className={boutique_dashboard.autresTD}>
+              {/* <td className={boutique_dashboard.autresTD}>
                 {commande.panier.map(item => (
                   <React.Fragment key={item.itemId}>
                     {item.name}
@@ -84,7 +84,7 @@ const CommandeDashboard = () => {
                   <React.Fragment key={item.itemId}>
                     {item.quantity}
                     <br />
-                  </React.Fragment>))}</td>
+                  </React.Fragment>))}</td> */}
               <td className={boutique_dashboard.autresTD}>{commande.prixTotal} €</td>
               <td className={boutique_dashboard.autresTDcache}>{commande._id}</td>
               <td className={boutique_dashboard.autresTDcache}>{commande.comment}</td>
