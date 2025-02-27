@@ -129,7 +129,7 @@ export const connexion = async (req, res, next) => {
         // Envoi du token sous forme de cookie HTTPonly, alors qu'avant le MDP était stocké dans le local storage.
         res.cookie("access_token", tokenUser, {
             httpOnly: true,
-            secure: false, // A mettre sur "true" lors d'une mis een ligne du site.
+            secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
             sameSite: "Lax", // Protège des attaques CSRF (usurpation d'identité, etc.)
             //Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
@@ -270,6 +270,6 @@ export const deleteUser = async (req, res) => {
         res.status(200).json({ message: "Utilisateur supprimé avec succès." });
 
     } catch (error) {
-        console.log("Erreur lors de la tentative de suppression : ", error);
+        console.log("Erreur lors de la tentative de suppression : ", error.message);
     }
 };
