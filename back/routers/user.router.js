@@ -12,6 +12,6 @@ router.get("/obtenir/:id", userID)
 router.put("/update/:id", Token, upUser)
 router.put("/verification/:token", verifyEmail)
 router.post("/verification/bis", renvoieEmail)
-router.delete("/delete/:id", Token, deleteUser)
+router.delete("/delete/:id", deleteUser)
 
 export default router
