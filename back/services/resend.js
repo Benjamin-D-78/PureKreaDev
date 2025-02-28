@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import { env } from '../config/index.js';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("re_9wc9TdHE_GrMHiQkEc6TAgr5hHxQZJNDY");
 console.log("mon test API_KEY : ", process.env.RESEND_API_KEY)
 
 export const sendEmail = async (user, verifieToken) => {
