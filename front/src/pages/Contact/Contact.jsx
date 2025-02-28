@@ -328,8 +328,7 @@ const Contact = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={contact.recaptcha}>
-                                    <button type="button" onClick={handleRecaptcha}>Valider reCAPTCHA</button>
+                                <div >
                                 </div>
                                 <div className={contact.contientConfirmation}>
                                     <div className={contact.contientinput}>
@@ -342,6 +341,7 @@ const Contact = () => {
                                     <p>En cochant cette case, vous acceptez d'être recontacté(e) dans le cadre de votre demande.</p>
                                 </div>
                                 <div className={contact.contientBtnValidation}>
+                                <button type="button" onClick={handleRecaptcha} className={contact.recaptcha}>Je suis un humain</button>
                                     <button
                                         className={contact.btnValidation}>Envoyer
                                     </button>
