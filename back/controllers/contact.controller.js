@@ -13,7 +13,7 @@ export const creationMessage = async (req, res) => {
         }
 
         // Clé secrète de reCAPTCHA
-        const RECAPTCHA_SECRET_KEY = '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m'; // Remplace avec ta clé secrète reCAPTCHA
+        const RECAPTCHA_SECRET_KEY = '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m';
 
         // Vérification du token reCAPTCHA via l'API de Google
         const response = await axios.post(
