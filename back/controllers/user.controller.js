@@ -29,7 +29,6 @@ export const inscription = async (req, res, next) => {
         }
 
         const hashedMDP = await bcrypt.hash(req.body.password, 10)
-
         const user = await userModel.create({ ...req.body, password: hashedMDP, isVerified: false });
 
         // On créé un token spécial qui va servir à vérifier l'email.

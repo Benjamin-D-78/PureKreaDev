@@ -54,6 +54,7 @@ function App() {
           <Route path="*" element={<NotFound />} />  {/* Page NotFound */}
         </Route>
 
+        {/* Routes si connecté */}
         <Route element={<RoutesConnexion />}>
           <Route path="/commande" element={<Commande />} />
           <Route path="/mescommandes/:id" element={<MesCommandes />} />
