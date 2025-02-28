@@ -4,6 +4,34 @@ import { RGXR } from "../utils/regex.js";
 // CREATION MESSAGE
 export const creationMessage = async (req, res) => {
     try {
+
+        // Vérification du token reCAPTCHA
+        const { recaptchaToken } = req.body;  // Assure-toi que le token est bien envoyé dans la requête
+
+        if (!recaptchaToken) {
+            return res.status(400).json({ Message: "Le token reCAPTCHA est requis." });
+        }
+
+        // Clé secrète de reCAPTCHA
+        const RECAPTCHA_SECRET_KEY = '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m'; // Remplace avec ta clé secrète reCAPTCHA
+
+        // Vérification du token reCAPTCHA via l'API de Google
+        const response = await axios.post(
+            `https://www.google.com/recaptcha/api/siteverify`,
+            null,
+            {
+                params: {
+                    secret: RECAPTCHA_SECRET_KEY,
+                    response: recaptchaToken,
+                },
+            }
+        );
+
+        // Vérifie si la validation reCAPTCHA a échoué
+        if (!response.data.success) {
+            return res.status(400).json({ Message: "Vérification reCAPTCHA échouée. Veuillez réessayer." });
+        }
+
         const firstnameRegexr = RGXR.PRENOM;
         if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
             return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
@@ -27,8 +55,8 @@ export const creationMessage = async (req, res) => {
             }
         }
 
-        const response = await Contact.create(req.body);
-        res.status(201).json({ Message: "Message envoyé avec succès.", response })
+        const contact = await Contact.create(req.body);
+        res.status(201).json({ Message: "Message envoyé avec succès.", contact })
     } catch (error) {
         console.error(error);
         res.status(500).json({ Message: "Echec lors de la création du message.", error });

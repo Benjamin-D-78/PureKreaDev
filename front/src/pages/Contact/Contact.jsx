@@ -24,6 +24,8 @@ import Accordeon from '../../components/Accordeon/accordeon'
 
 const Contact = () => {
 
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
+
     const [message, setMessage] = useState({
         motif: "",
         firstname: "",
@@ -54,7 +56,6 @@ const Contact = () => {
                 isValid = false;
             }
         }
-
         if (message.firstname) {
             const firstnameRegexr = RGXR.PRENOM;
             if (!firstnameRegexr.test(message.firstname) || message.firstname.length < 2 || message.firstname.length > 30) {
@@ -62,7 +63,6 @@ const Contact = () => {
                 isValid = false;
             }
         }
-
         if (message.email) {
             const emailRegexr = RGXR.EMAIL;
             if (!emailRegexr.test(message.email) || message.email.length < 8 || message.email.length > 60) {
@@ -70,15 +70,13 @@ const Contact = () => {
                 isValid = false;
             }
         }
-
         if (message.phone) {
             const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(message.phone) || message.phone.length !== 0) {
+            if (!phoneRegexr.test(message.phone) || message.phone.length !== 10) {
                 messageError.phone = "10 chiffres attendus."
                 isValid = false;
             }
         }
-
         if (message.content) {
             const contentRegexr = RGXR.CONTENT;
             if (!contentRegexr.test(message.content) || message.content.length < 3 || message.content.length > 500) {
@@ -86,7 +84,6 @@ const Contact = () => {
                 isValid = false;
             }
         }
-
         setError(messageError);
         return isValid;
     }
@@ -106,8 +103,26 @@ const Contact = () => {
         }
     }
 
+
+    const handleRecaptcha = async () => {
+        // Attente que reCAPTCHA soit prêt avant d'exécuter
+        window.grecaptcha.enterprise.ready(async () => {
+            const token = await window.grecaptcha.enterprise.execute(
+                '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m',
+                { action: 'LOGIN' }
+            );
+            setRecaptchaToken(token); // Sauvegarder le token dans l'état
+        });
+    };
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (!recaptchaToken) {
+            toast.error("Le CAPTCHA doit être validé.")
+            return;
+        }
 
         if (!message.motif || !message.firstname || !message.lastname || !message.email || !message.content) {
             toast.error("Certains des champs obligatoires sont vides.")
@@ -123,7 +138,7 @@ const Contact = () => {
 
         if (URL.MESSAGE_CREATION) {
             try {
-                const response = await axiosInstance.post(URL.MESSAGE_CREATION, message)
+                const response = await axiosInstance.post(URL.MESSAGE_CREATION, { ...message, recaptchaToken })
                 if (response.status === 201) {
                     toast.success("Message envoyé avec succès.", { autoClose: 1000 })
 
@@ -214,6 +229,7 @@ const Contact = () => {
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
                                             }}
+                                        // avec "replace" et "/g, ''", on recherche tous les caractères qui ne correspondent PAS à ceux que l'on a renseigné et on les remplace par des caractères vides.
                                         />
                                         {error.lastname && <span className={monProfil.spanError}>{error.lastname}</span>}
 
@@ -311,6 +327,9 @@ const Contact = () => {
                                             <p>Après-midi</p>
                                         </div>
                                     </div>
+                                </div>
+                                <div className={contact.recaptcha}>
+                                    <button type="button" onClick={handleRecaptcha}>Valider reCAPTCHA</button>
                                 </div>
                                 <div className={contact.contientConfirmation}>
                                     <div className={contact.contientinput}>

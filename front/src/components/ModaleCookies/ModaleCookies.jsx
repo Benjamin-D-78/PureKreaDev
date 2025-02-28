@@ -18,7 +18,7 @@ const ModaleCookies = () => {
     }
 
     const handleRefus = () => {
-        localStorage.setItem("cookieConsent", "declined");
+        // localStorage.setItem("cookieConsent", "declined");
         setModal(false);
     }
 
