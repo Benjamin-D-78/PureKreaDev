@@ -24,11 +24,10 @@ export const creationMessage = async (req, res) => {
             }
         );
 
-        // On vérifie la validation reCAPTCHA
+        // On vérifie la validation recaptcha
         if (!response.data.success) {
             return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
         }
-
 
         const firstnameRegexr = RGXR.PRENOM;
         if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
