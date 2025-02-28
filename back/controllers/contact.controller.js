@@ -5,7 +5,6 @@ import { RGXR } from "../utils/regex.js";
 export const creationMessage = async (req, res) => {
     try {
 
-        // Vérification du token reCAPTCHA
         const { recaptchaToken } = req.body;  // Assure-toi que le token est bien envoyé dans la requête
 
         if (!recaptchaToken) {
