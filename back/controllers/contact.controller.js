@@ -1,5 +1,6 @@
 import Contact from "../models/contact.model.js";
 import { RGXR } from "../utils/regex.js";
+import { env } from "../config/index.js"
 
 // CREATION MESSAGE
 export const creationMessage = async (req, res) => {
@@ -11,14 +12,11 @@ export const creationMessage = async (req, res) => {
             return res.status(400).json({ Message: "Le token reCAPTCHA est requis." });
         }
 
-        // Clé secrète du recaptcha
-        const RECAPTCHA_SECRET_KEY = '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m';
-
         // Vérification du token recaptcha via l'API de Google
         const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
             {
                 params: {
-                    secret: RECAPTCHA_SECRET_KEY,
+                    secret: env.RECAPTCHA_SECRET_KEY,
                     response: recaptchaToken,
                 },
             }

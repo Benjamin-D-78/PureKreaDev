@@ -105,13 +105,14 @@ const Contact = () => {
 
 
     const handleRecaptcha = async () => {
-        // Attente que reCAPTCHA soit prêt avant d'exécuter
+        console.log("Bouton reCAPTCHA cliqué");
+
         window.grecaptcha.enterprise.ready(async () => {
             const token = await window.grecaptcha.enterprise.execute(
                 '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m',
                 { action: 'LOGIN' }
             );
-            setRecaptchaToken(token); // Sauvegarder le token dans l'état
+            setRecaptchaToken(token);
         });
     };
 

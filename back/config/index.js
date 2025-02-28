@@ -9,5 +9,6 @@ export const env = {
     TOKEN: process.env.TOKEN,
     EMAIL_USER: process.env.EMAIL_USER,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
     STRIPE_SECRET_TEST: process.env.STRIPE_SECRET_TEST
 }
