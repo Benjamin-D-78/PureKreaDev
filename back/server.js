@@ -29,14 +29,14 @@ mongoose
 
 // MIDDLEWARE
 app.use(cors({
-    origin: ["http://localhost:3000", "https://pure-krea-benjamind.vercel.app"],
-    methods: 'GET, POST, DELETE, PUT',
+    origin: "https://pure-krea-benjamind.vercel.app",
+    methods: ['GET, POST, DELETE, PUT'],
     credentials: true,
     allowedHeaders: ['Content-Type','Authorization','Cookie'],
     exposedHeaders: ['Set-Cookie'],
     preflightContinue: true,
 }));
-app.options('*', cors()); // Ajoute un gestionnaire pour toutes les requêtes options
+app.options('/api/*', cors()); // Ajoute un gestionnaire pour toutes les requêtes options
 app.use(express.json());
 app.use(cookieParser());
 

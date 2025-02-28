@@ -1,8 +1,7 @@
 import { Resend } from 'resend';
 import { env } from '../config/index.js';
 
-const resend = new Resend("re_9wc9TdHE_GrMHiQkEc6TAgr5hHxQZJNDY");
-console.log("mon test API_KEY : ", process.env.RESEND_API_KEY)
+const resend = new Resend(env.RESEND_API_KEY);
 
 export const sendEmail = async (user, verifieToken) => {
     const verificationURL = process.env.NODE_ENV === 'development' 
