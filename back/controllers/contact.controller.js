@@ -5,19 +5,17 @@ import { RGXR } from "../utils/regex.js";
 export const creationMessage = async (req, res) => {
     try {
 
-        const { recaptchaToken } = req.body;  // Assure-toi que le token est bien envoyé dans la requête
+        const { recaptchaToken } = req.body; // On vérifie si le token est dans la requête
 
         if (!recaptchaToken) {
             return res.status(400).json({ Message: "Le token reCAPTCHA est requis." });
         }
 
-        // Clé secrète de reCAPTCHA
+        // Clé secrète du recaptcha
         const RECAPTCHA_SECRET_KEY = '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m';
 
-        // Vérification du token reCAPTCHA via l'API de Google
-        const response = await axios.post(
-            `https://www.google.com/recaptcha/api/siteverify`,
-            null,
+        // Vérification du token recaptcha via l'API de Google
+        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
             {
                 params: {
                     secret: RECAPTCHA_SECRET_KEY,
@@ -26,10 +24,11 @@ export const creationMessage = async (req, res) => {
             }
         );
 
-        // Vérifie si la validation reCAPTCHA a échoué
+        // On vérifie la validation reCAPTCHA
         if (!response.data.success) {
-            return res.status(400).json({ Message: "Vérification reCAPTCHA échouée. Veuillez réessayer." });
+            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
         }
+
 
         const firstnameRegexr = RGXR.PRENOM;
         if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
