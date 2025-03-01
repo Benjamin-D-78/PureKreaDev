@@ -110,7 +110,7 @@ const Contact = () => {
 //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
   const handleRecaptcha = (value) => {
     setRecaptchaToken(value);
-    console.log(recaptchaToken)
+    console.log(handleRecaptcha)
   };
 
 
