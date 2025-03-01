@@ -79,7 +79,7 @@ export const sendEmail = async (user, verifieToken) => {
     const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
 
     const mailData = {
-        from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
+        from: env.API_KEY,  // Expéditeur (l'email de l'expéditeur)
         to: user.email,  // Destinataire (l'email de l'utilisateur)
         subject: "Vérifiez votre email",  // Sujet de l'email
         text: `Bienvenue ${user.name}.\n\nMerci de vous être inscrit.\n\nCliquez sur ce lien pour vérifier votre email : ${verificationURL}`,
