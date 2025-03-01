@@ -110,6 +110,7 @@ const Contact = () => {
 //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
   const handleRecaptcha = (value) => {
     setRecaptchaToken(value);
+    console.log(recaptchaToken)
   };
 
 
@@ -130,7 +131,6 @@ const Contact = () => {
 
         if (!recaptchaToken) {
             toast.error("Le CAPTCHA doit être validé.")
-            console.log(recaptchaToken)
             return;
         }
 
