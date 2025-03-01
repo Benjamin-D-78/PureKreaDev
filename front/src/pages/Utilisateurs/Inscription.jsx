@@ -183,6 +183,7 @@ const Inscription = () => {
                                 onInput={(event) => {
                                     event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
                                 }} />
+                                <p>Certains email peuvent ne pas être supportés.</p>
                             {error.email && <span className={coin.spanError}>{error.email}</span>}
                             <br />
 

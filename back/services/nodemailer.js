@@ -71,20 +71,28 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmail = async (user, verifieToken) => {
 
-    const verificationURL = process.env.NODE_ENV === 'development'
-        ? `http://localhost:3000/verification/${verifieToken}`
-        : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
+  const verificationURL = process.env.NODE_ENV === 'development'
+    ? `http://localhost:3000/verification/${verifieToken}`
+    : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
 
-    // Créer le lien de vérification au format HTML
-    const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
+  // Créer le lien de vérification au format HTML
+  const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
 
-    const mailData = {
-        from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
-        to: user.email,  // Destinataire (l'email de l'utilisateur)
-        subject: "Vérifiez votre email",  // Sujet de l'email
-        text: `Bienvenue ${user.name}.\n\nMerci de vous être inscrit.\n\nCliquez sur ce lien pour vérifier votre email : ${verificationURL}`,
-        html: `Cliquez sur ce lien pour vérifier votre email : ${verificationLink}`,
-};
+  const mailData = {
+    from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
+    to: user.email,  // Destinataire (l'email de l'utilisateur)
+    subject: "Vérifiez votre email",  // Sujet de l'email
+    // text: `Bienvenue ${user.firstname} ${user.lastname}.\n\nMerci de vous être inscrit.\n\nCliquez sur ce lien pour vérifier votre email : ${verificationURL}`,
+    html: `
+        <p>Bienvenue ${user.firstname} ${user.lastname}.</p>
+        <p>Nous vous remercions pour votre inscription</p>
+        <p>Cliquez sur ce bouton pour valider votre email :</p>
+        <br />
+        <a href="${verificationURL}"><button>Vérifier mon compte</button></a>
+        <br />
+        <p>L'équipe PureKréa</p>`,
+        
+  };
 
   try {
     const info = await transporter.sendMail(mailData);
