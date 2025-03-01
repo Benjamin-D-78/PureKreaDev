@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import axios from "axios"
+import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
 
 // RACCOURCIS
 import { URL } from '../../utils/Constantes'
@@ -20,6 +21,7 @@ import monProfil from "../MonProfil/monprofil.module.css"
 import NavBar from '../../components/NavBar/NavBar'
 import Footer from '../../components/Footer/Footer'
 import Accordeon from '../../components/Accordeon/accordeon'
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const Contact = () => {
@@ -104,18 +106,11 @@ const Contact = () => {
     }
 
 
-    const handleRecaptcha = async () => {
-        console.log("Bouton reCAPTCHA cliqué");
-
-        window.grecaptcha.enterprise.ready(async () => {
-            const token = await window.grecaptcha.enterprise.execute(
-                '6LeEX-UqAAAAAHdCKudRdmmpBRQvkkacGtw5lV-m',
-                { action: 'LOGIN' }
-            );
-            setRecaptchaToken(token);
-        });
-    };
-    console.log(recaptchaToken)
+  // on appelle handleRecaptcha quand une réponse au reCAPTCHA est envoyée
+  const handleRecaptcha = (value) => {
+    console.log("Captcha response:", value);
+    setRecaptchaToken(value);
+  };
 
 
     const handleSubmit = async (event) => {
@@ -343,10 +338,13 @@ const Contact = () => {
                                     <p>En cochant cette case, vous acceptez d'être recontacté(e) dans le cadre de votre demande.</p>
                                 </div>
                                 <div className={contact.contientBtnValidation}>
-                                <button type='button' onClick={handleRecaptcha} className={contact.recaptcha}>Je suis un humain</button>
-                                    <button
-                                        className={contact.btnValidation}>Envoyer
-                                    </button>
+                                    <ReCAPTCHA
+                                        className='g-recaptcha'
+                                        sitekey={RECAPTCHA_PUBLIC_KEY}
+                                        action="LOGIN"
+                                        onChange={handleRecaptcha}
+                                    />                                    
+                                    <button className={contact.btnValidation}>Envoyer</button>
                                 </div>
                             </form>
                         </div>

@@ -6,14 +6,14 @@ import { env } from "../config/index.js"
 export const creationMessage = async (req, res) => {
     try {
 
-        const { recaptchaToken } = req.body; // On vérifie si le token est dans la requête
+        const { recaptchaToken, message } = req.body; // On vérifie si le token est dans la requête
 
         if (!recaptchaToken) {
-            return res.status(400).json({ Message: "Le token reCAPTCHA est requis." });
+            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
         }
 
         // Vérification du token recaptcha via l'API de Google
-        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
+        const response = await axios.post(`https://recaptchaenterprise.googleapis.com/v1/projects/purekreadev/assessments?key=API_KEY`, null,
             {
                 params: {
                     secret: env.RECAPTCHA_SECRET_KEY,
