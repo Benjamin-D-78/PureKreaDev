@@ -7,7 +7,7 @@ import axios from "axios"
 export const creationMessage = async (req, res) => {
     try {
         // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
+        console.log({Message: req.body.recaptchaToken})
         const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
