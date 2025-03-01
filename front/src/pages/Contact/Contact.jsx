@@ -111,7 +111,7 @@ const Contact = () => {
     const handleRecaptcha = (value) => {
         setRecaptchaToken(value);
     };
-    console.log(recaptchaToken)
+    // console.log(recaptchaToken)
 
 
     const handleSubmit = async (event) => {
