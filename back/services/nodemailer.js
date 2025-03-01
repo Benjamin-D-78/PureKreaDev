@@ -1,4 +1,6 @@
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
+const sendGrid = require("@sendgrid/mail")
+sendGrid.setApiKey(apiKey);
 import { env } from "../config/index.js";
 
 // Fonction pour envoyer un email de vérification
@@ -59,15 +61,15 @@ import { env } from "../config/index.js";
 
 
 // Configuration SMTP de SendGrid.
-const transporter = nodemailer.createTransport({
-  host: 'smtp.sendgrid.net',
-  port: 587,
-  secure: false,
-  auth: {
-    user: env.EMAIL_USER,  // L'adresse email configurée dans .env
-    pass: env.PASS_USER,  // Le mot de passe configuré dans .env
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.sendgrid.net',
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: env.EMAIL_USER,  // L'adresse email configurée dans .env
+//     pass: env.PASS_USER,  // Le mot de passe configuré dans .env
+//   },
+// });
 
 export const sendEmail = async (user, verifieToken) => {
 
@@ -87,9 +89,15 @@ export const sendEmail = async (user, verifieToken) => {
 };
 
   try {
-    const info = await transporter.sendMail(mailData);
-    console.log('Email envoyé :', info.response);
+    await sendGrid.send(mailData);
+    console.log("Email envoyé avec succès.");
   } catch (error) {
     console.error("Erreur lors de l'envoie de l'email : ", error.message);
   }
+//   try {
+//     const info = await transporter.sendMail(mailData);
+//     console.log('Email envoyé :', info.response);
+//   } catch (error) {
+//     console.error("Erreur lors de l'envoie de l'email : ", error.message);
+//   }
 };
