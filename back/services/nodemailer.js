@@ -61,11 +61,11 @@ import { env } from "../config/index.js";
 // Configuration SMTP de SendGrid.
 const transporter = nodemailer.createTransport({
   host: 'smtp.sendgrid.net',
-  port: 587,
-  secure: false,
+  port: 465, // 465 pour SSL, 587 pour TLS
+  secure: true, // A false pour TLS
   auth: {
-    user: env.API_KEY,  // L'adresse email configurée dans .env
-    pass: env.PASS_USER,  // Le mot de passe configuré dans .env
+    user: env.API_KEY,
+    pass: env.PASS_USER,
   },
 });
 
@@ -79,8 +79,8 @@ export const sendEmail = async (user, verifieToken) => {
     const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
 
     const mailData = {
-        from: "desmonet.idf@gmail.com",  // Expéditeur (l'email de l'utilisateur)
-        to: "desmonet.idf@gmail.com",  // Destinataire (l'email de l'utilisateur)
+        from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
+        to: user.email,  // Destinataire (l'email de l'utilisateur)
         subject: "Vérifiez votre email",  // Sujet de l'email
         text: `Bienvenue ${user.name}.\n\nMerci de vous être inscrit.\n\nCliquez sur ce lien pour vérifier votre email : ${verificationURL}`,
         html: `Cliquez sur ce lien pour vérifier votre email : ${verificationLink}`,
