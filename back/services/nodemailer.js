@@ -69,7 +69,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = async (user, verifieToken) => {
+export const sendEmail = async (user, verifieToken) => {
 
     const verificationURL = process.env.NODE_ENV === 'development'
         ? `http://localhost:3000/verification/${verifieToken}`
