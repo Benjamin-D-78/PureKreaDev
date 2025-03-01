@@ -116,20 +116,20 @@ const Contact = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!recaptchaToken) {
-            toast.error("Le CAPTCHA doit être validé.")
-            return;
-        }
-
         if (!message.motif || !message.firstname || !message.lastname || !message.email || !message.content) {
             toast.error("Certains des champs obligatoires sont vides.")
             return;
         }
-
+        
         if (!formulaire()) return;
 
         if (!message.verification) {
             toast.error("Vous devez accepter d'être recontacté pour envoyer votre message.")
+            return;
+        }
+
+        if (!recaptchaToken) {
+            toast.error("Le CAPTCHA doit être validé.")
             return;
         }
 
@@ -339,7 +339,7 @@ const Contact = () => {
                                 </div>
                                 <div className={contact.contientBtnValidation}>
                                     <ReCAPTCHA
-                                        className='g-recaptcha'
+                                        className={contact.recaptcha}
                                         sitekey={RECAPTCHA_PUBLIC_KEY}
                                         action="LOGIN"
                                         onChange={handleRecaptcha}

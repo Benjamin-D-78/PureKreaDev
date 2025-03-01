@@ -253,7 +253,7 @@
     max-width: 25rem;
     height: 3rem;
     margin-bottom: 1rem;
-    background-color: #FFFFF0;
+    /* background-color: #FFFFF0; */
     border: none;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.4rem;
@@ -266,7 +266,7 @@
     width: 50%;
     max-width: 25rem;
     height: 3rem;
-    margin-bottom: 1rem;
+    margin: 3rem 0 1rem 0;
     background-color: #C6E60F;
     border: none;
     font-family: Arial, Helvetica, sans-serif;
