@@ -13,7 +13,7 @@ export const creationMessage = async (req, res) => {
         }
 
         // Vérification du token recaptcha via l'API de Google
-        const response = await axios.post(`https://recaptchaenterprise.googleapis.com/v1/projects/purekreadev/assessments?key=API_KEY`, null,
+        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
             {
                 params: {
                     secret: env.RECAPTCHA_SECRET_KEY,
