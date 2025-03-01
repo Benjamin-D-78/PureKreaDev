@@ -64,7 +64,7 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: env.EMAIL_USER,  // L'adresse email configurée dans .env
+    user: env.API_KEY,  // L'adresse email configurée dans .env
     pass: env.PASS_USER,  // Le mot de passe configuré dans .env
   },
 });
