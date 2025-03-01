@@ -88,7 +88,8 @@ export const sendEmail = async (user, verifieToken) => {
         <p>Nous vous remercions pour votre inscription</p>
         <p>Cliquez sur ce bouton pour valider votre email :</p>
         <br />
-        <a href="${verificationURL}"><button>Vérifier mon compte</button></a>
+        <a href="${verificationURL}"><button style="background-color: #C6E60F; border-radius: 0.5rem;">Vérifier mon compte</button></a>
+        <br />
         <br />
         <p>L'équipe PureKréa</p>`,
         

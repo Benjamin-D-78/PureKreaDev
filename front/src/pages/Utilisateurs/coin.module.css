@@ -133,6 +133,17 @@
 
 
 /* ERREURS */
+.spanAlerte{
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    margin: auto;
+    /* margin-bottom: 0.5rem; */
+    padding-left: 0.2rem;
+    font-family: "Marko One", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    color: orange;}
+
 .spanError{
     display: block;
     width: 100%;
