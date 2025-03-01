@@ -5,9 +5,9 @@ import { env } from "../config/index.js"
 // CREATION MESSAGE
 export const creationMessage = async (req, res) => {
     try {
-
-        const { recaptchaToken, message } = req.body; // On vérifie si le token est dans la requête
-
+        // On vérifie si le token est dans la requête
+        const { recaptchaToken } = req.body;
+        
         if (!recaptchaToken) {
             return res.status(400).json({ Message: "Le CAPTCHA est requis." });
         }

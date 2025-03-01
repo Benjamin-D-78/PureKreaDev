@@ -106,9 +106,9 @@ const Contact = () => {
     }
 
 
-  // on appelle handleRecaptcha quand une réponse au reCAPTCHA est envoyée
+  // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
+//   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
   const handleRecaptcha = (value) => {
-    console.log("Captcha response:", value);
     setRecaptchaToken(value);
   };
 
@@ -136,6 +136,7 @@ const Contact = () => {
         if (URL.MESSAGE_CREATION) {
             try {
                 const response = await axiosInstance.post(URL.MESSAGE_CREATION, { ...message, recaptchaToken })
+                console.log(response)
                 if (response.status === 201) {
                     toast.success("Message envoyé avec succès.", { autoClose: 1000 })
 
@@ -341,7 +342,7 @@ const Contact = () => {
                                     <ReCAPTCHA
                                         className='g-recaptcha'
                                         sitekey={RECAPTCHA_PUBLIC_KEY}
-                                        action="LOGIN"
+                                        action="contact" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
                                         onChange={handleRecaptcha}
                                     />                                    
                                     <button className={contact.btnValidation}>Envoyer</button>
