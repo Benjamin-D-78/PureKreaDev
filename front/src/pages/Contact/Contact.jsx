@@ -339,7 +339,7 @@ const Contact = () => {
                                 </div>
                                 <div className={contact.contientBtnValidation}>
                                     <ReCAPTCHA
-                                        className={contact.recaptcha}
+                                        className='g-recaptcha'
                                         sitekey={RECAPTCHA_PUBLIC_KEY}
                                         action="LOGIN"
                                         onChange={handleRecaptcha}
