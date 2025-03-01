@@ -137,7 +137,7 @@ const Contact = () => {
         if (URL.MESSAGE_CREATION) {
             try {
                 const response = await axiosInstance.post(URL.MESSAGE_CREATION, { ...message, recaptchaToken })
-                console.log(response.data)
+                // console.log(response.data)
                 if (response.status === 201) {
                     toast.success("Message envoyé avec succès.", { autoClose: 1000 })
 
