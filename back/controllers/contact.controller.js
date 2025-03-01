@@ -7,8 +7,7 @@ export const creationMessage = async (req, res) => {
     try {
         // On vérifie si le token est dans la requête
         console.log(req.body)
-
-        const recaptchaToken = req.headers;
+        const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
             return res.status(400).json({ Message: "Le CAPTCHA est requis." });
