@@ -73,18 +73,20 @@ const CommandeDashboard = () => {
         <tbody>
           {commandes?.map(commande => (
             <tr key={commande._id}>
-              {/* <td className={boutique_dashboard.autresTD}>
-                {commande.panier.map(item => (
-                  <React.Fragment key={item.itemId}>
-                    {item.name}
-                    <br />
-                  </React.Fragment>))}</td>
               <td className={boutique_dashboard.autresTD}>
                 {commande.panier.map(item => (
-                  <React.Fragment key={item.itemId}>
+                  <div key={item.itemId}>
+                    {item.name}
+                    <br />
+                  </div>))}
+                  </td>
+              <td className={boutique_dashboard.autresTD}>
+                {commande.panier.map(item => (
+                  <div key={item.itemId}>
                     {item.quantity}
                     <br />
-                  </React.Fragment>))}</td> */}
+                  </div>))}
+                  </td>
               <td className={boutique_dashboard.autresTD}>{commande.prixTotal} €</td>
               <td className={boutique_dashboard.autresTDcache}>{commande._id}</td>
               <td className={boutique_dashboard.autresTDcache}>{commande.comment}</td>
