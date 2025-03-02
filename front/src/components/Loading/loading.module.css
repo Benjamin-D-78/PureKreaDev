@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 100%;
+    height: 40rem;
     width: 100%;
 }
 
@@ -21,6 +21,6 @@
 
 .d{
     background-image: url("../../images/NavBar/fond_NavBar.jpg");
-    height: 100vh;
+    height: 100%;
     width: 33.3%;
 }
