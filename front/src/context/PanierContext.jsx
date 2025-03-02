@@ -155,10 +155,10 @@ export const PanierProvider = ({ children }) => {
         }
     }
 
-    const validerCommande = async (paiementReussi) => {
+    const validerCommande = async () => {
         try {
 
-            if(!paiementReussi) return;
+            // if(!paiementReussi) return;
 
             // On vérifie que le panier n'est pas vide.
             if (panier.length === 0) {

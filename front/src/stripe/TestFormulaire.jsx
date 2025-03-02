@@ -15,6 +15,7 @@ import { AuthContext } from '../context/AuthContext'
 const TestFormulaire = () => {
 
     const stripe = useStripe();
+    const [numeroCarteValide, setNumeroCarteValide] = useState(false);
     const [paiementValide, setPaiementValide] = useState(false)
     const elements = useElements();
     const { prixTotal, panier, validerCommande } = useContext(PanierContext);
@@ -60,7 +61,10 @@ const TestFormulaire = () => {
         const numeroCarte = elements.getElement(CardElement);
         const number = numeroCarte._number?.value; // On récupère la valeur du champ du numéro de carte
 
-        if (number !== "4242424242424242") {
+        if (number === "4242424242424242") {
+            setNumeroCarteValide(true)
+        } else {
+            setNumeroCarteValide(false)
             toast.error("Le numéro de carte doit être '4242 4242 4242 4242'")
             return;
         }
@@ -81,12 +85,12 @@ const TestFormulaire = () => {
                 })
                 if (response.data.success) {
                     toast.success("Paiement réalisé avec succès.", { autoClose: 2000 })
-                    // validerCommande(true)
+                    setPaiementValide(true)
                 }
             } catch (error) {
                 toast.error("Votre paiement a échoué")
                 console.log("Erreur : ", error)
-                // validerCommande(false)
+                setPaiementValide(false)
             }
         } else {
             console.log(error.message)
@@ -113,7 +117,7 @@ const TestFormulaire = () => {
                     <div className='flex justify-center align-items-center flex-column'>
                         <button
                             disabled={!paiementValide}
-                            onClick={validerCommande}
+                            onClick={setNumeroCarteValide && validerCommande}
                             className='bg-[#C6E60F] mb-[1rem] w-[12rem] h-[2.5rem] font-marko text-[1.4rem] rounded-xl mt-[4rem]'>Payer
                         </button>
                         <Link className='border-1 border-[#C6E60F]  text-white rounded-md font-marko rounded-xl mb-[2rem]' to={{ pathname: "/" }}><button className='w-[12rem] h-[2.5rem] font-marko text-[1.4rem]'>Abandonner</button></Link>
