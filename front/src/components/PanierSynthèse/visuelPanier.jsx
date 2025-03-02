@@ -19,6 +19,7 @@ const PanierTotal = () => {
 
   const { retirerArticle, prixParQuantite, totalArticle, changerQuantite, videPanier, panier, prixTotal } = useContext(PanierContext)
   const { auth, deconnexion } = useContext(AuthContext); // On récupère l'objet utilisateur depuis le contexte
+  const [loading, setLoading] = useState(true)
   const [utilisateur, setUtilisateur] = useState({
     firstname: "",
     lastname: "",
@@ -59,8 +60,10 @@ const PanierTotal = () => {
           try {
             const response = await axiosInstance.get(`${URL.USER_BY_ID}/${auth._id}`);
             setUtilisateur(response.data)
+            setLoading(false)
           } catch (error) {
             console.error("Erreur lors de la recherche d'utilisateur", error)
+            setLoading(false)
           }
         }
       };

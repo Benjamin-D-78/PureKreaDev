@@ -11,6 +11,7 @@ const PetitCaroussel = () => {
 
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true)
     const [slide, setSlide] = useState(0);
 
     const slideSuivante = () => {
@@ -30,8 +31,10 @@ const PetitCaroussel = () => {
                     if (Array.isArray(response.data)) {
                         setImages(response.data);
                     }
+                    setLoading(false)
                 } catch (error) {
                     setError("Problème lors de la récupération des articles", error.message)
+                    setLoading(false)
                 }
             }
         }
