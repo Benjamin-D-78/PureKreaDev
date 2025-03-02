@@ -76,12 +76,14 @@ export default function Footer() {
             email: ""
           })
         }
-        if (response.status === 404) {
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
           toast.error("Vous êtes déjà abonné.", { autoClose: 3000 })
         }
-      } catch (error) {
-        console.error("Echec de la tentative d'abonnement : ", error.message)
-        toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
+        if (error.response && error.response.status === 500) {
+          console.error("Echec de la tentative d'abonnement : ", error.message)
+          toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
+        }
       }
     } else {
       toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
