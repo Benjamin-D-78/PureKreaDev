@@ -197,16 +197,16 @@ export const PanierProvider = ({ children }) => {
                 // console.log(response)
                 const id = response.data._id
 
-                // for (let item of panier) {
-                //     try {
-                //         const majStock = await axiosInstance.put(`${URL.ITEM_STOCK}/${item._id}`, {stock: item.stock - item.quantite})
-                //         // if(majStock.status === 200){
-                //         //     console.log("Stock des items mis à jour avec succès.")
-                //         // }
-                //     } catch (error) {
-                //         console.error("Erreur lors de la mise à jour du stock : ", item.name, error)
-                //     }
-                // }
+                for (let item of panier) {
+                    try {
+                        const majStock = await axiosInstance.put(`${URL.ITEM_STOCK}/${item._id}`, {stock: item.stock - item.quantite})
+                        // if(majStock.status === 200){
+                        //     console.log("Stock des items mis à jour avec succès.")
+                        // }
+                    } catch (error) {
+                        console.error("Erreur lors de la mise à jour du stock : ", item.name, error)
+                    }
+                }
                 setPanier([]) // On vide le panier
 
                 // On supprimer le panier dans le localStorage pour l'utilisateur
