@@ -194,7 +194,7 @@ export const PanierProvider = ({ children }) => {
 
             if (response.status === 201) {
                 toast.success("Commande validée avec succès!", { autoClose: 2000 });
-                console.log(response)
+                // console.log(response)
                 const id = response.data._id
 
                 // for (let item of panier) {

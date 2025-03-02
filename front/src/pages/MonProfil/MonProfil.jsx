@@ -234,13 +234,13 @@ const MonProfil = () => {
         if (utilisateur.postal !== "") updateUser.postal = utilisateur.postal
         if (utilisateur.town !== "") updateUser.town = utilisateur.town
 
-        console.log(updateUser)
+        // console.log(updateUser)
 
         if (URL.USER_UPDATE) {
             try {
                 const response = await axiosInstance.put(`${URL.USER_UPDATE}/${id}`, updateUser, { withCredentials: true }
                 );
-                console.log(response)
+                // console.log(response)
                 if (response.status === 200) {
                     toast.success("Profil mis à jour avec succès.", { autoClose: 3000 });
                     const updateAuth = { ...auth, ...response.data } //On incorpore les nouvelles données dans le auth, sinon ça écrase le auth déjà existant et le remet à zéro.
@@ -285,14 +285,14 @@ const MonProfil = () => {
                                 <div className={monProfil.contientDonnees}>
                                     <div className={monProfil.labelsProfil}>
                                         <label>Nom : </label>
-                                        <label htmlFor="lastname">Nouveau nom : </label>
+                                        <label htmlFor="newlastname">Nouveau nom : </label>
                                     </div>
                                     <div className={monProfil.inputsProfil}>
                                         {utilisateur && utilisateur.lastname ? (<span className={monProfil.pUtilisateur}>{utilisateur.lastname}</span>) : <span>Information manquante</span>}
                                         <input
                                             type="text"
                                             name='lastname'
-                                            id='lastname'
+                                            id='newlastname'
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             minLength={2}
@@ -310,14 +310,14 @@ const MonProfil = () => {
                                 <div className={monProfil.contientDonnees}>
                                     <div className={monProfil.labelsProfil}>
                                         <label>Prénom : </label>
-                                        <label htmlFor="firstname">Nouveau prénom : </label>
+                                        <label htmlFor="newfirstname">Nouveau prénom : </label>
                                     </div>
                                     <div className={monProfil.inputsProfil}>
                                         {utilisateur && utilisateur.firstname ? (<span className={monProfil.pUtilisateur}>{utilisateur.firstname}</span>) : <span>Information manquante</span>}
                                         <input
                                             type="text"
                                             name='firstname'
-                                            id='firstname'
+                                            id='newfirstname'
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             minLength={2}

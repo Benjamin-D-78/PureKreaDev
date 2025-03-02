@@ -72,7 +72,7 @@ const Commande = () => {
         if (URL.USER_BY_ID) {
           try {
             const response = await axiosInstance.get(`${URL.USER_BY_ID}/${auth._id}`);
-            console.log(response)
+            // console.log(response)
             if (response.data) {
               setUtilisateur(response.data)
             }
