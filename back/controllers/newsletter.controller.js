@@ -17,9 +17,9 @@ export const creationAbonne = async (req, res) => {
             return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
         }
 
-        const emailExistant = await Newsletter.findOne({where: {email: req.body.email}});
+        const emailExistant = await Newsletter.findOne({ email: req.body.email});
         if (emailExistant) {
-            res.status(409).json({Message: "Utilisateur déjà abonné."})
+            res.status(404).json({Message: "Utilisateur déjà abonné."})
         }
 
         const response = await Newsletter.create(req.body);
