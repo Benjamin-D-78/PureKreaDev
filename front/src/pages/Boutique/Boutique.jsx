@@ -30,6 +30,7 @@ const Boutique = () => {
     const [items, setItems] = useState([])
     const [error, setError] = useState(null)
     const [itemsAffiches, setItemsAffiches] = useState(8)
+    const [loading, setLoading] = useState(true)
 
 
 
@@ -66,9 +67,12 @@ const Boutique = () => {
                         setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
                         setCouleurs([...new Set(response.data.map(item => item.color))].sort())
                     }
+                    setLoading(false)
                 } catch (error) {
                     console.log("Erreur lors de l'appel API", error)
                     setError(error.message);
+                    setLoading(false)
+
                 }
             }
         };
@@ -150,6 +154,9 @@ const Boutique = () => {
 
 
     if (error) return <> <p>{error}</p> </>
+    if (loading) {
+        return <p>En cours de chargement...</p>
+    }
 
     return (
         <div>
