@@ -81,12 +81,12 @@ const TestFormulaire = () => {
                 })
                 if (response.data.success) {
                     toast.success("Paiement réalisé avec succès.", { autoClose: 2000 })
-                    validerCommande(true)
+                    // validerCommande(true)
                 }
             } catch (error) {
                 toast.error("Votre paiement a échoué")
                 console.log("Erreur : ", error)
-                validerCommande(false)
+                // validerCommande(false)
             }
         } else {
             console.log(error.message)

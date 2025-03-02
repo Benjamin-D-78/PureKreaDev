@@ -155,8 +155,11 @@ export const PanierProvider = ({ children }) => {
         }
     }
 
-    const validerCommande = async () => {
+    const validerCommande = async (paiementReussi) => {
         try {
+
+            if(!paiementReussi) return;
+
             // On vérifie que le panier n'est pas vide.
             if (panier.length === 0) {
                 toast.error("Votre panier est vide. Veuillez ajouter des articles pour pouvoir passer commande.");
