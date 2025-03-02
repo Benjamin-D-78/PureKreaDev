@@ -168,7 +168,7 @@ export default function Footer() {
       </div>
       {/* Bloc droite */}
       <div className={footerCSS.droite}>
-        <div><p className={footerCSS.texteH}>PureKréa - Artisan cravatier français - Images libres de droits <br />Site Projet 2024</p></div>
+        <div><p className={footerCSS.texteH}>PureKréa - Artisan cravatier français - Images libres de droits <br />Site Projet 2024 / 2025</p></div>
         <div className={footerCSS.texteC}>
           <nav>
             <ul>
