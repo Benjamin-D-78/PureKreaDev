@@ -1,0 +1,19 @@
+.conteneur{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.g{
+    height: 100vh;
+    width: 33.3%;
+    background-color: #265E92;
+}
+
+/* .m img{} */
+
+.d{
+    background-image: url("../../images/NavBar/fond_NavBar.jpg");
+    height: 100vh;
+    width: 33.3%;
+}
