@@ -5,7 +5,7 @@ const Loading = () => {
   return (
     <div className={loading.conteneur}>
         <div lassName={loading.g}></div>
-        <div lassName={loading.m}><img src={laurier} alt="Laurier" /></div>
+        <div lassName={loading.m}><p>En cours de chargement</p></div>
         <div lassName={loading.d}></div>
     </div>
   )
