@@ -15,7 +15,6 @@ import { AuthContext } from '../context/AuthContext'
 const TestFormulaire = () => {
 
     const stripe = useStripe();
-    const [numeroCarteValide, setNumeroCarteValide] = useState(false);
     const [paiementValide, setPaiementValide] = useState(false)
     const elements = useElements();
     const { prixTotal, panier, validerCommande } = useContext(PanierContext);
@@ -58,25 +57,22 @@ const TestFormulaire = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const numeroCarte = elements.getElement(CardElement);
-        const number = numeroCarte._number?.value; // On récupère la valeur du champ du numéro de carte
-
-        if (number === "4242424242424242") {
-            setNumeroCarteValide(true)
-        } else {
-            setNumeroCarteValide(false)
-            toast.error("Le numéro de carte doit être '4242 4242 4242 4242'")
-            return;
-        }
-
         // on créé ici une méthode de paiement
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: "card",
             card: elements.getElement(CardElement), // On récupère cette méthode de paiement avec le getElement
         });
         if (!error) {
-            console.log("Token généré : ", paymentMethod) // On génère grâce à paymentMethod un paiement qui sera en fait un Token. Ce token sera à envoyer au backend pour réaliser le paiement.
+            // On génère grâce à paymentMethod un paiement qui sera en fait un Token. Ce token sera à envoyer au backend pour réaliser le paiement.
+            // console.log("Token généré : ", paymentMethod)
             // on envoie le token au back
+
+            const derniersChiffres = paymentMethod.card.last4;
+            if (derniersChiffres !== "4242") {
+                toast.error("Le numéro de carte doit être '4242 4242 4242 4242'")
+                return;
+            }
+
             try {
                 const { id } = paymentMethod;
                 const response = await axiosInstance.post(URL.CHARGEMENT, {
@@ -85,12 +81,11 @@ const TestFormulaire = () => {
                 })
                 if (response.data.success) {
                     toast.success("Paiement réalisé avec succès.", { autoClose: 2000 })
-                    setPaiementValide(true)
+                    validerCommande();
                 }
             } catch (error) {
                 toast.error("Votre paiement a échoué")
                 console.log("Erreur : ", error)
-                setPaiementValide(false)
             }
         } else {
             console.log(error.message)
@@ -116,8 +111,7 @@ const TestFormulaire = () => {
                     <p className='text-[#FFA500] max-w-[30rem] mx-auto'>Veuillez indiquer : 4242 4242 4242 4242</p>
                     <div className='flex justify-center align-items-center flex-column'>
                         <button
-                            disabled={!numeroCarteValide || !paiementValide}
-                            onClick={validerCommande}
+                            disabled={!paiementValide}
                             className='bg-[#C6E60F] mb-[1rem] w-[12rem] h-[2.5rem] font-marko text-[1.4rem] rounded-xl mt-[4rem]'>Payer
                         </button>
                         <Link className='border-1 border-[#C6E60F]  text-white rounded-md font-marko rounded-xl mb-[2rem]' to={{ pathname: "/" }}><button className='w-[12rem] h-[2.5rem] font-marko text-[1.4rem]'>Abandonner</button></Link>

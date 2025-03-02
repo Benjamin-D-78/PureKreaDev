@@ -148,6 +148,16 @@ export const upItem = async (req, res) => {
     }
 }
 
+// PUT - UPDATE DU STOCK LORS DE LA COMMANDE
+export const upStock = async(req, res) => {
+    try {
+        const response = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        res.status(200).json({Message: "Stock mis à jour avec succès.", response})
+    } catch (error) {
+        res.status(500).json({Message: "Echec de la mise à jour du stock.", error})
+    }
+}
+
 // DELETE
 export const deleteItem = async (req, res) => {
     try {

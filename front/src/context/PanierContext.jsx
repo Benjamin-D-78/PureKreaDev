@@ -158,8 +158,6 @@ export const PanierProvider = ({ children }) => {
     const validerCommande = async () => {
         try {
 
-            // if(!paiementReussi) return;
-
             // On vérifie que le panier n'est pas vide.
             if (panier.length === 0) {
                 toast.error("Votre panier est vide. Veuillez ajouter des articles pour pouvoir passer commande.");
@@ -201,7 +199,7 @@ export const PanierProvider = ({ children }) => {
 
                 for (let item of panier) {
                     try {
-                        const majStock = await axiosInstance.put(`${URL.ITEM_UPDATE}/${item._id}`, {stock: item.stock - item.quantite})
+                        const majStock = await axiosInstance.put(`${URL.ITEM_STOCK}/${item._id}`, {stock: item.stock - item.quantite})
                         if(majStock.status === 200){
                             console.log("Stock des items mis à jour avec succès.")
                         }
