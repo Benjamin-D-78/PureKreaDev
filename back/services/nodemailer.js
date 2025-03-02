@@ -98,6 +98,7 @@ export const sendEmail = async (user, verifieToken) => {
   try {
     const info = await transporter.sendMail(mailData);
     console.log('Email envoyé :', info.response);
+    console.log('Objet de l\'email:', mailData.subject);
   } catch (error) {
     console.error("Erreur lors de l'envoie de l'email : ", error.message);
   }

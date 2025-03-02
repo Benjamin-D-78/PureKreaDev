@@ -226,7 +226,8 @@ const Boutique = () => {
                         {/* On appelle ici la fonction de filtrage pour les items en fonction de l'opti,on sélectionnée. */}
                         {/* {console.log(filtreItems)} */}
                         {/* {console.log(filtreItems.slice(0, itemsAffiches))} */}
-                        {filtreItems?.slice(0, itemsAffiches).map(item => (
+                        {/* SLice 0 car on commence à afficher à partir de l'item 0 */}
+                        {filtreItems?.filter(item => item.stock > 0).slice(0, itemsAffiches).map(item => (
                             <div className={boutique.carte} key={item._id}>
                                 <div className={boutique.contientDivImg}>
                                     <Link className={boutique.imgCliquable} to={{ pathname: `/details/${item._id}` }}>
