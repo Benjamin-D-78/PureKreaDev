@@ -81,10 +81,12 @@ const TestFormulaire = () => {
                 })
                 if (response.data.success) {
                     toast.success("Paiement réalisé avec succès.", { autoClose: 2000 })
+                    validerCommande(true)
                 }
             } catch (error) {
                 toast.error("Votre paiement a échoué")
                 console.log("Erreur : ", error)
+                validerCommande(false)
             }
         } else {
             console.log(error.message)
@@ -107,7 +109,7 @@ const TestFormulaire = () => {
                         options={{ hidePostalCode: true }}
                         onChange={carteCompletee}
                         className='bg-white rounded-md max-w-[30rem] mx-auto' />
-                    <p className='text[#FFA500] max-w-[30rem] mb-[1rem] mx-auto'>Veuillez indiquer : 4242 4242 4242 4242</p>
+                    <p className='text-[#FFA500] max-w-[30rem] mx-auto'>Veuillez indiquer : 4242 4242 4242 4242</p>
                     <div className='flex justify-center align-items-center flex-column'>
                         <button
                             disabled={!paiementValide}
