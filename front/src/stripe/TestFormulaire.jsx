@@ -57,7 +57,7 @@ const TestFormulaire = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const numeroCarte = elements.getElement(numeroCarte);
+        const numeroCarte = elements.getElement(CardElement);
         const number = numeroCarte._number?.value; // On récupère la valeur du champ du numéro de carte
 
         if (number !== "4242424242424242") {
@@ -107,7 +107,7 @@ const TestFormulaire = () => {
                         options={{ hidePostalCode: true }}
                         onChange={carteCompletee}
                         className='bg-white rounded-md max-w-[30rem] mx-auto' />
-                    <p className='#FFA500 max-w-[30rem] mb-[1rem]'>Veuillez indiquer : 4242 4242 4242 4242</p>
+                    <p className='text[#FFA500] max-w-[30rem] mb-[1rem] mx-auto'>Veuillez indiquer : 4242 4242 4242 4242</p>
                     <div className='flex justify-center align-items-center flex-column'>
                         <button
                             disabled={!paiementValide}
