@@ -76,6 +76,9 @@ export default function Footer() {
             email: ""
           })
         }
+        if (response.status === 409) {
+          toast.error("Vous êtes déjà abonné.", { autoClose: 3000 })
+        }
       } catch (error) {
         console.error("Echec de la tentative d'abonnement : ", error.message)
         toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
