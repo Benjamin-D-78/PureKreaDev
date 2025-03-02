@@ -41,9 +41,7 @@ const PetitCaroussel = () => {
         pictures()
     }, [])
 
-
-
-
+    if (loading) return;
 
 
     return (
