@@ -3,7 +3,6 @@ import axios from "axios"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
-import Loading from '../components/Loading/Loading'
 
 // EXTERNALISATION
 import { URL } from '../utils/Constantes'
@@ -96,9 +95,7 @@ const TestFormulaire = () => {
         }
     }
 
-    if (loading) {
-        return <Loading />
-    }
+    if (loading) return <p className='text-center'>En cours de chargement</p>
 
     return (
         <div className='w-[100%]'>

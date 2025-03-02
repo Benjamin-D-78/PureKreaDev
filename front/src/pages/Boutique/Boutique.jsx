@@ -12,7 +12,6 @@ import PanierTotal from "../../components/PanierSynthèse/visuelPanier.jsx";
 import ConnectezVous from "../../components/ConnectezVous/connectezVous.jsx";
 import PrenezRendezVous from "../../components/PrenezRendezVous/prenezRendezVous.jsx";
 import Accordeon from "../../components/Accordeon/accordeon.jsx";
-import Loading from "../../components/Loading/Loading.jsx";
 
 // ICONES & IMAGES
 import iconePanier from "../../images/Icones/paniers.png"
@@ -155,9 +154,8 @@ const Boutique = () => {
 
 
     if (error) return <> <p>{error}</p> </>
-    if (loading) {
-        return <Loading />
-    }
+    if (loading) return <p className='text-center'>En cours de chargement</p>
+
 
     return (
         <div>
