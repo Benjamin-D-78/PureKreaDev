@@ -71,7 +71,7 @@ const PanierTotal = () => {
     }
   }, [auth])
 
-
+  if (loading) return;
 
   return (
     <div>

@@ -3,6 +3,7 @@ import axios from "axios"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
+import Loading from '../components/Loading/Loading'
 
 // EXTERNALISATION
 import { URL } from '../utils/Constantes'
@@ -15,6 +16,7 @@ import { AuthContext } from '../context/AuthContext'
 const TestFormulaire = () => {
 
     const stripe = useStripe();
+    const [loading, setLoading] = useState(true)
     const [paiementValide, setPaiementValide] = useState(false)
     const elements = useElements();
     const { prixTotal, panier, validerCommande } = useContext(PanierContext);
@@ -46,8 +48,10 @@ const TestFormulaire = () => {
                         // console.log(response.data)
                         setUtilisateur(response.data)
                     }
+                    setLoading(false)
                 } catch (error) {
                     console.error("Erreur lors de la recherche d'utilisateur", error)
+                    setLoading(false)
                 }
             };
             userById();
@@ -90,6 +94,10 @@ const TestFormulaire = () => {
         } else {
             console.log(error.message)
         }
+    }
+
+    if (loading) {
+        return <Loading />
     }
 
     return (
