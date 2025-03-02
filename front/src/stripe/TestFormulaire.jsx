@@ -117,7 +117,10 @@ const TestFormulaire = () => {
                     <div className='flex justify-center align-items-center flex-column'>
                         <button
                             disabled={!paiementValide}
-                            onClick={setNumeroCarteValide && validerCommande}
+                            onClick={() => {
+                                if (numeroCarteValide && paiementValide) 
+                                    validerCommande()
+                            }}
                             className='bg-[#C6E60F] mb-[1rem] w-[12rem] h-[2.5rem] font-marko text-[1.4rem] rounded-xl mt-[4rem]'>Payer
                         </button>
                         <Link className='border-1 border-[#C6E60F]  text-white rounded-md font-marko rounded-xl mb-[2rem]' to={{ pathname: "/" }}><button className='w-[12rem] h-[2.5rem] font-marko text-[1.4rem]'>Abandonner</button></Link>
