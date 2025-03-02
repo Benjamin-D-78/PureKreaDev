@@ -25,6 +25,7 @@ import { PanierContext } from "../../context/PanierContext.jsx";
 const Details = () => {
 
     const { auth } = useContext(AuthContext)
+    const [loading, setLoading] = useState(true)
     const { ajouterArticle } = useContext(PanierContext)
 
     const [item, setItem] = useState([]);
@@ -48,13 +49,17 @@ const Details = () => {
                 try {
                     const { data, status } = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
                         setItem(data)
+                        setLoading(false)
                 } catch (error) {
                     setError("Erreur lors de la réception des données", error)
+                    setLoading(false)
                 }
             }
         };
         detailsItem();
     }, [id])
+
+    if (loading) return <p className='text-center'>En cours de chargement</p>
 
     return (
         <main>
