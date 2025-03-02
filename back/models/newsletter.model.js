@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import mongooseUniqueValidator from 'mongoose-unique-validator'
 
 const newsletterSchema = mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     statut: {
         type: String,
         required: false,
@@ -13,4 +14,5 @@ const newsletterSchema = mongoose.Schema({
     date: { type: Date, default: Date.now }
 })
 
+newsletterSchema.plugin(mongooseUniqueValidator) // Vérifie que les champs déclarés comme unique le sont bien dans la BDD
 export default mongoose.model("Newsletter", newsletterSchema);
