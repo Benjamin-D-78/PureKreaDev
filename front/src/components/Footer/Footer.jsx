@@ -76,7 +76,7 @@ export default function Footer() {
             email: ""
           })
         }
-        if (response.status === 409) {
+        if (response.status === 404) {
           toast.error("Vous êtes déjà abonné.", { autoClose: 3000 })
         }
       } catch (error) {
