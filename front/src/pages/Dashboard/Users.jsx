@@ -120,7 +120,7 @@ const AjoutUtilisateur = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (utilisateur.lastname === "" || utilisateur.firstname === "" || utilisateur.email === "" || utilisateur.password === "" || utilisateur.phone === "" || utilisateur.adress === "" || utilisateur.postal === "" || utilisateur.town === "") {
+        if (utilisateur.lastname === "" || utilisateur.firstname === "" || utilisateur.email === "" || utilisateur.password === "") {
             toast.error("Le formulaire n'est pas complété.");
             return;
         }
