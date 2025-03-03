@@ -17,17 +17,16 @@ import abonneRoutes from "./routers/newsletter.router.js"
 // APP EXPRESS
 const app = express()
 
-
 // PORT
 const PORT = env.PORT || 8000
 
-// DATABASE MONGOOSE
+// CONNEXION A LA BDD MONGODB
 mongoose
     .connect(env.MONGO_URI_LOCAL, {dbName: env.DB_NAME})
     .then(() => console.log("Connexion à MongoDB réussie !"))
     .catch(error => console.log("Echec de la connexion à MongoDB : ", error))
 
-// MIDDLEWARE
+// MIDDLEWARE D'EXPRESS
 app.use(cors({
     origin: "https://pure-krea-benjamind.vercel.app",
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
@@ -36,7 +35,6 @@ app.use(cors({
     exposedHeaders: ['Set-Cookie'],
     preflightContinue: true,
 }));
-// app.options('/api/*', cors()); // Ajoute un gestionnaire pour toutes les requêtes options
 app.use(express.json());
 app.use(cookieParser());
 

@@ -2,11 +2,17 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink } from "react-router-dom"
 import footerCSS from "./footer.module.css"
 import axios from "axios"
-import { URL } from '../../utils/Constantes'
 import { toast } from 'react-toastify'
+
+// CENTRALISATION
 import { PATTERN, RGXR } from '../../utils/Regixr'
-import ModalePolitique from '../ModalPolitique/ModalePolitique'
+import { URL } from '../../utils/Constantes'
+import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
 import axiosInstance from '../../utils/axiosInstance'
+
+// COMPOSANTS
+import ModalePolitique from '../ModalPolitique/ModalePolitique'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 // ICONES
 import linkedin from "../../images/Reseaux/linkedin.png"
@@ -15,6 +21,8 @@ import github from "../../images/Reseaux/github.png"
 
 
 export default function Footer() {
+
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   const [abonne, setAbonne] = useState({
     firstname: "",
@@ -54,6 +62,12 @@ export default function Footer() {
     setAbonne((abonne) => ({ ...abonne, [name]: value }))
   }
 
+  // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
+  //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
+  const handleRecaptcha = (value) => {
+    setRecaptchaToken(value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -63,6 +77,11 @@ export default function Footer() {
     }
 
     if (!formulaire()) return;
+
+    if (!recaptchaToken) {
+      toast.error("Le CAPTCHA doit être validé.")
+      return;
+    }
 
     if (URL.ABONNE_CREATION) {
       try {
@@ -167,6 +186,12 @@ export default function Footer() {
                 />
                 <button className={footerCSS.btnEnvoiFormNewsletter}>Je m'abonne</button>
               </div>
+              <ReCAPTCHA
+                className='g-recaptcha'
+                sitekey={RECAPTCHA_PUBLIC_KEY}
+                action="contact" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
+                onChange={handleRecaptcha}
+              />
             </form>
           </div>
         </div>
