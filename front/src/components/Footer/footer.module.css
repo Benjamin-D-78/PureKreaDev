@@ -51,7 +51,7 @@ footer{
 /* Bloc Centre */
 .centre{
     width: 100%;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 
     .contientTexteEtForm{
         background-color: #FCF7FF;
@@ -102,7 +102,7 @@ footer{
 .divCaptcha{
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }
 
 

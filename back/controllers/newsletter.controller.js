@@ -1,5 +1,7 @@
 import Newsletter from "../models/newsletter.model.js";
 import { RGXR } from "../utils/regex.js";
+import axios from "axios"
+
 
 // CREATION NEWSLETTER
 export const creationAbonne = async (req, res) => {
