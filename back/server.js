@@ -35,6 +35,15 @@ app.use(cors({
     exposedHeaders: ['Set-Cookie'],
     preflightContinue: true,
 }));
+
+// Pour gérer les requêtes OPTIONS (pré-volées)
+app.options('*', cors({
+    origin: "https://pure-krea-benjamind.vercel.app",
+    methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    credentials: true,
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 
