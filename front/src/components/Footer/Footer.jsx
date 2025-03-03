@@ -64,9 +64,9 @@ export default function Footer() {
 
   // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
   //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
-  // const handleRecaptcha = (value) => {
-  //   setRecaptchaToken(value);
-  // };
+  const handleRecaptcha = (value) => {
+    setRecaptchaToken(value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,10 +78,10 @@ export default function Footer() {
 
     if (!formulaire()) return;
 
-    // if (!recaptchaToken) {
-    //   toast.error("Le CAPTCHA doit être validé.")
-    //   return;
-    // }
+    if (!recaptchaToken) {
+      toast.error("Le CAPTCHA doit être validé.")
+      return;
+    }
 
     if (URL.ABONNE_CREATION) {
       try {
@@ -96,11 +96,6 @@ export default function Footer() {
           })
         }
       } catch (error) {
-        setAbonne({
-          firstname: "",
-          lastname: "",
-          email: ""
-        })
         if (error.response && error.response.status === 400) {
           toast.error("Veuillez réessayer.", { autoClose: 3000 })
         }
@@ -114,6 +109,8 @@ export default function Footer() {
           console.error("Echec de la tentative d'abonnement : ", error.message)
           toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
         }
+
+        window.location.reload();
       }
     } else {
       toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
@@ -197,14 +194,14 @@ export default function Footer() {
                 />
                 <button className={footerCSS.btnEnvoiFormNewsletter}>Je m'abonne</button>
               </div>
-              {/* <div className={footerCSS.divCaptcha}>
+              <div className={footerCSS.divCaptcha}>
                 <ReCAPTCHA
                   className='g-recaptcha'
                   sitekey={RECAPTCHA_PUBLIC_KEY}
                   action="newsletter" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
                   onChange={handleRecaptcha}
                 />
-              </div> */}
+              </div>
             </form>
           </div>
         </div>
