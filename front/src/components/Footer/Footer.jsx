@@ -96,6 +96,12 @@ export default function Footer() {
           })
         }
       } catch (error) {
+        if (error.response && error.response.status === 400) {
+          toast.error("Veuillez réessayer.", { autoClose: 3000 })
+        }
+        if (error.response && error.response.status === 409) {
+          toast.error("Veuillez réessayer.", { autoClose: 3000 })
+        }
         if (error.response && error.response.status === 404) {
           toast.error("Vous êtes déjà abonné.", { autoClose: 3000 })
         }
