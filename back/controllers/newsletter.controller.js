@@ -1,5 +1,6 @@
 import Newsletter from "../models/newsletter.model.js";
 import { RGXR } from "../utils/regex.js";
+import { env } from "../config/index.js";
 import axios from "axios"
 
 
