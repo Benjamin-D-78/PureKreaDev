@@ -85,17 +85,22 @@ export default function Footer() {
 
     if (URL.ABONNE_CREATION) {
       try {
-        const response = await axiosInstance.post(URL.ABONNE_CREATION, {...abonne, recaptchaToken})
+        const response = await axiosInstance.post(URL.ABONNE_CREATION, { ...abonne, recaptchaToken })
         // console.log(response)
+        if (response.status === 201) {
+          toast.success("Merci de vous être abonné !", { autoClose: 3000 })
+          setAbonne({
+            firstname: "",
+            lastname: "",
+            email: ""
+          })
+        }
+      } catch (error) {
         setAbonne({
           firstname: "",
           lastname: "",
           email: ""
         })
-        if (response.status === 201) {
-          toast.success("Merci de vous être abonné !", { autoClose: 3000 })
-        }
-      } catch (error) {
         if (error.response && error.response.status === 400) {
           toast.error("Veuillez réessayer.", { autoClose: 3000 })
         }
