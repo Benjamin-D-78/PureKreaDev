@@ -114,7 +114,7 @@ const Inscription = () => {
                 const response = await axiosInstance.post(URL.USER_INSCRIPTION, user)
                 if (response.status === 201) {
                     navigate("/");
-                    toast.success("Inscription effectuée avec succès.", { autoClose: 1000 })
+                    toast.success("Merci pour votre inscription ! Pensez à valider votre email pour pouvoir vous connecter.", { autoClose: 5000 })
                 }
             } catch (error) {
                 console.log("Echec de l'inscription de l'utilisateur.", error.message)
