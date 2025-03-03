@@ -85,7 +85,7 @@ export default function Footer() {
 
     if (URL.ABONNE_CREATION) {
       try {
-        const response = await axiosInstance.post(URL.ABONNE_CREATION, abonne)
+        const response = await axiosInstance.post(URL.ABONNE_CREATION, {...abonne, recaptchaToken})
         console.log(response)
         if (response.status === 201) {
           toast.success("Merci de vous être abonné !", { autoClose: 3000 })
@@ -186,12 +186,14 @@ export default function Footer() {
                 />
                 <button className={footerCSS.btnEnvoiFormNewsletter}>Je m'abonne</button>
               </div>
-              <ReCAPTCHA
-                className='g-recaptcha'
-                sitekey={RECAPTCHA_PUBLIC_KEY}
-                action="contact" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
-                onChange={handleRecaptcha}
-              />
+              <div className={footerCSS.divCaptcha}>
+                <ReCAPTCHA
+                  className='g-recaptcha'
+                  sitekey={RECAPTCHA_PUBLIC_KEY}
+                  action="newsletter" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
+                  onChange={handleRecaptcha}
+                />
+              </div>
             </form>
           </div>
         </div>

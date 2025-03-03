@@ -4,7 +4,6 @@ import { RGXR } from "../utils/regex.js";
 // CREATION NEWSLETTER
 export const creationAbonne = async (req, res) => {
     try {
-
         // On vérifie si le token est dans la requête
         console.log(req.body.recaptchaToken)
         console.log(req.body)

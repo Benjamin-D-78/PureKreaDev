@@ -51,6 +51,7 @@ footer{
 /* Bloc Centre */
 .centre{
     width: 100%;
+    margin-bottom: 1rem;
 
     .contientTexteEtForm{
         background-color: #FCF7FF;
@@ -98,8 +99,11 @@ footer{
     
     .inputFormNewsletterB{margin-bottom: 3rem;}
 
-
-
+.divCaptcha{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
 
 
 /* Bloc Droite */
