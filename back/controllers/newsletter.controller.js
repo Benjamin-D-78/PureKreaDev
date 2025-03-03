@@ -8,28 +8,28 @@ import axios from "axios"
 export const creationAbonne = async (req, res) => {
     try {
         // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
-        console.log(req.body)
-        const recaptchaToken = req.body.recaptchaToken;
+        // console.log(req.body.recaptchaToken)
+        // console.log(req.body)
+        // const recaptchaToken = req.body.recaptchaToken;
 
-        if (!recaptchaToken) {
-            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
-        }
+        // if (!recaptchaToken) {
+        //     return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+        // }
 
-        // Vérification du token recaptcha via l'API de Google
-        const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
-            {
-                params: {
-                    secret: env.RECAPTCHA_SECRET_KEY,
-                    response: recaptchaToken,
-                },
-            }
-        );
+        // // Vérification du token recaptcha via l'API de Google
+        // const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
+        //     {
+        //         params: {
+        //             secret: env.RECAPTCHA_SECRET_KEY,
+        //             response: recaptchaToken,
+        //         },
+        //     }
+        // );
 
-        // On vérifie la validation recaptcha
-        if (!captcha.data.success) {
-            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
-        }
+        // // On vérifie la validation recaptcha
+        // if (!captcha.data.success) {
+        //     return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+        // }
 
         const firstnameRegexr = RGXR.PRENOM;
         if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
