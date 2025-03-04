@@ -11,7 +11,7 @@ router.get("/all", allUsers)
 router.get("/obtenir/:id", userID)
 router.put("/update/:id", Token, upUser)
 router.put("/verification/:token", verifyEmail)
-router.put("/reset/:token", mdpOublie)
+router.post("/reset", mdpOublie)
 router.post("/verification/bis", renvoieEmail)
 router.delete("/delete/:id", Token, deleteUser)
 
