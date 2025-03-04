@@ -14,7 +14,7 @@ export const inscription = async (req, res, next) => {
     try {
         // On vérifie si le token est dans la requête
         console.log(req.body.recaptchaToken)
-        console.log(req.body)
+        // console.log(req.body)
         const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
