@@ -64,7 +64,11 @@
 
 
 
-
+.divCaptcha{
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
 
 .contientSubmit{
     display: flex;

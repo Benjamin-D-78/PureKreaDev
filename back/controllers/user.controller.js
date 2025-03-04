@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { env } from "../config/index.js";
 import { sendEmail } from "../services/nodemailer.js";
 import { RGXR } from "../utils/regex.js";
+import axios from "axios"
 
 
 
@@ -11,6 +12,30 @@ import { RGXR } from "../utils/regex.js";
 // SIGNUP ( hashage du MDP avec "bcrypt" contenu dans une variable)
 export const inscription = async (req, res, next) => {
     try {
+        // On vérifie si le token est dans la requête
+        console.log(req.body.recaptchaToken)
+        console.log(req.body)
+        const recaptchaToken = req.body.recaptchaToken;
+
+        if (!recaptchaToken) {
+            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+        }
+
+        // Vérification du token recaptcha via l'API de Google
+        const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
+            {
+                params: {
+                    secret: env.RECAPTCHA_SECRET_KEY,
+                    response: recaptchaToken,
+                },
+            }
+        );
+
+        // On vérifie la validation recaptcha
+        if (!captcha.data.success) {
+            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+        }
+
         const firstnameRegexr = RGXR.PRENOM;
         if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
             return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });

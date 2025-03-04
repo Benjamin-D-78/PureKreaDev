@@ -3,8 +3,11 @@ import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
+
+// CENRALISATION
 import { URL } from '../../utils/Constantes'
 import axiosInstance from '../../utils/axiosInstance'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 // ICONES
 import voir from "../../images/Icones/voir.svg"
@@ -13,6 +16,7 @@ import voir from "../../images/Icones/voir.svg"
 import NavBar from "../../components/NavBar/NavBar"
 import Footer from '../../components/Footer/Footer'
 import { PATTERN, RGXR } from '../../utils/Regixr'
+import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
 
 
 const Inscription = () => {
@@ -20,7 +24,7 @@ const Inscription = () => {
     const [voirA, setVoirA] = useState(false)
     const [voirB, setVoirB] = useState(false)
     const [mdpTape, setMdpTape] = useState(false)
-
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
 
     const [user, setUser] = useState({
         isActive: true
@@ -88,6 +92,9 @@ const Inscription = () => {
         }
     }
 
+    const handleRecaptcha = (value) => {
+        setRecaptchaToken(value);
+    };
 
     const checkInput = (event) => {
         const { name } = event.target; // On récupère le nom du champ qui a perdu le focus
@@ -104,6 +111,11 @@ const Inscription = () => {
             return;
         }
 
+        if (!recaptchaToken) {
+            toast.error("Le CAPTCHA doit être validé.")
+            return;
+        }
+
         if (user.password !== user.repeatPassword) {
             toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
             return;
@@ -111,7 +123,7 @@ const Inscription = () => {
 
         if (URL.USER_INSCRIPTION) {
             try {
-                const response = await axiosInstance.post(URL.USER_INSCRIPTION, user)
+                const response = await axiosInstance.post(URL.USER_INSCRIPTION, { ...user, recaptchaToken })
                 if (response.status === 201) {
                     navigate("/");
                     toast.success("Merci pour votre inscription ! Pensez à valider votre email pour pouvoir vous connecter.", { autoClose: 5000 })
@@ -119,6 +131,9 @@ const Inscription = () => {
             } catch (error) {
                 console.log("Echec de l'inscription de l'utilisateur.", error.message)
                 toast.error("Un problème est survenu, veuillez nous contacter.", { autoClose: 3000 })
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             }
         } else {
             toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
@@ -251,6 +266,14 @@ const Inscription = () => {
 
                             {error.repeatPassword && <span className={coin.spanError}>{error.repeatPassword}</span>}
                             <br />
+                            <div className={coin.divCaptcha}>
+                                <ReCAPTCHA
+                                    className='g-recaptcha'
+                                    sitekey={RECAPTCHA_PUBLIC_KEY}
+                                    action="inscription" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
+                                    onChange={handleRecaptcha}
+                                />
+                            </div>
                             <div className={coin.contientSubmit}>
                                 <button className={coin.submitCoIn}>M'inscrire</button>
                                 <Link className={coin.connexion} to="/connexion"><button className={coin.alternatif}>Déjà inscrit ?</button></Link>
