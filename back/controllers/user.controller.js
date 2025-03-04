@@ -2,7 +2,7 @@ import userModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "../config/index.js";
-import { sendEmail } from "../services/nodemailer.js";
+import { sendEmail, resetMDP } from "../services/nodemailer.js";
 import { RGXR } from "../utils/regex.js";
 import axios from "axios"
 
@@ -112,6 +112,35 @@ export const renvoieEmail = async (req, res, next) => {
     } catch (error) {
         console.log("Erreur lors de l'envoi du nouveau mail de vérification : ", error)
         next(error)
+    }
+}
+
+export const mdpOublie = async (req, res) => {
+    try {
+        const emailRegexr = RGXR.EMAIL;
+        if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
+            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
+        }
+
+        // Recherche de l'utilisateur dans la BDD
+        const rechercheUser = await userModel.findOne({ email: req.body.email });
+
+        if (!rechercheUser) return res.status(404).json({ Message: "Utilisateur non trouvé." });
+
+        // On vérifie si l'utilisateur a confirmé son email.
+        if (!rechercheUser.isVerified) {
+            return res.status(403).json({ message: "Veuillez vérifier votre email avant d'effectuer toute autre manipulation." })
+        }
+
+        // On créé un token spécial qui va servir à vérifier l'email.
+        const verificationToken = jwt.sign({ email: rechercheUser.email }, env.TOKEN, { expiresIn: "1h" });
+        // On envoi le mail à notre utilisateur avecle lien de vérification.
+        await resetMDP(req.body, verificationToken);
+
+        res.status(201).json({ Message: "L'utilisateur a bien été créé et l'email envoyé." });
+
+    } catch (error) {
+        res.status(500).json({ Message: "Echec de l'envoie du mail", error })
     }
 }
 

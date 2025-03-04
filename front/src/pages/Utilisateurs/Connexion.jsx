@@ -119,6 +119,7 @@ const Connexion = () => {
                 <button className={coin.submitCoIn}>Me connecter</button>
                 <Link className={coin.inscription} to="/inscription"> <button className={coin.alternatif}>Pas encore inscrit ?</button></Link>
               </div>
+              <Link className={coin.linkValidation} to="/reinitialisation"><p className={coin.validation}>J'ai oublié mon mot de passe</p></Link>
               <Link className={coin.linkValidation} to="/renvoi"><p className={coin.validation}>Je veux recevoir un nouveau mail de validation</p></Link>
             </form>
           </div>

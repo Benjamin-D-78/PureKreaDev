@@ -90,6 +90,7 @@ const Contact = () => {
         return isValid;
     }
 
+    // On réupère le champ "name" qui est renseigné par l'utilisateur
     const checkInput = (event) => {
         const { name } = event.target;
         formulaire()

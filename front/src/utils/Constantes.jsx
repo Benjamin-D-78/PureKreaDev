@@ -7,10 +7,12 @@ export const URL = {
     USER_ALL: "/api/user/all",
     USER_UPDATE: "/api/user/update",
     USER_DELETE: "/api/user/delete",
+    USER_RESET: "/api/user/reset",
 
     // EMAIL
     EMAIL_VERIFICATION: "/api/user/verification",
     EMAIL_VERIFICATION_BIS: "/api/user/verification/bis",
+
 
     // ITEM
     ITEM_CREATION: "/api/item/creation",
