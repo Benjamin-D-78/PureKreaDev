@@ -101,28 +101,28 @@ const VerificationMDP = () => {
         formulaire(); // on rappelle la fonction formumaire pour tenter de revalider.
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
 
-        if (!user.email || !user.password) {
-            toast.error("Veuillez remplir tous les champs", { autoClose: 3000 })
-            return;
-        }
+    //     if (!user.email || !user.password) {
+    //         toast.error("Veuillez remplir tous les champs", { autoClose: 3000 })
+    //         return;
+    //     }
 
-        if (!formulaire()) return;
+    //     if (!formulaire()) return;
 
-        if (user.password !== user.repeatPassword) {
-            toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
-            return;
-        }
+    //     if (user.password !== user.repeatPassword) {
+    //         toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
+    //         return;
+    //     }
 
 
-        try {
-            // const response = await axiosInstance.post
-        } catch (error) {
+    //     // try {
+    //     //     // const response = await axiosInstance.post
+    //     // } catch (error) {
 
-        }
-    }
+    //     // }
+    // }
 
 
     if (loading) {
@@ -139,7 +139,7 @@ const VerificationMDP = () => {
                     <div className={coin.boxIn1}>
                         <div className={coin.formIn}>
                             <h1 className={coin.titreCoIn}>Modifiez votre mot de passe</h1>
-                            <form onSubmit={handleSubmit} noValidate>
+                            <form noValidate>
 
                                 <label className={coin.labelCoIn} htmlFor="email-inscription">E-mail : <span className={coin.spanInscription}>*</span></label>
                                 <input
