@@ -175,6 +175,9 @@ export const mdpModifie = async (req, res) => {
         const { token } = req.params;
         // console.log(token)
 
+        // On créé notre "liste noire" de token déjà utilisés.
+        // Seul moyen car Bcrypt est autonome et ne permet pas de suppression de token ou d'invalidité.
+        const revokedTokens = [];
         if (revokedTokens.includes(token)) {
             return res.status(400).json({Message : "Token déjà utilisé ou révoqué."})
         }
