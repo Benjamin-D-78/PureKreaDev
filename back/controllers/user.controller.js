@@ -202,8 +202,13 @@ export const mdpModifie = async (req, res) => {
 
         // On hashe le nouveau MDP
         const hashedPassword = await bcrypt.hash(password, 10); // On hache le nouveau mot de passe
-        password = hashedPassword //On remplace le MDP par sa version hachée.
+        user.password = hashedPassword //On remplace le MDP par sa version hachée.
         await user.save();
+
+        // await userModel.updateOne(
+        //     { email: decoded.email },
+        //     { $set: { password: hashedPassword } }
+        //   );
 
     } catch (error) {
         console.error(error)
