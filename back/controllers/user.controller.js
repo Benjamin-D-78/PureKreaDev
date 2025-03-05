@@ -203,8 +203,9 @@ export const mdpModifie = async (req, res) => {
         }
 
         // On rend la valeur du token à null une fois qu'il a été utilisé
+        console.log("avant : ",user.token)
         user.token = null
-        console.log(user.token)
+        console.log("après : ", user.token)
         await user.save()
 
         // On hashe le nouveau MDP
