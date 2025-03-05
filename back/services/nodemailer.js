@@ -4,7 +4,7 @@ import { env } from "../config/index.js";
 // Configuration SMTP de SendGrid.
 const transporter = nodemailer.createTransport({
   host: 'smtp.sendgrid.net',
-  port: 465, // 465 pour SSL, 587 pour TLS
+  port: 465, // 465 pour SSL, 587 (connexion non chiffrée) pour TLS
   secure: true, // A false pour TLS
   auth: {
     user: env.API_KEY,
