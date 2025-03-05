@@ -170,6 +170,8 @@ export const resetPassword = async (req, res) => {
 export const mdpModifie = async (req, res) => {
     try {
         // On récupère le token depuis l'URL
+        console.log("req.body : ",req.body)
+        console.log("req.params : ",req.params)
         const { token } = req.params;
         console.log(token)
         // On déstructure le req.body pour mieux le réutiliser
@@ -201,7 +203,7 @@ export const mdpModifie = async (req, res) => {
         }
 
         // On rend la valeur du token à null une fois qu'il a été utilisé
-        token = null
+        user.token = null
         await user.save()
 
         // On hashe le nouveau MDP
