@@ -117,6 +117,30 @@ export const renvoieEmail = async (req, res, next) => {
 
 export const mdpOublie = async (req, res) => {
     try {
+        // On vérifie si le token est dans la requête
+        console.log(req.body.recaptchaToken)
+        // console.log(req.body)
+        const recaptchaToken = req.body.recaptchaToken;
+
+        if (!recaptchaToken) {
+            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+        }
+
+        // Vérification du token recaptcha via l'API de Google
+        const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
+            {
+                params: {
+                    secret: env.RECAPTCHA_SECRET_KEY,
+                    response: recaptchaToken,
+                },
+            }
+        );
+
+        // On vérifie la validation recaptcha
+        if (!captcha.data.success) {
+            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+        }
+
         const emailRegexr = RGXR.EMAIL;
         if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
             return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
@@ -175,13 +199,6 @@ export const mdpModifie = async (req, res) => {
         const { token } = req.params;
         // console.log(token)
 
-        // On créé notre "liste noire" de token déjà utilisés.
-        // Seul moyen car Bcrypt est autonome et ne permet pas de suppression de token ou d'invalidité.
-        const revokedTokens = [];
-        if (revokedTokens.includes(token)) {
-            return res.status(400).json({Message : "Token déjà utilisé ou révoqué."})
-        }
-
         // On déstructure le req.body pour mieux le réutiliser
         const { email, password, repeatPassword } = req.body;
 
@@ -210,16 +227,12 @@ export const mdpModifie = async (req, res) => {
             return res.status(404).json({ message: "Utilisateur non trouvé" });
         }
 
-        // On rend la valeur du token à null une fois qu'il a été utilisé
-        // En gros on l'ajoute à la liste des tokens "révoqués".
-        revokedTokens.push(token)
-
         // On hashe le nouveau MDP
         const hashedPassword = await bcrypt.hash(password, 10); // On hache le nouveau mot de passe
         user.password = hashedPassword //On remplace le MDP par sa version hachée.
         await user.save();
 
-        res.status(200).json({Message : "Mot de passe modifié avec succès."})
+        res.status(200).json({ Message: "Mot de passe modifié avec succès." })
 
     } catch (error) {
         console.error(error)

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import axios from "axios"
+import ReCAPTCHA from "react-google-recaptcha";
 import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
 
 // RACCOURCIS
@@ -21,7 +22,6 @@ import monProfil from "../MonProfil/monprofil.module.css"
 import NavBar from '../../components/NavBar/NavBar'
 import Footer from '../../components/Footer/Footer'
 import Accordeon from '../../components/Accordeon/accordeon'
-import ReCAPTCHA from "react-google-recaptcha";
 
 
 const Contact = () => {
