@@ -57,7 +57,7 @@ export const resetMDP = async (user, verifieToken) => {
     html: `
         <p>Veuillez cliquer sur le bouton ci-dessous pour modifier votre mot de passe :</p>
         <br />
-        <a href="${verificationURL}"><button style="background-color: #C6E60F;">Changer mon mot de passe</button></a>
+        <a href="${verificationURL}"><button style="background-color: #C6E60F;">Modifier mon mot de passe</button></a>
         <br />
         <br />
         <p style="color: #FF0000;">Si vous n'êtes pas à l'origine de cette demande, veuillez nous contacter dès que possible :</p>
@@ -65,6 +65,7 @@ export const resetMDP = async (user, verifieToken) => {
           <li style="color: #FF0000;"> Par retour de mail.</li>
           <li style="color: #FF0000;"> Par téléphone, au 0170707070.</li>
         </ul>
+        <br />
         <p>L'équipe PureKréa</p>`,
   };
 

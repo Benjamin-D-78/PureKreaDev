@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import coin from "../Utilisateurs/coin.module.css"
+import notfound from "../NotFound/notfound.module.css"
 import voir from "../../images/Icones/voir.svg"
 import { toast } from 'react-toastify';
 
@@ -155,7 +156,6 @@ const VerificationMDP = () => {
                                     onInput={(event) => {
                                         event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
                                     }} />
-                                <span className={coin.spanAlerte}>Adresse "gmail" recommandée.</span><br />
                                 {error.email && <span className={coin.spanError}>{error.email}</span>}
                                 <br />
 
@@ -233,8 +233,13 @@ const VerificationMDP = () => {
 
                 :
 
-                <div className={coin.divContainerIn}>
-                    <p>Token non valide.</p>
+                <div className={notfound.contientNotFound}>
+                    <div className={notfound.divNotFound}>
+                        <p>Validité du token expirée</p>
+                        <div className={notfound.contientBtnRevenir}>
+                            <Link to="/reinitialisation"><button className={notfound.btnRevenir}>Demander un nouveau token</button></Link>
+                        </div>
+                    </div>
                 </div>
             }
             <Footer />
