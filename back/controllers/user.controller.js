@@ -171,6 +171,7 @@ export const mdpModifie = async (req, res) => {
     try {
         // On récupère le token depuis l'URL
         const { token } = req.params;
+        
         // On déstructure le req.body pour mieux le réutiliser
         const { email, password, repeatPassword } = req.body;
 
@@ -202,6 +203,7 @@ export const mdpModifie = async (req, res) => {
         // On hashe le nouveau MDP
         const hashedPassword = await bcrypt.hash(password, 10); // On hache le nouveau mot de passe
         password = hashedPassword //On remplace le MDP par sa version hachée.
+        await user.save();
 
     } catch (error) {
         console.error(error)

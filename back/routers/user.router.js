@@ -13,7 +13,7 @@ router.put("/update/:id", Token, upUser)
 router.put("/verification/:token", verifyEmail)
 router.get("/verificationmdp/:token", resetPassword)
 router.post("/reset", mdpOublie)
-router.post("/modificationmdp", mdpModifie)
+router.post("/modificationmdp/:token", mdpModifie)
 router.post("/verification/bis", renvoieEmail)
 router.delete("/delete/:id", Token, deleteUser)
 

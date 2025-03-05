@@ -119,9 +119,9 @@ const VerificationMDP = () => {
         }
 
         try {
-            const response = await axiosInstance.post(URL.USER_MODIFICATION_PASSWORD)
+            const response = await axiosInstance.post(`${URL.USER_MODIFICATION_PASSWORD}/${token}`, user)
             console.log(response.data)
-            if (response.status === 201) {
+            if (response.status === 200) {
                 navigate("/connexion")
                 toast.success("Mot de passe modifié avec succès.")
             }
