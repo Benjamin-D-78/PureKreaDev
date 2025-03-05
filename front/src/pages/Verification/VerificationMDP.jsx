@@ -127,14 +127,14 @@ const VerificationMDP = () => {
 
 
     if (loading) {
-        return <p>Vérification du token...</p>;
+        return <p className='text-center'>Vérification du token...</p>;
     }
 
     return (
         <div>
-            <NavBar />
+            {tokenValide && <NavBar />}
 
-            {tokenValide ?
+            {tokenValide ? (
 
                 <div className={coin.divContainerIn}>
                     <div className={coin.boxIn1}>
@@ -231,9 +231,9 @@ const VerificationMDP = () => {
                     </div>
                 </div>
 
-                :
+            ) : (
 
-                <div>
+                <div className={notfound.contientNotFound}>
                     <div className={notfound.divNotFound}>
                         <p>Token expiré</p>
                         <div className={notfound.contientBtnRevenir}>
@@ -241,8 +241,10 @@ const VerificationMDP = () => {
                         </div>
                     </div>
                 </div>
+                
+            )
             }
-            <Footer />
+            {tokenValide && <Footer />}
         </div>
     )
 }

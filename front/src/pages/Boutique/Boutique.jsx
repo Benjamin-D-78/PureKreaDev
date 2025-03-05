@@ -154,7 +154,7 @@ const Boutique = () => {
 
 
     if (error) return <> <p>{error}</p> </>
-    if (loading) return <p className='text-center'>En cours de chargement</p>
+    if (loading) return <p className="text-center">En cours de chargement</p>
 
 
     return (
