@@ -102,6 +102,7 @@ const VerificationMDP = () => {
         formulaire(); // on rappelle la fonction formumaire pour tenter de revalider.
     }
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -117,12 +118,16 @@ const VerificationMDP = () => {
             return;
         }
 
-
-        // try {
-        //     // const response = await axiosInstance.post
-        // } catch (error) {
-
-        // }
+        try {
+            const response = await axiosInstance.post(URL.USER_MODIFICATION_PASSWORD)
+            console.log(response.data)
+            if (response.status === 201) {
+                navigate("/connexion")
+                toast.success("Mot de passe modifié avec succès.")
+            }
+        } catch (error) {
+            toast.error("Echec de la modification du mot de passe.")
+        }
     }
 
 
@@ -241,7 +246,7 @@ const VerificationMDP = () => {
                         </div>
                     </div>
                 </div>
-                
+
             )
             }
             {tokenValide && <Footer />}

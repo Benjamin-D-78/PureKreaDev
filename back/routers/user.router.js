@@ -1,6 +1,6 @@
 import express from "express";
 import { Token } from "../middlewares/auth.js";
-import { verifyEmail, mdpOublie, resetPassword } from "../controllers/user.controller.js";
+import { verifyEmail, mdpOublie, resetPassword, mdpModifie } from "../controllers/user.controller.js";
 import { inscription, connexion, allUsers, userID, upUser, deleteUser, renvoieEmail } from "../controllers/user.controller.js";
 
 const router = express.Router()
@@ -13,6 +13,7 @@ router.put("/update/:id", Token, upUser)
 router.put("/verification/:token", verifyEmail)
 router.get("/verificationmdp/:token", resetPassword)
 router.post("/reset", mdpOublie)
+router.post("/modificationmdp", mdpModifie)
 router.post("/verification/bis", renvoieEmail)
 router.delete("/delete/:id", Token, deleteUser)
 

@@ -153,17 +153,59 @@ export const resetPassword = async (req, res) => {
         // On récupère l'utilisateur à partir de l'email
         const user = await userModel.findOne({ email: decoded.email });
         if (!user) {
-            return res.status(400).json({Message: "Utilisateur non trouvé"});
+            return res.status(400).json({ Message: "Utilisateur non trouvé" });
         }
         if (!user.isVerified) {
-            return res.status(400).json({Message: "Email non validé."});
+            return res.status(400).json({ Message: "Email non validé." });
         }
 
-        res.status(200).json({Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe", user});
+        res.status(200).json({ Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe", user });
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({Message : "Erreur lors du décodage du token : ", error})
+        res.status(500).json({ Message: "Echec lors du décodage du token : ", error })
+    }
+}
+
+export const mdpModifie = async (req, res) => {
+    try {
+        // On récupère le token depuis l'URL
+        const { token } = req.params;
+        // On déstructure le req.body pour mieux le réutiliser
+        const { email, password, repeatPassword } = req.body;
+
+        if (repeatPassword !== password) {
+            return res.status(400).json({ message: "Les mots de passe ne correspondent pas" });
+        }
+
+        const emailRegexr = RGXR.EMAIL;
+        if (!emailRegexr.test(email) || email.length < 10 || email.length > 60) {
+            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
+        }
+        const passwordRegexr = RGXR.PASSWORD;
+        if (!passwordRegexr.test(password) || password.length < 8 || password.length > 40) {
+            return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
+        }
+        const repeatPasswordRegexr = RGXR.PASSWORD;
+        if (!repeatPasswordRegexr.test(repeatPassword) || repeatPassword.length < 8 || repeatPassword.length > 40) {
+            return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
+        }
+
+        // On vérifie si le token est valide
+        const decoded = jwt.verify(token, env.TOKEN);
+        const user = await userModel.findOne({ email: decoded.email });
+
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        // On hashe le nouveau MDP
+        const hashedPassword = await bcrypt.hash(password, 10); // On hache le nouveau mot de passe
+        password = hashedPassword //On remplace le MDP par sa version hachée.
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ Message: "Echec de la modification du mot de passe." })
     }
 }
 

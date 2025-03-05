@@ -9,6 +9,7 @@ export const URL = {
     USER_DELETE: "/api/user/delete",
     USER_RESET: "/api/user/reset",
     USER_PASSWORD: "/api/user/verificationmdp",
+    USER_MODIFICATION_PASSWORD: "/api/user/modificationmdp",
 
     // EMAIL
     EMAIL_VERIFICATION: "/api/user/verification",
