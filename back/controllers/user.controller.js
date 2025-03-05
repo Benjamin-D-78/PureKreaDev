@@ -200,15 +200,14 @@ export const mdpModifie = async (req, res) => {
             return res.status(404).json({ message: "Utilisateur non trouvé" });
         }
 
+        // On rend la valeur du token à null une fois qu'il a été utilisé
+        user.token = null
+        await user.save()
+
         // On hashe le nouveau MDP
         const hashedPassword = await bcrypt.hash(password, 10); // On hache le nouveau mot de passe
         user.password = hashedPassword //On remplace le MDP par sa version hachée.
         await user.save();
-
-        // await userModel.updateOne(
-        //     { email: decoded.email },
-        //     { $set: { password: hashedPassword } }
-        //   );
 
         res.status(200).json({Message : "Mot de passe modifié avec succès."})
 
