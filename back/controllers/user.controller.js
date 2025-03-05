@@ -201,7 +201,7 @@ export const mdpModifie = async (req, res) => {
         }
 
         // On rend la valeur du token à null une fois qu'il a été utilisé
-        user.token = null
+        token = null
         await user.save()
 
         // On hashe le nouveau MDP
