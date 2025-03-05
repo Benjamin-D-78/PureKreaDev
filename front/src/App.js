@@ -19,6 +19,7 @@ import NousConnaitre from './pages/NousConnaitre/NousConnaitre';
 import PrendreRendezVous from './pages/PrendreRendez-Vous/PrendreRendezVous';
 import ModaleCookies from './components/ModaleCookies/ModaleCookies';
 import Reset from './pages/Utilisateurs/Reset';
+import VerificationMDP from './pages/Verification/VerificationMDP';
 
 import Layout from './components/Layout';
 import RoutesPubliques from './components/RoutesPubliques';
@@ -48,6 +49,7 @@ function App() {
           <Route index element={<Boutique />} />  {/* Page principale */}
           <Route path="/details/:id" element={<Details />} />
           <Route path="/verification/:token" element={<VerificationEmail />} />
+          <Route path="/reset/:token" element={<VerificationMDP />} />
           <Route path="/renvoi" element={<Renvoi />} />
           <Route path="/reinitialisation" element={<Reset />} />
           <Route path="/contact" element={<Contact />} />

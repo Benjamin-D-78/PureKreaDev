@@ -8,6 +8,7 @@ export const URL = {
     USER_UPDATE: "/api/user/update",
     USER_DELETE: "/api/user/delete",
     USER_RESET: "/api/user/reset",
+    USER_PASSWORD: "/api/user/verificationmdp",
 
     // EMAIL
     EMAIL_VERIFICATION: "/api/user/verification",

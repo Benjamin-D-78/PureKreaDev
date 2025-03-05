@@ -144,6 +144,29 @@ export const mdpOublie = async (req, res) => {
     }
 }
 
+export const resetPassword = async (req, res) => {
+    try {
+        // On récupère le token depuis l'URL
+        const { token } = req.params;
+        // On vérifie si le token est valide
+        const decoded = jwt.verify(token, env.TOKEN);
+        // On récupère l'utilisateur à partir de l'email
+        const user = await userModel.findOne({ email: decoded.email });
+        if (!user) {
+            return res.status(400).json({Message: "Utilisateur non trouvé"});
+        }
+        if (!user.isVerified) {
+            return res.status(400).json({Message: "Email non validé."});
+        }
+
+        res.status(200).json({Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe", user});
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({Message : "Erreur lors du décodage du token : ", error})
+    }
+}
+
 // CONNEXION
 export const connexion = async (req, res, next) => {
     try {

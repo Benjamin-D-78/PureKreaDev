@@ -61,9 +61,9 @@ export const resetMDP = async (user, verifieToken) => {
         <br />
         <br />
         <p style="color: #FF0000;">Si vous n'êtes pas à l'origine de cette demande, veuillez nous contacter dès que possible :</p>
-        <ul> - 
-          <li style="color: #FF0000;"> - Par retour de mail.</li>
-          <li style="color: #FF0000;"> - Par téléphone, au 0170707070.</li>
+        <ul>
+          <li style="color: #FF0000;"> Par retour de mail.</li>
+          <li style="color: #FF0000;"> Par téléphone, au 0170707070.</li>
         </ul>
         <p>L'équipe PureKréa</p>`,
   };

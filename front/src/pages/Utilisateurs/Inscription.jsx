@@ -103,13 +103,13 @@ const Inscription = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        if (!formulaire()) return;
-
+        
         if (!user.lastname || !user.firstname || !user.email || !user.password) {
             toast.error("Veuillez remplir tous les champs", { autoClose: 3000 })
             return;
         }
+        
+        if (!formulaire()) return;
 
         if (!recaptchaToken) {
             toast.error("Le CAPTCHA doit être validé.")
