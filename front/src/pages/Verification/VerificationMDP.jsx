@@ -18,7 +18,6 @@ const VerificationMDP = () => {
 
     const [loading, setLoading] = useState(true);
     const [tokenValide, setTokenValide] = useState(false);
-    // const [message, setMessage] = useState([]);
     const { token } = useParams();
     const navigate = useNavigate()
 
