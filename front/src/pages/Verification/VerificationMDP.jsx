@@ -233,11 +233,11 @@ const VerificationMDP = () => {
 
                 :
 
-                <div className={notfound.contientNotFound}>
+                <div>
                     <div className={notfound.divNotFound}>
-                        <p>Validité du token expirée</p>
+                        <p>Token expiré</p>
                         <div className={notfound.contientBtnRevenir}>
-                            <Link to="/reinitialisation"><button className={notfound.btnRevenir}>Demander un nouveau token</button></Link>
+                            <Link to="/reinitialisation"><button className={notfound.btnRevenir}>Nouveau token</button></Link>
                         </div>
                     </div>
                 </div>
