@@ -171,7 +171,7 @@ export const mdpModifie = async (req, res) => {
     try {
         // On récupère le token depuis l'URL
         const { token } = req.params;
-        
+        console.log(token)
         // On déstructure le req.body pour mieux le réutiliser
         const { email, password, repeatPassword } = req.body;
 
