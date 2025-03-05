@@ -170,10 +170,15 @@ export const resetPassword = async (req, res) => {
 export const mdpModifie = async (req, res) => {
     try {
         // On récupère le token depuis l'URL
-        console.log("req.body : ",req.body)
-        console.log("req.params : ",req.params)
+        // console.log("req.body : ",req.body)
+        // console.log("req.params : ",req.params)
         const { token } = req.params;
-        console.log(token)
+        // console.log(token)
+
+        if (revokedTokens.includes(token)) {
+            return res.status(400).json({Message : "Token déjà utilisé ou révoqué."})
+        }
+
         // On déstructure le req.body pour mieux le réutiliser
         const { email, password, repeatPassword } = req.body;
 
@@ -203,10 +208,8 @@ export const mdpModifie = async (req, res) => {
         }
 
         // On rend la valeur du token à null une fois qu'il a été utilisé
-        console.log("avant : ",user.token)
-        user.token = null
-        console.log("après : ", user.token)
-        await user.save()
+        // En gros on l'ajoute à la liste des tokens "révoqués".
+        revokedTokens.push(token)
 
         // On hashe le nouveau MDP
         const hashedPassword = await bcrypt.hash(password, 10); // On hache le nouveau mot de passe
