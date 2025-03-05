@@ -45,6 +45,7 @@ const VerificationMDP = () => {
             if (URL.USER_PASSWORD) {
                 try {
                     const response = await axiosInstance.get(`${URL.USER_PASSWORD}/${token}`)
+                    console.log(response.data)
                     if (response.status === 200) {
                         setTokenValide(true)
                         setLoading(false)

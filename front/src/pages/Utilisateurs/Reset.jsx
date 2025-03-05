@@ -16,8 +16,7 @@ import { URL } from "../../utils/Constantes";
 const Reset = () => {
 
     const [email, setEmail] = useState("");
-    const [responseMessage, setReponseMessage] = useState("");
-
+    // const [responseMessage, setReponseMessage] = useState("");
     const [user, setUser] = useState({
         email: ""
     })
@@ -54,7 +53,7 @@ const Reset = () => {
         if (URL.USER_RESET) {
             try {
                 const response = await axiosInstance.post(URL.USER_RESET, { email })
-                setReponseMessage(response.data.message)
+                // setReponseMessage(response.data.message)
                 toast.success("Email envoyé avec succès.")
                 setEmail("");
 
