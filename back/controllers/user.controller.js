@@ -210,6 +210,8 @@ export const mdpModifie = async (req, res) => {
         //     { $set: { password: hashedPassword } }
         //   );
 
+        res.status(200).json({Message : "Mot de passe modifié avec succès."})
+
     } catch (error) {
         console.error(error)
         res.status(500).json({ Message: "Echec de la modification du mot de passe." })

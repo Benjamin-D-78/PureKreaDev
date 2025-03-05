@@ -56,6 +56,9 @@ const Reset = () => {
                 const response = await axiosInstance.post(URL.USER_RESET, { email })
                 setReponseMessage(response.data.message)
                 toast.success("Email envoyé avec succès.")
+                setUser({
+                    email: ""
+                })
 
             } catch (error) {
                 if (error.response && error.response.status === 400) {
