@@ -3,8 +3,6 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import { env } from "./config/index.js"
-// import Stripe from "stripe"
-
 
 // ROUTAGE
 import userRoutes from "./routers/user.router.js"
