@@ -76,8 +76,9 @@ const Messages = () => {
                         <th className={boutique_dashboard.thCache}>E-mail</th>
                         <th>Téléphone</th>
                         <th className={boutique_dashboard.thCache}>Préférence</th>
-                        <th >Motif</th>
+                        <th>Motif</th>
                         <th className={boutique_dashboard.thCache}>Message</th>
+                        <th>Date</th>
                         <th className={boutique_dashboard.thCache}>Statut</th>
                         <th className={boutique_dashboard.thButton}><button className={boutique_dashboard.refreshItems} onClick={allMessages}>Raffraîchir</button></th>
                     </tr>
@@ -92,6 +93,7 @@ const Messages = () => {
                             <td className={boutique_dashboard.autresTDcache}>{message.preference}</td>
                             <td className={boutique_dashboard.autresTD}>{message.motif}</td>
                             <td className={boutique_dashboard.autresTDcacheContent}>{message.content}</td>
+                            <td className={boutique_dashboard.autresTD}>{new Date(message.date).toLocaleDateString()}</td>
                             <td className={boutique_dashboard.autresTDcache}>
                                 <select value={message.statut} onChange={(event) => updateStatut(message._id, event.target.value)}>
                                     <option value={message.statut}>{message.statut}</option>
