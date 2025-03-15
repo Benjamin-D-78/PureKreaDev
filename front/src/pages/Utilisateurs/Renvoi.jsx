@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import coin from "./coin.module.css"
 import axios from "axios"
 import { toast } from 'react-toastify'
+import ReCAPTCHA from 'react-google-recaptcha'
 
-// EXTERNALISATION
+// CENTRALISATION
+import axiosInstance from '../../utils/axiosInstance'
+import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
 import { URL } from '../../utils/Constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
-import axiosInstance from '../../utils/axiosInstance'
 
 // COMPOSANTS
 import NavBar from '../../components/NavBar/NavBar'
@@ -15,6 +17,7 @@ import Footer from '../../components/Footer/Footer'
 
 const Renvoi = () => {
 
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
     const [email, setEmail] = useState("");
     const [responseMessage, setReponseMessage] = useState("");
 
@@ -42,6 +45,14 @@ const Renvoi = () => {
         return isValid;
     }
 
+
+    // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
+    //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
+    const handleRecaptcha = (value) => {
+        setRecaptchaToken(value);
+    };
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -50,11 +61,16 @@ const Renvoi = () => {
             return;
         }
 
+        if (!recaptchaToken) {
+            toast.error("Le CAPTCHA doit être validé.")
+            return;
+        }
+
         if (!formulaire()) return;
 
         if (URL.EMAIL_VERIFICATION_BIS) {
             try {
-                const response = await axiosInstance.post(URL.EMAIL_VERIFICATION_BIS, { email })
+                const response = await axiosInstance.post(URL.EMAIL_VERIFICATION_BIS, { email, recaptchaToken })
                 setReponseMessage(response.data.message)
                 toast.success("Email envoyé avec succès, pensez à le valider pour pouvoir vous connecter.")
 
@@ -99,6 +115,14 @@ const Renvoi = () => {
                                     event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
                                 }} />
                             <br />
+                            <div className={coin.divCaptcha}>
+                                <ReCAPTCHA
+                                    className='g-recaptcha'
+                                    sitekey={RECAPTCHA_PUBLIC_KEY}
+                                    action="renvoie" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
+                                    onChange={handleRecaptcha}
+                                />
+                            </div>
                             <div className={coin.contientSubmit}>
                                 <button className={coin.submitCoIn}>Envoyer</button>
                                 <Link className={coin.inscription} to="/connexion"> <button className={coin.alternatif}>Connexion</button></Link>
