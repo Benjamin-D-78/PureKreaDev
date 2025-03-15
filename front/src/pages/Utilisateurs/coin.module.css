@@ -14,7 +14,7 @@
     align-items: center;}
 
 .boxIn1 {
-    width: 80%;
+    width: 90%;
     margin: auto;}
 
 
@@ -71,10 +71,6 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-
-/* .recaptcha{
-    width: 80%;
-} */
 
 .contientSubmit{
     display: flex;
