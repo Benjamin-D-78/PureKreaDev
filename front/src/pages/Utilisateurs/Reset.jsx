@@ -116,7 +116,7 @@ const Reset = () => {
                             <br />
                             <div className={coin.divCaptcha}>
                                 <ReCAPTCHA
-                                    className={coin.recaptcha}
+                                    className='g-recaptcha w-4/5'
                                     sitekey={RECAPTCHA_PUBLIC_KEY}
                                     action="reset" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
                                     onChange={handleRecaptcha}
