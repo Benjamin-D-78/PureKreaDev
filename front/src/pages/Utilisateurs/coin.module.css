@@ -67,10 +67,13 @@
 .divCaptcha{
     display: flex;
     justify-content: center;
-    width: 80%;
     margin: auto;
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+.recaptcha{
+    width: 80%;
 }
 
 .contientSubmit{
