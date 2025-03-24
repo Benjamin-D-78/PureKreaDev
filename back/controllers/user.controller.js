@@ -53,6 +53,7 @@ export const inscription = async (req, res, next) => {
             return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
         }
 
+        // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé. Plus il y en a, plus c'est lent et donc mieux c'est.
         const hashedMDP = await bcrypt.hash(req.body.password, 10)
         const user = await userModel.create({ ...req.body, password: hashedMDP, isVerified: false });
 
@@ -413,6 +414,7 @@ export const upUser = async (req, res) => {
             }
 
             // On hashe le nouveau MDP
+            // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé. Plus il y en a, plus c'est lent et donc mieux c'est.
             const hashedPassword = await bcrypt.hash(req.body.password, 10); // On hache le nouveau mot de passe
             req.body.password = hashedPassword //On remplace le MDP par sa version hachée.
         }
@@ -430,7 +432,7 @@ export const upUser = async (req, res) => {
 
 // DELETE USER
 export const deleteUser = async (req, res) => {
-    try { // On vérifie si l'utilisateur existe :
+    try { // On vérifie si l'utilisateur existe
         const response = await userModel.findById(req.params.id);
 
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });

@@ -122,14 +122,12 @@ const Contact = () => {
             toast.error("Certains des champs obligatoires sont vides.")
             return;
         }
-
         if (!formulaire()) return;
 
         if (!message.verification) {
             toast.error("Vous devez accepter d'être recontacté pour envoyer votre message.")
             return;
         }
-
         if (!recaptchaToken) {
             toast.error("Le CAPTCHA doit être validé.")
             return;
