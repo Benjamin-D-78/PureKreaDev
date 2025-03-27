@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
 import { toast } from "react-toastify";
 import { URL } from "../utils/Constantes";
 import axiosInstance from "../utils/axiosInstance";
@@ -12,6 +11,16 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(null); // On stocke les infos de l'utilisateur connecté
     const navigate = useNavigate();
 
+    const connexion = async () => {
+        setIsLoading(true)
+        try {
+            const authData = localStorage.getItem("auth") // On récupère les données de l'utilisateur depuis le localStorage
+            setAuth(authData ? JSON.parse(authData) : null)
+            setIsLoading(false)
+        } catch (error) {
+            console.log(error.message)
+        }
+    };
     useEffect(() => { connexion() }, [])
 
     const dataFormConnexion = async (dataForm) => {
@@ -20,6 +29,7 @@ export const AuthProvider = ({ children }) => {
             try {
                 const { data, status } = await axiosInstance.post(URL.USER_CONNEXION, dataForm, { withCredentials: true })
                 if (status === 200) {
+                    // JSON.Stringify car le localStorage ne peux stocker que des chaînes de caractères.
                     localStorage.setItem("auth", JSON.stringify(data));
 
                     setAuth(data);
@@ -48,16 +58,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const connexion = async () => {
-        setIsLoading(true)
-        try {
-            const authData = localStorage.getItem("auth") // On récupère les données de l'utilisateur depuis le localStorage
-            setAuth(authData ? JSON.parse(authData) : null)
-            setIsLoading(false)
-        } catch (error) {
-            console.log(error.message)
-        }
-    };
+
 
     const deconnexion = () => {
         setIsLoading(true)
@@ -69,7 +70,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ dataFormConnexion, auth, setAuth, deconnexion, isLoading }}> {/* On fournit les données au composant enfant. */}
+        <AuthContext.Provider value={{ dataFormConnexion, auth, setAuth, deconnexion, isLoading }}>
+        {/* On fournit les données au composant enfant. */}
             {children}
         </AuthContext.Provider>
     );
