@@ -154,6 +154,7 @@ const Inscription = () => {
                                 type="text"
                                 name='firstname'
                                 id='firstname-inscription'
+                                autocomplete="username" // Accessibilité
                                 onChange={handleChange}
                                 onBlur={checkInput}
                                 minLength={2}
@@ -172,6 +173,7 @@ const Inscription = () => {
                                 type="text"
                                 name='lastname'
                                 id='lastname-inscription'
+                                autocomplete="username" // Accessibilité
                                 onChange={handleChange}
                                 onBlur={checkInput}
                                 minLength={2}
@@ -190,6 +192,7 @@ const Inscription = () => {
                                 type="text"
                                 name='email'
                                 id='email-inscription'
+                                autocomplete="username" // Accessibilité
                                 onChange={handleChange}
                                 onBlur={checkInput}
                                 minLength={8}
