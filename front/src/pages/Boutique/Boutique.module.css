@@ -31,7 +31,7 @@
 
 /* Entête */
 .blocEntete1 {
-    background-image: url("../../images/NavBar/fond_NavBar.jpg");}
+    background-image: url("../../images/NavBar/fond_NavBar.avif");}
 
 .pStock {
     font-family: "Marko One", Arial, Helvetica, sans-serif;
@@ -280,7 +280,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 4rem;
-    background-image: url("../../images/NavBar/fond_NavBar.jpg");
+    background-image: url("../../images/NavBar/fond_NavBar.avif");
     background-size: cover; /* On recouvre entièrement le texte avec l'image */
     background-clip: text; /* On applique l'image au texte */
     color: transparent; /* On rend le texte transparent pour voir que l'image */

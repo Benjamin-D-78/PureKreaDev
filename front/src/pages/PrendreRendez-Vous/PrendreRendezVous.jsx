@@ -6,7 +6,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import Footer from '../../components/Footer/Footer'
 
 // ICONES
-import ciseaux from "../../images/Sur-mesure.png"
+import ciseaux from "../../images/Sur-mesure.avif"
 
 
 const PrendreRendezVous = () => {
