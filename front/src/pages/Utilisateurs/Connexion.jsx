@@ -100,6 +100,7 @@ const Connexion = () => {
                     type={voirA ? "text" : "password"}
                     name='password'
                     id='password-connexion'
+                    autocomplete="current-password"
                     className={coin.inputCoIn}
                     onChange={handleChange}
                     minLength={8}

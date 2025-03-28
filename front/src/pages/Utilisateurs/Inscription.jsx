@@ -210,6 +210,7 @@ const Inscription = () => {
                                         type={voirA ? "text" : "password"}
                                         name='password'
                                         id='password-inscription'
+                                        autocomplete="new-password" // Accessibilité
                                         onChange={handleChange}
                                         onBlur={checkInput}
                                         minLength={8}
@@ -233,6 +234,7 @@ const Inscription = () => {
                                         type={voirB ? "text" : "password"}
                                         name='repeatPassword'
                                         id='repeatPassword-inscription'
+                                        autocomplete="new-password" // Accessibilité
                                         onChange={handleChange}
                                         onBlur={checkInput}
                                         minLength={8}
