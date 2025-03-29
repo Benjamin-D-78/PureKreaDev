@@ -24,6 +24,13 @@ mongoose
     .then(() => console.log("Connexion à MongoDB réussie !"))
     .catch(error => console.log("Echec de la connexion à MongoDB : ", error))
 
+// Configuration des en-têtes de sécurité (Content-Security-Policy)
+// ça sert à définir quelles ressources externes (scripts, images, styles, iframes, etc.) un navigateur est autorisé à charger et à exécuter.
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://js.stripe.com https://www.google.com https://www.gstatic.com https://assets.calendly.com; frame-ancestors 'self' https://checkout.stripe.com https://www.google.com https://calendly.com; frame-src 'self' https://calendly.com;");
+    next();
+});
+
 // MIDDLEWARE D'EXPRESS
 app.use(cors({
     origin: "https://pure-krea-benjamind.vercel.app",
