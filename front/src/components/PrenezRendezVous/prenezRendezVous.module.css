@@ -11,32 +11,23 @@
     .pCallToAction{
         font-family: "Marko One", Arial, Helvetica, sans-serif;
         color: white;
-        /* padding: 2rem 2rem 0 2rem; */
         text-align: center;
-        /* font-size: 1.6rem; */
-    }
-
-    .divBtnCallToAction{
-        display: flex;
-        justify-content: center;
-        padding: 0 3rem 2rem 3rem;
-    }
-
-    .divBtnCallToAction a{
-        width: 90%;
-        color: black;
     }
 
     .btnCallToAction{
-        width: 100%;
+        width: 90%;
         height: 3rem;
+        line-height: 3rem;
         margin-top: 2rem;
+        padding: 0 3rem 2rem 3rem;
         background-color: #FFFFF0;
+        color: black;
+        text-align: center;
+        text-decoration: none;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1.4rem;
         font-weight: 600;
         border-radius: 1.5rem;
-        cursor: pointer;
         white-space: nowrap; /* On empêche le texte de se couper en plusieurs lignes */
         overflow: hidden; /* Ensuite on masque le texte qui dépasse */
         text-overflow: ellipsis; /* Et on affiche des points de suspension si le texte dépasse */
