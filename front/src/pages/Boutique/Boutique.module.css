@@ -38,7 +38,8 @@
 
 /* Entête */
 .blocEntete1 {
-    background-image: url("../../images/NavBar/fond_NavBar.avif");
+    /* background-image: url("../../images/NavBar/fond_NavBar.avif"); */
+    background-color: #7A1618;
 }
 
 .pStock {
@@ -310,7 +311,8 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 4rem;
-    background-image: url("../../images/NavBar/fond_NavBar.avif");
+    background-color: #7A1618;
+    /* background-image: url("../../images/NavBar/fond_NavBar.avif"); */
     background-size: cover;
     /* On recouvre entièrement le texte avec l'image */
     background-clip: text;
