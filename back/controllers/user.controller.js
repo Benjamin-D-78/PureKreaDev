@@ -368,7 +368,7 @@ export const upUser = async (req, res) => {
         }
         if (req.body.phone) {
             const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(req.body.phone) || req.body.phone.length != 10) {
+            if (!phoneRegexr.test(req.body.phone) || req.body.phone <0 || req.body.phone >9999999999) {
                 return res.status(400).json({ Message: "10 chiffres attendus." })
             }
         }
@@ -380,7 +380,7 @@ export const upUser = async (req, res) => {
         }
         if (req.body.postal) {
             const postalRegexr = RGXR.POSTAL;
-            if (!postalRegexr.test(req.body.postal) || req.body.postal.length != 5) {
+            if (!postalRegexr.test(req.body.postal) || req.body.postal < 1 || req.body.postal > 99999) {
                 return res.status(400).json({ Message: "5 chiffres attendus." })
             }
         }
