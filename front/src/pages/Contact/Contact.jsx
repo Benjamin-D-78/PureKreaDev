@@ -288,7 +288,7 @@ const Contact = () => {
                                     <div className={contact.contientLabelInput}>
                                         <label htmlFor="phone">Téléphone</label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             name='phone'
                                             value={message.phone}
                                             onChange={handleChange}
