@@ -180,7 +180,7 @@ const Boutique = () => {
                             <img className={boutique.refresh} onClick={resetFiltre} src={raffraichir} alt="réinitialisation des filtres" />
                             {/* </div> */}
                             {/* sr-only est principalement utilisé par bootstrap, ça sert à mettre le label spécifique aux normes d'accessibilité, tout en le rendant invisible pour les autres utilisateurs. Utile quand on a pas assez de place, tout en permettant d'être utilisé par technologies d'assistance. */}
-                            <label for="width" className="sr-only">Choisir la largeur :</label>
+                            <label for="width" className="sr-only">Choisissez la largeur :</label>
                             <select
                                 className={boutique.selectEntete}
                                 name="width"
@@ -192,6 +192,7 @@ const Boutique = () => {
                                     <option key={largeur} value={largeur}>{largeur} cm</option>
                                 ))}
                             </select>
+                            <label for="color" className="sr-only">Choisissez la couleur :</label>
                             <select
                                 className={boutique.selectEntete}
                                 name="color"
@@ -204,6 +205,7 @@ const Boutique = () => {
                                 ))}
 
                             </select>
+                            <label for="price" className="sr-only">Choisissez la tranche de prix :</label>
                             <select
                                 className={boutique.selectEntete}
                                 name="price"
@@ -215,6 +217,7 @@ const Boutique = () => {
                                     <option key={pri} value={pri}>{pri} €</option>
                                 ))}
                             </select>
+                            <label for="category" className="sr-only">Choisissez la catégorie :</label>
                             <select
                                 className={boutique.selectEntete}
                                 name="category"
