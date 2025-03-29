@@ -6,7 +6,7 @@ const PrenezRendezVous = () => {
         <div className={calltoaction.contientCallToAction}>
             <p className={calltoaction.pCallToAction}>Laissez-vous tenter par le sur-mesure...</p>
             {/* <div className={calltoaction.divBtnCallToAction}> */}
-                <Link to="/rendez-vous">Prenez rendez-vous</Link>
+                <Link className={calltoaction.linkCallToAction} to="/rendez-vous">Prenez rendez-vous</Link>
             {/* </div> */}
         </div>
     )
