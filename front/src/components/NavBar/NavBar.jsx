@@ -23,8 +23,7 @@ export default function NavBar() {
             <header>
                 <nav className={navbar.nav}>
                     <div className={navbar.divImage}>
-                        <NavLink to="/"><img className={navbar.img} src={logo} alt="Logo 'PureKréNavLink'" />
-                        </NavLink>
+                        <NavLink to="/"><img className={navbar.img} src={logo} alt="Logo 'PureKréNavLink'" /></NavLink>
                     </div>
                     <div className={navbar.navContainer}>
                         <div className={`${montrerMenu ? navbar.montre : navbar.cache}`}>
@@ -35,9 +34,9 @@ export default function NavBar() {
                                 <NavLink className={navbar.a} to="/contact">Contact</NavLink>
 
                                 {auth ?
-                                        <NavLink className={navbar.deconnexion} onClick={deconnexion}>Déconnexion</NavLink>
+                                    <NavLink className={navbar.deconnexion} onClick={deconnexion}>Déconnexion</NavLink>
                                     :
-                                        <NavLink className={navbar.deconnexion} to="/connexion">Connexion</NavLink>
+                                    <NavLink className={navbar.deconnexion} to="/connexion">Connexion</NavLink>
                                 }
                             </div>
                         </div>

@@ -116,18 +116,20 @@ header{
     .menuBurger, .menuClose{
         display: none;}
 
-    .ul{
+    .divListe{
         /* background-color: antiquewhite; */
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;}
 
-    .a{color: white;}
+    .a{
+        color: white;
+        margin: 0 2rem 0rem 1rem;}
     .a:hover{
         text-decoration: none;
         color: orange;}
 
     .deconnexion{display: none;}
 
-    .navbarLI{margin: 0 2rem 0rem 1rem;}
+    /* .navbarLI{margin: 0 2rem 0rem 1rem;} */
  }
