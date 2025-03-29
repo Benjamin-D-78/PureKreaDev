@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/AuthContext'
 import navbar from "./navbar.module.css"
 
 // ICONES
-import logo from "../../images/NavBar/logo.png"
+import logo from "../../images/NavBar/logo.avif"
 import hamburger from "../../images/NavBar/hamburger.svg"
 import close from "../../images/NavBar/close.svg"
 
@@ -23,7 +23,7 @@ export default function NavBar() {
             <header>
                 <nav className={navbar.nav}>
                     <div className={navbar.divImage}>
-                        <NavLink to="/"><img className={navbar.img} src={logo} alt="Logo 'PureKréNavLink'" /></NavLink>
+                        <NavLink to="/"><img className={navbar.img} src={logo} alt="Logo de l'entreprise PureKréa" /></NavLink>
                     </div>
                     <div className={navbar.navContainer}>
                         <div className={`${montrerMenu ? navbar.montre : navbar.cache}`}>
