@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 
 // CONTEXT
 import { AuthContext } from '../../context/AuthContext'
@@ -17,13 +17,14 @@ export default function NavBar() {
 
     const [montrerMenu, setMontrerMenu] = useState(false)
     const { auth, deconnexion } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     return (
         <div className={navbar.contientHeader}>
             <header>
                 <nav className={navbar.nav}>
                     <div className={navbar.divImage}>
-                        <NavLink to="/"><img className={navbar.img} src={logo} alt="Logo de l'entreprise PureKréa" /></NavLink>
+                        <img className={navbar.img} src={logo} alt="Logo de l'entreprise PureKréa" onClick={() => navigate("/")} />
                     </div>
                     <div className={navbar.navContainer}>
                         <div className={`${montrerMenu ? navbar.montre : navbar.cache}`}>
