@@ -87,7 +87,8 @@ footer{
 
     .btnEnvoiFormNewsletter{
         color: white;
-        background-image: url("../../images/NavBar/fond_NavBar.avif");
+        background-color: #7A1618;
+        /* background-image: url("../../images/NavBar/fond_NavBar.avif"); */
         width: 12rem;
         height: 3rem;
         font-family: "Linden Hill", Arial, Helvetica, sans-serif;
