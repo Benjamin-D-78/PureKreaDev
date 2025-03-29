@@ -28,22 +28,18 @@ export default function NavBar() {
                     </div>
                     <div className={navbar.navContainer}>
                         <div className={`${montrerMenu ? navbar.montre : navbar.cache}`}>
-                            <ul className={navbar.ul}>
-                                <li className={navbar.navbarLI}><NavLink className={navbar.a} to="/">Boutique</NavLink></li>
-                                <li className={navbar.navbarLI}><NavLink className={navbar.a} to="/nous-connaitre">Nous connaître</NavLink></li>
-                                <li className={navbar.navbarLI}><NavLink className={navbar.a} to="/rendez-vous">Prendre rendez-vous</NavLink></li>
-                                <li className={navbar.navbarLI}><NavLink className={navbar.a} to="/contact">Contact</NavLink></li>
+                            <div className={navbar.divListe}>
+                                <NavLink className={navbar.a} to="/">Boutique</NavLink>
+                                <NavLink className={navbar.a} to="/nous-connaitre">Nous connaître</NavLink>
+                                <NavLink className={navbar.a} to="/rendez-vous">Prendre rendez-vous</NavLink>
+                                <NavLink className={navbar.a} to="/contact">Contact</NavLink>
 
                                 {auth ?
-                                    <li className={navbar.navbarLI}>
                                         <NavLink className={navbar.deconnexion} onClick={deconnexion}>Déconnexion</NavLink>
-                                    </li>
                                     :
-                                    <li className={navbar.navbarLI}>
                                         <NavLink className={navbar.deconnexion} to="/connexion">Connexion</NavLink>
-                                    </li>
                                 }
-                            </ul>
+                            </div>
                         </div>
                         <img
                             onClick={() => setMontrerMenu(!montrerMenu)}
