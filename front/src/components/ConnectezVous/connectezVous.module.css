@@ -23,6 +23,9 @@
     .linkConnexion{
         width: 90%;
         height: 3rem;
+        line-height: 3rem;
+        text-align: center;
+        text-decoration: none;
         margin-top: 2rem;
         background-color: #C6E60F;
         color: black;
