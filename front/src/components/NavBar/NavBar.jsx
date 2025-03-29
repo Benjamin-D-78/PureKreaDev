@@ -24,7 +24,7 @@ export default function NavBar() {
             <header>
                 <nav className={navbar.nav}>
                     <div className={navbar.divImage}>
-                        <img className={navbar.img} width="100%" height="100%" src={logo} alt="Logo de l'entreprise PureKréa" onClick={() => navigate("/")} />
+                        <img className={navbar.img} src={logo} alt="Logo de l'entreprise PureKréa" onClick={() => navigate("/")} />
                     </div>
                     <div className={navbar.navContainer}>
                         <div className={`${montrerMenu ? navbar.montre : navbar.cache}`}>
