@@ -36,9 +36,7 @@ header{
     text-align: center;
 
     .img{
-        width: auto;
-        height: auto;
-        object-fit: contain;
+        height: 100%;
         margin: 0.5rem 0 0 0.5rem;
         padding-bottom: 0.5rem;
         cursor: pointer;}
