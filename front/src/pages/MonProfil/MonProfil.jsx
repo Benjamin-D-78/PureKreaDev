@@ -428,7 +428,7 @@ const MonProfil = () => {
                                     </div>
                                     <div className={monProfil.inputsProfil}>
                                         <input
-                                            type="number"
+                                            type="text"
                                             name='phone'
                                             id='phone'
                                             onChange={handleChange}
@@ -471,7 +471,7 @@ const MonProfil = () => {
 
                                         <input
                                             className={monProfil.inputsSepare}
-                                            type="number"
+                                            type="text"
                                             name='postal'
                                             id='postal'
                                             value={utilisateur?.postal || ""}
