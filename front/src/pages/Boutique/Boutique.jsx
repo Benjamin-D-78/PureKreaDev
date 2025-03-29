@@ -258,7 +258,7 @@ const Boutique = () => {
                                         <img onClick={() => ajouterArticle(item)} className={boutique.iconeAchat} src={iconePanier} alt="icone panier" />
                                     </div>
                                     <div className={boutique.divButtonDetails}>
-                                        <Link className={boutique.btnCliquable} to={{ pathname: `/details/${item._id}` }}>
+                                        <Link className={boutique.linkDetails} to={{ pathname: `/details/${item._id}` }}>
                                             <button className={boutique.buttonDetails}>Plus de détails</button>
                                         </Link>
                                     </div>
