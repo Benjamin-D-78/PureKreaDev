@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+/* Pour les navigateurs basés sur Webkit (Chrome, Safari, etc.) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Pour Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

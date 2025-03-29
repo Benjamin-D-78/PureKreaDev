@@ -267,7 +267,7 @@ const Boutique = () => {
                     <div>
                         {itemsAffiches < filtreItems.length && (
                             <div className={boutique.divBtnToutVoir}>
-                                <button tabIndex={0} className={boutique.toutVoir} onClick={() => setItemsAffiches(item => item + 8)}>Tout voir</button>
+                                <button tabIndex={0} className={boutique.toutVoir} onClick={() => setItemsAffiches(item => item + 8)}>Voir plus</button>
                             </div>
                         )}
                     </div>
