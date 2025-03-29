@@ -293,12 +293,14 @@ const Contact = () => {
                                             value={message.phone}
                                             onChange={handleChange}
                                             onBlur={checkInput}
-                                            minLength={10}
-                                            maxLength={10}
+                                            max={9999999999}
+                                            // minLength={10}
+                                            // maxLength={10}
                                             pattern={PATTERN.PHONE}
-                                            onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/\D/g, '')
-                                            }} />
+                                            // onInput={(event) => {
+                                            //     event.target.value = event.target.value.replace(/\D/g, '')
+                                            // }} 
+                                            />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
                                     </div>
                                 </div>

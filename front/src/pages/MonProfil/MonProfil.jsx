@@ -434,12 +434,14 @@ const MonProfil = () => {
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             value={utilisateur?.phone || ""}
-                                            minLength={10}
-                                            maxLength={10}
+                                            max={9999999999}
+                                            // minLength={10}
+                                            // maxLength={10}
                                             pattern={PATTERN.PHONE}
-                                            onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/\D/g, '')
-                                            }} />
+                                            // onInput={(event) => {
+                                            //     event.target.value = event.target.value.replace(/\D/g, '')
+                                            // }} 
+                                            />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
                                     </div>
                                 </div>
@@ -475,14 +477,16 @@ const MonProfil = () => {
                                             name='postal'
                                             id='postal'
                                             value={utilisateur?.postal || ""}
-                                            minLength={5}
-                                            maxLength={5}
+                                            max={99999}
+                                            // minLength={5}
+                                            // maxLength={5}
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             pattern={PATTERN.POSTAL}
-                                            onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/\D/g, '')
-                                            }} />
+                                            // onInput={(event) => {
+                                            //     event.target.value = event.target.value.replace(/\D/g, '')
+                                            // }} 
+                                            />
 
                                         <input
                                             type="text"
