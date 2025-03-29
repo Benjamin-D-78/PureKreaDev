@@ -428,19 +428,19 @@ const MonProfil = () => {
                                     </div>
                                     <div className={monProfil.inputsProfil}>
                                         <input
-                                            type="number"
+                                            type="text"
                                             name='phone'
                                             id='phone'
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             value={utilisateur?.phone || ""}
-                                            max={9999999999}
-                                            // minLength={10}
-                                            // maxLength={10}
+                                            // max={9999999999}
+                                            minLength={10}
+                                            maxLength={10}
                                             pattern={PATTERN.PHONE}
-                                            // onInput={(event) => {
-                                            //     event.target.value = event.target.value.replace(/\D/g, '')
-                                            // }} 
+                                            onInput={(event) => {
+                                                event.target.value = event.target.value.replace(/\D/g, '')
+                                            }} 
                                             />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
                                     </div>
@@ -473,19 +473,19 @@ const MonProfil = () => {
 
                                         <input
                                             className={monProfil.inputsSepare}
-                                            type="number"
+                                            type="text"
                                             name='postal'
                                             id='postal'
                                             value={utilisateur?.postal || ""}
-                                            max={99999}
-                                            // minLength={5}
-                                            // maxLength={5}
+                                            // max={99999}
+                                            minLength={5}
+                                            maxLength={5}
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             pattern={PATTERN.POSTAL}
-                                            // onInput={(event) => {
-                                            //     event.target.value = event.target.value.replace(/\D/g, '')
-                                            // }} 
+                                            onInput={(event) => {
+                                                event.target.value = event.target.value.replace(/\D/g, '')
+                                            }} 
                                             />
 
                                         <input
