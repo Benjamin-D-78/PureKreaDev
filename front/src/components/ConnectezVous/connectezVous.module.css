@@ -21,15 +21,11 @@
     padding: 0 3rem 2rem 3rem;
 
     .linkConnexion{
-        /* width: 90%; */
-        color: black;
-    }
-
-    .btnConnexion{
         width: 90%;
         height: 3rem;
         margin-top: 2rem;
         background-color: #C6E60F;
+        color: black;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1.4rem;
         font-weight: 600;
