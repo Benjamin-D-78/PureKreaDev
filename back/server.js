@@ -36,7 +36,7 @@ app.use(cors({
     origin: "https://pure-krea-benjamind.vercel.app",
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
     credentials: true,
-    allowedHeaders: ['Content-Type','Authorization','Cookie'],
+    allowedHeaders: ['Content-Type','Authorization','Cookie','recaptchaToken'],
     exposedHeaders: ['Set-Cookie'],
     preflightContinue: true,
 }));

@@ -228,6 +228,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             name='lastname'
+                                            id='lastname'
                                             autocomplete="family-name"
                                             value={message.lastname}
                                             onChange={handleChange}
@@ -248,6 +249,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             name='firstname'
+                                            id='firstname'
                                             autocomplete="given-name"
                                             value={message.firstname}
                                             onChange={handleChange}
@@ -268,6 +270,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             name='email'
+                                            id='email'
                                             autocomplete="email"
                                             value={message.email}
                                             onChange={handleChange}
@@ -285,6 +288,7 @@ const Contact = () => {
                                         <input
                                             type="number"
                                             name='phone'
+                                            id='phone'
                                             autocomplete="tel"
                                             value={message.phone}
                                             onChange={handleChange}
