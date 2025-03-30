@@ -90,7 +90,6 @@ export default function Footer() {
     if (URL.ABONNE_CREATION) {
       try {
         const response = await axiosInstance.post(URL.ABONNE_CREATION, { ...abonne, recaptchaToken })
-        resetRecaptcha()
         // console.log(response)
         if (response.status === 201) {
           toast.success("Merci de vous être abonné !", { autoClose: 3000 })
@@ -99,6 +98,7 @@ export default function Footer() {
             lastname: "",
             email: ""
           })
+          resetRecaptcha()
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -106,6 +106,12 @@ export default function Footer() {
         }
         if (error.response && error.response.status === 404) {
           toast.error("Vous êtes déjà abonné.", { autoClose: 3000 })
+          setAbonne({
+            firstname: "",
+            lastname: "",
+            email: ""
+          })
+          resetRecaptcha()
         }
         if (error.response && error.response.status === 409) {
           toast.error("Veuillez réessayer.", { autoClose: 3000 })
@@ -128,7 +134,7 @@ export default function Footer() {
     // On créer le script dans le DOM
     const script = document.createElement('script');
     // On indique l'url du fichier JS qu'on veut utiliser
-    script.src = 'https://www.google.com/recaptcha/api.js?render='+RECAPTCHA_PUBLIC_KEY;
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
     // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
     script.async = true;
     // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
