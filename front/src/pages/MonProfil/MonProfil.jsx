@@ -369,6 +369,7 @@ const MonProfil = () => {
                                                 type={voirA ? "text" : "password"}
                                                 name='ancienMDP'
                                                 id='ancienMDP'
+                                                autocomplete="current-password"
                                                 value={ancienMDP}
                                                 minLength={8}
                                                 maxLength={40}
@@ -383,6 +384,7 @@ const MonProfil = () => {
                                                 type={voirB ? "text" : "password"}
                                                 name='newMDP'
                                                 id='newMDP'
+                                                autocomplete="new-password"
                                                 value={newMDP}
                                                 minLength={8}
                                                 maxLength={40}
@@ -396,6 +398,7 @@ const MonProfil = () => {
                                                 type={voirC ? "text" : "password"}
                                                 name='repeteMDP'
                                                 id='repeteMDP'
+                                                autocomplete="new-password"
                                                 value={repeteMDP}
                                                 minLength={8}
                                                 maxLength={40}
