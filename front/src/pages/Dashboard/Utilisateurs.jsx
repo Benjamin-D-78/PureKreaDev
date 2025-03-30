@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
-import axios from "axios"
 import { toast } from 'react-toastify'
 
 // EXTERNALISATION

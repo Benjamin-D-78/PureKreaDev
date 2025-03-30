@@ -25,7 +25,7 @@ import Accordeon from '../../components/Accordeon/accordeon'
 
 const Contact = () => {
 
-    const refRecaptcha = useRef(null)
+    const refRecaptcha = useRef(null) // On va cherche la référence du recaptcha dans le dom
     const [recaptchaToken, setRecaptchaToken] = useState(null);
 
     const [message, setMessage] = useState({
@@ -141,7 +141,6 @@ const Contact = () => {
             toast.error("Le CAPTCHA doit être validé.")
             return;
         }
-
         if (URL.MESSAGE_CREATION) {
             try {
                 const response = await axiosInstance.post(URL.MESSAGE_CREATION, { ...message, recaptchaToken })
@@ -214,7 +213,7 @@ const Contact = () => {
                             <form onSubmit={handleSubmit} noValidate>
                                 <div className={contact.contientMotif}>
                                     <label htmlFor="motif">Votre demande concerne <span className={contact.span}>*</span></label>
-                                    <select name='motif' value={message.motif} onChange={handleChange}>
+                                    <select name='motif' value={message.motif} onChange={handleChange} aria-label='Sélectionnez un motif de contact'>
                                         <option></option>
                                         <option value="Le service sur-mesure">Le service sur-mesure</option>
                                         <option value="Une erreur dans une commande">Une erreur dans une commande</option>
@@ -229,6 +228,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             name='lastname'
+                                            autocomplete="family-name"
                                             value={message.lastname}
                                             onChange={handleChange}
                                             onBlur={checkInput}
@@ -248,6 +248,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             name='firstname'
+                                            autocomplete="given-name"
                                             value={message.firstname}
                                             onChange={handleChange}
                                             onBlur={checkInput}
@@ -267,6 +268,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             name='email'
+                                            autocomplete="email"
                                             value={message.email}
                                             onChange={handleChange}
                                             onBlur={checkInput}
@@ -283,6 +285,7 @@ const Contact = () => {
                                         <input
                                             type="number"
                                             name='phone'
+                                            autocomplete="tel"
                                             value={message.phone}
                                             onChange={handleChange}
                                             onBlur={checkInput}
@@ -302,6 +305,7 @@ const Contact = () => {
                                     <textarea
                                         name="content"
                                         id='content'
+                                        autocomplete="off"
                                         className={contact.textarea}
                                         value={message.content}
                                         onChange={handleChange}
@@ -324,6 +328,7 @@ const Contact = () => {
                                                 type="radio"
                                                 name='preference'
                                                 value="Matin"
+                                                autocomplete="off"
                                                 checked={message.preference === 'Matin'}
                                                 onChange={handleChange} />
                                             <p>Matin</p>
@@ -333,6 +338,7 @@ const Contact = () => {
                                                 type="radio"
                                                 name='preference'
                                                 value="Après-midi"
+                                                autocomplete="off"
                                                 checked={message.preference === 'Après-midi'}
                                                 onChange={handleChange} />
                                             <p>Après-midi</p>
@@ -346,6 +352,7 @@ const Contact = () => {
                                         <input
                                             type="checkbox"
                                             name='verification'
+                                            autocomplete="off"
                                             checked={message.verification}
                                             onChange={handleChange} />
                                     </div>

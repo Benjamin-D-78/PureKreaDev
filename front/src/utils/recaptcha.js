@@ -5,7 +5,7 @@ export const RECAPTCHA_PUBLIC_KEY = "6Le0SuYqAAAAAHfMcbGHjP1Ggqpsa_ynGieVDhqL"
 // "useScriptRecaptcha" car les hooks commencent par "use"
 const useScriptRecaptcha = () => {
 
-    const [scriptLoaded, setScriptLoaded] = useState(false);
+    const [scriptLoading, setScriptLoading] = useState(false);
 
     useEffect(() => {
         // On créer le script dans le DOM
@@ -18,7 +18,7 @@ const useScriptRecaptcha = () => {
         script.defer = true;
 
         // Quand le script est chargé
-        script.onload = () => setScriptLoaded(true);
+        script.onload = () => setScriptLoading(true);
 
         // On ajoute le script au corps "body" de la page
         document.body.appendChild(script);
@@ -29,7 +29,7 @@ const useScriptRecaptcha = () => {
         };
     }, []);
 
-    return scriptLoaded;
+    return scriptLoading;
 };
 
 export default useScriptRecaptcha;
