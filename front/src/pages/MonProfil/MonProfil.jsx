@@ -293,6 +293,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='lastname'
                                             id='newlastname'
+                                            autocomplete="family-name"
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             minLength={2}
@@ -318,6 +319,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='firstname'
                                             id='newfirstname'
+                                            autocomplete="given-name"
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             minLength={2}
@@ -343,6 +345,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='email'
                                             id='emailProfil'
+                                            autocomplete="email"
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             minLength={8}
@@ -434,6 +437,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='phone'
                                             id='phone'
+                                            autocomplete="tel"
                                             onChange={handleChange}
                                             onBlur={checkInput}
                                             value={utilisateur?.phone || ""}
@@ -464,6 +468,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='adress'
                                             id='adress'
+                                            autocomplete="address-line1"
                                             value={utilisateur?.adress || ""}
                                             minLength={8}
                                             maxLength={70}
@@ -479,6 +484,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='postal'
                                             id='postal'
+                                            autocomplete="postal-code"
                                             value={utilisateur?.postal || ""}
                                             // max={99999}
                                             minLength={5}
@@ -495,6 +501,7 @@ const MonProfil = () => {
                                             type="text"
                                             name='town'
                                             id='town'
+                                            autocomplete="address-level2"
                                             value={utilisateur?.town || ""}
                                             minLength={2}
                                             maxLength={50}

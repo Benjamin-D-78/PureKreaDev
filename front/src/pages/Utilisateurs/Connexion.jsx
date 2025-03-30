@@ -82,7 +82,7 @@ const Connexion = () => {
                 type="email"
                 name='email'
                 id='email-connexion'
-                autocomplete="username" // Accessibilité
+                autocomplete="email" // Accessibilité
                 className={coin.inputCoIn}
                 onChange={handleChange}
                 minLength={10}

@@ -172,7 +172,7 @@ const Inscription = () => {
                                 type="text"
                                 name='firstname'
                                 id='firstname-inscription'
-                                autocomplete="username" // Accessibilité
+                                autocomplete="off"
                                 onChange={handleChange}
                                 onBlur={checkInput}
                                 minLength={2}
@@ -191,7 +191,7 @@ const Inscription = () => {
                                 type="text"
                                 name='lastname'
                                 id='lastname-inscription'
-                                autocomplete="username" // Accessibilité
+                                autocomplete="off"
                                 onChange={handleChange}
                                 onBlur={checkInput}
                                 minLength={2}
@@ -210,7 +210,7 @@ const Inscription = () => {
                                 type="text"
                                 name='email'
                                 id='email-inscription'
-                                autocomplete="username" // Accessibilité
+                                autocomplete="off"
                                 onChange={handleChange}
                                 onBlur={checkInput}
                                 minLength={8}
@@ -231,7 +231,7 @@ const Inscription = () => {
                                         type={voirA ? "text" : "password"}
                                         name='password'
                                         id='password-inscription'
-                                        autocomplete="new-password" // Accessibilité
+                                        autocomplete="off"
                                         onChange={handleChange}
                                         onBlur={checkInput}
                                         minLength={8}
@@ -255,7 +255,7 @@ const Inscription = () => {
                                         type={voirB ? "text" : "password"}
                                         name='repeatPassword'
                                         id='repeatPassword-inscription'
-                                        autocomplete="new-password" // Accessibilité
+                                        autocomplete="off"
                                         onChange={handleChange}
                                         onBlur={checkInput}
                                         minLength={8}
