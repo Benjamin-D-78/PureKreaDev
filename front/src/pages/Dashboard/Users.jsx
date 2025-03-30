@@ -165,6 +165,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='firstname'
                         id='firstname'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={2}
@@ -182,6 +183,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='lastname'
                         id='lastname'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={2}
@@ -199,6 +201,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='email'
                         id='email'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={8}
@@ -215,6 +218,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='phone'
                         id='phone'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={10}
@@ -231,6 +235,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='adress'
                         id='adress'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={8}
@@ -247,6 +252,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='postal'
                         id='postal'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={5}
@@ -263,6 +269,7 @@ const AjoutUtilisateur = () => {
                         type="text"
                         name='town'
                         id='town'
+                        autocomplete="off"
                         onChange={handleChange}
                         onBlur={checkInput}
                         minLength={2}
@@ -279,6 +286,7 @@ const AjoutUtilisateur = () => {
                         type="password"
                         name='password'
                         id='password'
+                        autocomplete="off"
                         onChange={handleChange}
                         minLength={8}
                         maxLength={40}
@@ -295,6 +303,7 @@ const AjoutUtilisateur = () => {
                         type="password"
                         name='repeatPassword'
                         id='repeatPassword'
+                        autocomplete="off"
                         onChange={handleChange}
                         minLength={8}
                         maxLength={40}

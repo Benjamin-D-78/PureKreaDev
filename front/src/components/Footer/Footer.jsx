@@ -110,9 +110,9 @@ export default function Footer() {
           toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
         }
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 3000);
 
       }
     } else {
