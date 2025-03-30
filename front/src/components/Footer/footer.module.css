@@ -126,10 +126,12 @@ footer{
 
     .redirection {
         display: flex;
+        flex-direction: column;
         justify-content: center;
     }
     .footerA{
         color: white;
+        margin: 0.4rem 0;
         font-family: 'Linden Hill', Arial, Helvetica, sans-serif;}
     .footerA:hover{
         text-decoration: none;
