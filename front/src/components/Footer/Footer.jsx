@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 // CENTRALISATION
 import { PATTERN, RGXR } from '../../utils/Regixr'
 import { URL } from '../../utils/Constantes'
-import { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha'
+import { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
 
 // COMPOSANTS
@@ -21,9 +21,8 @@ import github from "../../images/Reseaux/github.png"
 
 export default function Footer() {
 
-  // const refRecaptcha = useRef(null)
-  // const [recaptchaToken, setRecaptchaToken] = useState(null);
-  const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
+  const refRecaptcha = useRef(null)
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   const [abonne, setAbonne] = useState({
     firstname: "",
@@ -63,19 +62,19 @@ export default function Footer() {
     setAbonne((abonne) => ({ ...abonne, [name]: value }))
   }
 
-  // // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
-  // //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
-  // const handleRecaptcha = (value) => {
-  //   setRecaptchaToken(value);
+  // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
+  //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
+  const handleRecaptcha = (value) => {
+    setRecaptchaToken(value);
 
-  // };
+  };
 
-  // const resetRecaptcha = (value) => {
-  //   setRecaptchaToken(null);
-  //   if (refRecaptcha.current) {
-  //     refRecaptcha.current.reset()
-  //   }
-  // }
+  const resetRecaptcha = (value) => {
+    setRecaptchaToken(null);
+    if (refRecaptcha.current) {
+      refRecaptcha.current.reset()
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -136,23 +135,23 @@ export default function Footer() {
     }
   }
 
-  // useEffect(() => {
-  //   // On créer le script dans le DOM
-  //   const script = document.createElement('script');
-  //   // On indique l'url du fichier JS qu'on veut utiliser
-  //   script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
-  //   // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
-  //   script.async = true;
-  //   // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
-  //   script.defer = true;
-  //   // On ajoute le script au corps "body" de la page
-  //   document.body.appendChild(script);
+  useEffect(() => {
+    // On créer le script dans le DOM
+    const script = document.createElement('script');
+    // On indique l'url du fichier JS qu'on veut utiliser
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
+    // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
+    script.async = true;
+    // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
+    script.defer = true;
+    // On ajoute le script au corps "body" de la page
+    document.body.appendChild(script);
 
-  //   return () => {
-  //     // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
-  //     document.body.removeChild(script);
-  //   };
-  // }, []);
+    return () => {
+      // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
+      document.body.removeChild(script);
+    };
+  }, []);
 
 
   return (
