@@ -120,9 +120,9 @@ const Contact = () => {
         setRecaptchaToken(null);
         // "current" c'est l'instance du composant ou l'élément DOM auquel la référence est attachée.
         if (refRecaptcha.current) {
-          refRecaptcha.current.reset()
+            refRecaptcha.current.reset()
         }
-      }
+    }
 
 
     const handleSubmit = async (event) => {
@@ -291,10 +291,10 @@ const Contact = () => {
                                             // minLength={10}
                                             // maxLength={10}
                                             pattern={PATTERN.PHONE}
-                                            // onInput={(event) => {
-                                            //     event.target.value = event.target.value.replace(/\D/g, '')
-                                            // }} 
-                                            />
+                                        // onInput={(event) => {
+                                        //     event.target.value = event.target.value.replace(/\D/g, '')
+                                        // }} 
+                                        />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
                                     </div>
                                 </div>
@@ -354,6 +354,7 @@ const Contact = () => {
                                 </div>
                                 <div className={contact.contientBtnValidation}>
                                     <ReCAPTCHA
+                                        ref={refRecaptcha}
                                         className='g-recaptcha'
                                         sitekey={RECAPTCHA_PUBLIC_KEY}
                                         action="contact" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
