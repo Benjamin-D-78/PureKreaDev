@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink } from "react-router-dom"
 import footerCSS from "./footer.module.css"
 import axios from "axios"
@@ -19,9 +19,9 @@ import linkedin from "../../images/Reseaux/linkedin.png"
 import github from "../../images/Reseaux/github.png"
 
 
-
 export default function Footer() {
 
+  const refRecaptcha = useRef(null)
   const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   const [abonne, setAbonne] = useState({
@@ -66,10 +66,14 @@ export default function Footer() {
   //   Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
   const handleRecaptcha = (value) => {
     setRecaptchaToken(value);
+
   };
 
   const resetRecaptcha = (value) => {
     setRecaptchaToken(null);
+    if (refRecaptcha.current) {
+      refRecaptcha.current.reset()
+    }
   }
 
   const handleSubmit = async (event) => {
