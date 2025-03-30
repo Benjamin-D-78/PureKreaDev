@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
-import axios from "axios"
 import ReCAPTCHA from "react-google-recaptcha";
-import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha';
+import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY} from '../../utils/recaptcha';
 
-// RACCOURCIS
+// CENTRALISATION
 import { URL } from '../../utils/Constantes'
 import { PATTERN, RGXR } from '../../utils/Regixr'
 import axiosInstance from '../../utils/axiosInstance'
