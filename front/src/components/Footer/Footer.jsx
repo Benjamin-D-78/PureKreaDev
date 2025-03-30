@@ -30,7 +30,6 @@ export default function Footer() {
     email: ""
   })
 
-  useScriptRecaptcha();
 
   const formulaire = () => {
     let isValid = true;
@@ -136,6 +135,8 @@ export default function Footer() {
       toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
     }
   }
+
+  useScriptRecaptcha();
 
   return (
     <footer>
