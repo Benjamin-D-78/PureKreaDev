@@ -124,10 +124,10 @@ footer{
         cursor: pointer;
     }
 
-    .footerLI{
-        text-align: center;
-        margin: 0.4rem 0 0.4rem 0;
-        list-style-type: none;}
+    .redirection {
+        display: flex;
+        justify-content: center;
+    }
     .footerA{
         color: white;
         font-family: 'Linden Hill', Arial, Helvetica, sans-serif;}

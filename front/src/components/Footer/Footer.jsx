@@ -228,20 +228,12 @@ export default function Footer() {
         <div><p className={footerCSS.texteH}>PureKréa - Artisan cravatier français - Images libres de droits <br />Site Projet 2024 / 2025</p></div>
         <div className={footerCSS.texteC}>
           <nav>
-            <ul>
-              <li className={footerCSS.footerLI}>
+            <div className={footerCSS.redirection}>
                 <NavLink className={footerCSS.footerA} to="/">Boutique</NavLink>
-              </li>
-              <li className={footerCSS.footerLI}>
                 <NavLink className={footerCSS.footerA} to="/nous-connaitre">Nous connaître</NavLink>
-              </li>
-              <li className={footerCSS.footerLI}>
                 <NavLink className={footerCSS.footerA} to="/rendez-vous">Prendre rendez-vous</NavLink>
-              </li>
-              <li className={footerCSS.footerLI}>
                 <NavLink className={footerCSS.footerA} to="/contact">Contact</NavLink>
-              </li>
-            </ul>
+            </div>
           </nav>
         </div>
         <div><ModalePolitique /></div>
