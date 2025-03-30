@@ -158,11 +158,13 @@ export default function Footer() {
           <div className={footerCSS.divFormNewsletter}>
             <form onSubmit={handleSubmit}>
               <div className={footerCSS.divFormNewsletterH}>
+                <label htmlFor="lastname-footer" className="sr-only">Indiquez votre nom</label>
                 <input
                   className={footerCSS.inputFormNewsletterH}
+                  autocomplete="off"
                   placeholder='Nom'
                   type="text"
-                  id='lastname'
+                  id='lastname-footer'
                   name='lastname'
                   minLength={2}
                   maxLength={30}
@@ -174,11 +176,13 @@ export default function Footer() {
                     event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
                   }}
                 />
+                <label htmlFor="firstname-footer" className="sr-only">Indiquez votre prénom</label>
                 <input
                   className={footerCSS.inputFormNewsletterH}
+                  autocomplete="off"
                   placeholder='Prénom'
                   type="text"
-                  id='firstname'
+                  id='firstname-footer'
                   name='firstname'
                   minLength={2}
                   maxLength={30}
@@ -192,11 +196,13 @@ export default function Footer() {
                 />
               </div>
               <div className={footerCSS.divFormNewsletterB}>
-                <input
+              <label htmlFor="email-footer" className="sr-only">Indiquez votre email</label>
+              <input
                   className={footerCSS.inputFormNewsletterB}
+                  autocomplete="email"
                   placeholder='E-mail'
                   type="email"
-                  id='email'
+                  id='email-footer'
                   name='email'
                   minLength={8}
                   maxLength={60}
@@ -229,10 +235,10 @@ export default function Footer() {
         <div className={footerCSS.texteC}>
           <nav>
             <div className={footerCSS.redirection}>
-                <NavLink className={footerCSS.footerA} to="/">Boutique</NavLink>
-                <NavLink className={footerCSS.footerA} to="/nous-connaitre">Nous connaître</NavLink>
-                <NavLink className={footerCSS.footerA} to="/rendez-vous">Prendre rendez-vous</NavLink>
-                <NavLink className={footerCSS.footerA} to="/contact">Contact</NavLink>
+              <NavLink className={footerCSS.footerA} to="/">Boutique</NavLink>
+              <NavLink className={footerCSS.footerA} to="/nous-connaitre">Nous connaître</NavLink>
+              <NavLink className={footerCSS.footerA} to="/rendez-vous">Prendre rendez-vous</NavLink>
+              <NavLink className={footerCSS.footerA} to="/contact">Contact</NavLink>
             </div>
           </nav>
         </div>
