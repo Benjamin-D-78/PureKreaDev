@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import ReCAPTCHA from "react-google-recaptcha";
-import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY} from '../../utils/recaptcha';
+import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha';
 
 // CENTRALISATION
 import { URL } from '../../utils/Constantes'
@@ -286,21 +286,20 @@ const Contact = () => {
                                     <div className={contact.contientLabelInput}>
                                         <label htmlFor="phone">Téléphone</label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             name='phone'
                                             id='phone'
                                             autocomplete="tel"
                                             value={message.phone}
                                             onChange={handleChange}
                                             onBlur={checkInput}
-                                            max={9999999999}
-                                            // minLength={10}
-                                            // maxLength={10}
+                                            // max={9999999999}
+                                            minLength={10}
+                                            maxLength={10}
                                             pattern={PATTERN.PHONE}
-                                        // onInput={(event) => {
-                                        //     event.target.value = event.target.value.replace(/\D/g, '')
-                                        // }} 
-                                        />
+                                            onInput={(event) => {
+                                                event.target.value = event.target.value.replace(/\D/g, '')
+                                            }} />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
                                     </div>
                                 </div>
@@ -326,11 +325,12 @@ const Contact = () => {
                                 </div>
                                 <div className={contact.contientLabelInputRadio}>
                                     <div>
-                                        <label htmlFor="preference">Préférence de contact</label>
+                                        <label htmlFor="matin">Préférence de contact</label>
                                         <div>
                                             <input
                                                 type="radio"
                                                 name='preference'
+                                                id='matin'
                                                 value="Matin"
                                                 autocomplete="off"
                                                 checked={message.preference === 'Matin'}
@@ -338,9 +338,11 @@ const Contact = () => {
                                             <p>Matin</p>
                                         </div>
                                         <div>
+                                        <label htmlFor="apres-midi" className="sr-only">Préférence de contact : après-midi</label>
                                             <input
                                                 type="radio"
                                                 name='preference'
+                                                id='apres-midi'
                                                 value="Après-midi"
                                                 autocomplete="off"
                                                 checked={message.preference === 'Après-midi'}
@@ -353,9 +355,11 @@ const Contact = () => {
                                 </div>
                                 <div className={contact.contientConfirmation}>
                                     <div className={contact.contientinput}>
+                                    <label htmlFor="verification" className="sr-only">Vous acceptez d'être recontacté(e)</label>
                                         <input
                                             type="checkbox"
                                             name='verification'
+                                            id='verification'
                                             autocomplete="off"
                                             checked={message.verification}
                                             onChange={handleChange} />
