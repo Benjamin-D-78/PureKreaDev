@@ -231,6 +231,7 @@ export default function Footer() {
               </div>
               <div className={footerCSS.divCaptcha}>
                 <ReCAPTCHA
+                  ref={refRecaptcha}
                   className='g-recaptcha'
                   sitekey={RECAPTCHA_PUBLIC_KEY}
                   action="newsletter" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
