@@ -7,7 +7,8 @@ import { toast } from 'react-toastify'
 // CENTRALISATION
 import { PATTERN, RGXR } from '../../utils/Regixr'
 import { URL } from '../../utils/Constantes'
-import { RECAPTCHA_PUBLIC_KEY, useRecaptcha} from '../../utils/recaptcha'
+import { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
+import useRecaptcha from '../../utils/recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
 
 // COMPOSANTS
