@@ -81,7 +81,7 @@ export default function Footer() {
   }
 
   // on appelle handleRecaptcha lorsque l'utilisateur clique sur le bouton.
-    // Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
+  // Lorsque l'utilisateur clique sur le bouton, value est égal au token qui est généré lors du clic.
   const handleRecaptcha = (value) => {
     setRecaptchaToken(value);
 
@@ -89,6 +89,7 @@ export default function Footer() {
 
   const resetRecaptcha = (value) => {
     setRecaptchaToken(null);
+    // "current" c'est l'instance du composant ou l'élément DOM auquel la référence est attachée.
     if (refRecaptcha.current) {
       refRecaptcha.current.reset()
     }

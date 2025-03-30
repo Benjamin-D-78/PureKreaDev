@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import coin from "./coin.module.css"
 import axios from "axios"
@@ -17,6 +17,7 @@ import Footer from '../../components/Footer/Footer'
 
 const Renvoi = () => {
 
+    const refRecaptcha = useRef(null)
     const [recaptchaToken, setRecaptchaToken] = useState(null);
     const [email, setEmail] = useState("");
     const [responseMessage, setReponseMessage] = useState("");
@@ -29,6 +30,26 @@ const Renvoi = () => {
         email: ""
     })
 
+
+    useEffect(() => {
+        // On créer le script dans le DOM
+        const script = document.createElement('script');
+        // On indique l'url du fichier JS qu'on veut utiliser
+        script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
+        // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
+        script.async = true;
+        // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
+        script.defer = true;
+        // On ajoute le script au corps "body" de la page
+        document.body.appendChild(script);
+
+        return () => {
+            // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
+            document.body.removeChild(script);
+        };
+    }, []);
+
+
     const formulaire = () => {
         const messageError = {};
         let isValid = true;
@@ -40,7 +61,6 @@ const Renvoi = () => {
                 isValid = false;
             }
         }
-
         setError(messageError);
         return isValid;
     }
@@ -51,6 +71,14 @@ const Renvoi = () => {
     const handleRecaptcha = (value) => {
         setRecaptchaToken(value);
     };
+
+    const resetRecaptcha = (value) => {
+        setRecaptchaToken(null);
+        // "current" c'est l'instance du composant ou l'élément DOM auquel la référence est attachée.
+        if (refRecaptcha.current) {
+            refRecaptcha.current.reset()
+        }
+    }
 
 
     const handleSubmit = async (event) => {
@@ -73,8 +101,10 @@ const Renvoi = () => {
                 const response = await axiosInstance.post(URL.EMAIL_VERIFICATION_BIS, { email, recaptchaToken })
                 setReponseMessage(response.data.message)
                 toast.success("Email envoyé avec succès, pensez à le valider pour pouvoir vous connecter.")
+                resetRecaptcha()
 
             } catch (error) {
+                resetRecaptcha()
                 if (error.response && error.response.status === 400) {
                     toast.error("L'adresse email est déjà validée.");
                 }
@@ -91,24 +121,6 @@ const Renvoi = () => {
             toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
         }
     }
-
-    useEffect(() => {
-        // On créer le script dans le DOM
-        const script = document.createElement('script');
-        // On indique l'url du fichier JS qu'on veut utiliser
-        script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
-        // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
-        script.async = true;
-        // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
-        script.defer = true;
-        // On ajoute le script au corps "body" de la page
-        document.body.appendChild(script);
-
-        return () => {
-            // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
-            document.body.removeChild(script);
-        };
-    }, []);
 
     return (
         <>
@@ -135,6 +147,7 @@ const Renvoi = () => {
                             <br />
                             <div className={coin.divCaptcha}>
                                 <ReCAPTCHA
+                                    ref={refRecaptcha}
                                     className='g-recaptcha'
                                     sitekey={RECAPTCHA_PUBLIC_KEY}
                                     action="renvoie" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)

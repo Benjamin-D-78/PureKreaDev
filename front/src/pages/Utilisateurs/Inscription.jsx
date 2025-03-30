@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -24,6 +24,7 @@ const Inscription = () => {
     const [voirA, setVoirA] = useState(false)
     const [voirB, setVoirB] = useState(false)
     const [mdpTape, setMdpTape] = useState(false)
+    const refRecaptcha = useRef(null)
     const [recaptchaToken, setRecaptchaToken] = useState(null);
 
     const [user, setUser] = useState({
@@ -39,6 +40,24 @@ const Inscription = () => {
         password: "",
         repeatPassword: ""
     })
+
+    useEffect(() => {
+        // On créer le script dans le DOM
+        const script = document.createElement('script');
+        // On indique l'url du fichier JS qu'on veut utiliser
+        script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
+        // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
+        script.async = true;
+        // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
+        script.defer = true;
+        // On ajoute le script au corps "body" de la page
+        document.body.appendChild(script);
+
+        return () => {
+            // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
+            document.body.removeChild(script);
+        };
+    }, []);
 
     const formulaire = () => {
         const messageError = {};
@@ -96,6 +115,14 @@ const Inscription = () => {
         setRecaptchaToken(value);
     };
 
+    const resetRecaptcha = (value) => {
+        setRecaptchaToken(null);
+        // "current" c'est l'instance du composant ou l'élément DOM auquel la référence est attachée.
+        if (refRecaptcha.current) {
+            refRecaptcha.current.reset()
+        }
+    }
+
     const checkInput = (event) => {
         const { name } = event.target; // On récupère le nom du champ qui a perdu le focus
         formulaire(); // on rappelle la fonction formumaire pour tenter de revalider.
@@ -103,12 +130,12 @@ const Inscription = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         if (!user.lastname || !user.firstname || !user.email || !user.password) {
             toast.error("Veuillez remplir tous les champs", { autoClose: 3000 })
             return;
         }
-        
+
         if (!formulaire()) return;
 
         if (!recaptchaToken) {
@@ -127,36 +154,17 @@ const Inscription = () => {
                 if (response.status === 201) {
                     navigate("/");
                     toast.success("Merci pour votre inscription ! Pensez à valider votre email pour pouvoir vous connecter.", { autoClose: 5000 })
+                    resetRecaptcha()
                 }
             } catch (error) {
                 console.log("Echec de l'inscription de l'utilisateur.", error.message)
                 toast.error("Un problème est survenu, veuillez nous contacter.", { autoClose: 3000 })
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                resetRecaptcha()
             }
         } else {
             toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
         }
     }
-
-    useEffect(() => {
-        // On créer le script dans le DOM
-        const script = document.createElement('script');
-        // On indique l'url du fichier JS qu'on veut utiliser
-        script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
-        // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
-        script.async = true;
-        // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
-        script.defer = true;
-        // On ajoute le script au corps "body" de la page
-        document.body.appendChild(script);
-
-        return () => {
-            // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
-            document.body.removeChild(script);
-        };
-    }, []);
 
     return (
         <>
@@ -291,6 +299,7 @@ const Inscription = () => {
                             <br />
                             <div className={coin.divCaptcha}>
                                 <ReCAPTCHA
+                                    ref={refRecaptcha}
                                     className='g-recaptcha'
                                     sitekey={RECAPTCHA_PUBLIC_KEY}
                                     action="inscription" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
