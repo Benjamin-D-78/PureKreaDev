@@ -68,6 +68,10 @@ export default function Footer() {
     setRecaptchaToken(value);
   };
 
+  const resetRecaptcha = (value) => {
+    setRecaptchaToken(null);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -94,6 +98,7 @@ export default function Footer() {
             lastname: "",
             email: ""
           })
+          resetRecaptcha()
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -109,7 +114,7 @@ export default function Footer() {
           console.error("Echec de la tentative d'abonnement : ", error.message)
           toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
         }
-
+        resetRecaptcha()
         // setTimeout(() => {
         //   window.location.reload();
         // }, 3000);
