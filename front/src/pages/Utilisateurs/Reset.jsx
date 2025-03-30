@@ -85,6 +85,7 @@ const Reset = () => {
                 resetRecaptcha()
 
             } catch (error) {
+                setEmail("");
                 resetRecaptcha()
                 if (error.response && error.response.status === 400) {
                     toast.error("Veuillez valider votre adresse mail avant toute chose.");

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import axios from "axios"
 import ReCAPTCHA from "react-google-recaptcha";
-import { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha';
+import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha';
 
 // RACCOURCIS
 import { URL } from '../../utils/Constantes'
@@ -26,8 +26,7 @@ import Accordeon from '../../components/Accordeon/accordeon'
 
 const Contact = () => {
 
-    // const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
-
+    const refRecaptcha = useRef(null)
     const [recaptchaToken, setRecaptchaToken] = useState(null);
 
     const [message, setMessage] = useState({
@@ -48,6 +47,8 @@ const Contact = () => {
         phone: "",
         content: "",
     })
+
+    useScriptRecaptcha()
 
     const formulaire = () => {
         const messageError = {};
@@ -114,7 +115,14 @@ const Contact = () => {
     const handleRecaptcha = (value) => {
         setRecaptchaToken(value);
     };
-    // console.log(recaptchaToken)
+
+    const resetRecaptcha = (value) => {
+        setRecaptchaToken(null);
+        // "current" c'est l'instance du composant ou l'élément DOM auquel la référence est attachée.
+        if (refRecaptcha.current) {
+          refRecaptcha.current.reset()
+        }
+      }
 
 
     const handleSubmit = async (event) => {
@@ -152,31 +160,15 @@ const Contact = () => {
                         verification: false,
                         preference: ""
                     })
+                    resetRecaptcha()
                 }
             } catch (error) {
+                resetRecaptcha()
                 console.error("Echec de l'envoi du message : ", error.message)
                 toast.error("Echec de l'envoi du message.", { autoClose: 3000 })
             }
         }
     }
-
-    useEffect(() => {
-        // On créer le script dans le DOM
-        const script = document.createElement('script');
-        // On indique l'url du fichier JS qu'on veut utiliser
-        script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
-        // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
-        script.async = true;
-        // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
-        script.defer = true;
-        // On ajoute le script au corps "body" de la page
-        document.body.appendChild(script);
-
-        return () => {
-            // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
-            document.body.removeChild(script);
-        };
-    }, []);
 
     return (
         <div>
