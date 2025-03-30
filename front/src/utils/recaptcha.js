@@ -1,46 +1,29 @@
-// import { useEffect, useState, useRef } from "react";
-
-// Clé publique
-import { useState, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 export const RECAPTCHA_PUBLIC_KEY = "6Le0SuYqAAAAAHfMcbGHjP1Ggqpsa_ynGieVDhqL"
-// import { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha';
 
-const useRecaptcha = () => {
-  const refRecaptcha = useRef(null);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
-
-  const handleRecaptcha = (value) => {
-    setRecaptchaToken(value);
-  };
-
-  const resetRecaptcha = () => {
-    setRecaptchaToken(null);
-    if (refRecaptcha.current) {
-      refRecaptcha.current.reset();
-    }
-  };
-
+// "useScriptRecaptcha" car les hooks commencent par "use"
+const useScriptRecaptcha = () => {
   useEffect(() => {
+    // On créer le script dans le DOM
     const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_PUBLIC_KEY}`;
+    // On indique l'url du fichier JS qu'on veut utiliser
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_PUBLIC_KEY;
+    // Chargement asynchrone : le navigateur peut continuer de télécharger d'autres ressources pendant que le script est chargé = amélioration des performances de la page.
     script.async = true;
+    // Le script ne sera exécuté qu'une fois que tout le DOM sera chargé
     script.defer = true;
+    // On ajoute le script au corps "body" de la page
     document.body.appendChild(script);
 
     return () => {
+      // On nettoie tout effet secondaire laissé par le composant une fois qu'on en a plus besoin.
       document.body.removeChild(script);
     };
   }, []);
-
-  return {
-    refRecaptcha,
-    recaptchaToken,
-    handleRecaptcha,
-    resetRecaptcha,
-  };
 };
 
-export default useRecaptcha;
+export default useScriptRecaptcha;
+
 
 
