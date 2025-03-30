@@ -90,6 +90,7 @@ export default function Footer() {
     if (URL.ABONNE_CREATION) {
       try {
         const response = await axiosInstance.post(URL.ABONNE_CREATION, { ...abonne, recaptchaToken })
+        resetRecaptcha()
         // console.log(response)
         if (response.status === 201) {
           toast.success("Merci de vous être abonné !", { autoClose: 3000 })
@@ -98,7 +99,6 @@ export default function Footer() {
             lastname: "",
             email: ""
           })
-          resetRecaptcha()
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -114,7 +114,6 @@ export default function Footer() {
           console.error("Echec de la tentative d'abonnement : ", error.message)
           toast.error("Echec de la tentative d'abonnement.", { autoClose: 3000 })
         }
-        resetRecaptcha()
         // setTimeout(() => {
         //   window.location.reload();
         // }, 3000);
