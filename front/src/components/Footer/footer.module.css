@@ -127,7 +127,7 @@ footer{
     .redirection {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
     }
     .footerA{
         color: white;
