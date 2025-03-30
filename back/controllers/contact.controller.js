@@ -48,7 +48,7 @@ export const creationMessage = async (req, res) => {
         }
         if (req.body.phone) {
             const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(req.body.phone) || req.body.phone <999999999 || req.body.phone >9999999999) {
+            if (!phoneRegexr.test(req.body.phone) || req.body.phone.length !== 10) {
                 return res.status(400).json({ Message: "10 chiffres attendus." });
             }
         }
