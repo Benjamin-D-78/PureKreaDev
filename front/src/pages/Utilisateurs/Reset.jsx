@@ -10,13 +10,14 @@ import Footer from "../../components/Footer/Footer";
 
 // CENTRALISATION
 import axiosInstance from "../../utils/axiosInstance";
-import { RECAPTCHA_PUBLIC_KEY } from "../../utils/variables";
+import { RECAPTCHA_PUBLIC_KEY, Recaptcha } from "../../utils/recaptcha";
 import { RGXR } from "../../utils/Regixr";
 import { PATTERN } from "../../utils/Regixr";
 import { URL } from "../../utils/Constantes";
 
 const Reset = () => {
 
+    // const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
     const [recaptchaToken, setRecaptchaToken] = useState(null);
     const [email, setEmail] = useState("");
     // const [responseMessage, setReponseMessage] = useState("");

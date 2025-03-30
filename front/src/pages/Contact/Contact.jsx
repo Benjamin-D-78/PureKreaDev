@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import axios from "axios"
 import ReCAPTCHA from "react-google-recaptcha";
-import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
+import { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha';
 
 // RACCOURCIS
 import { URL } from '../../utils/Constantes'
@@ -25,6 +25,8 @@ import Accordeon from '../../components/Accordeon/accordeon'
 
 
 const Contact = () => {
+
+    // const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
 
     const [recaptchaToken, setRecaptchaToken] = useState(null);
 

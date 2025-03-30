@@ -7,8 +7,7 @@ import { toast } from 'react-toastify'
 // CENTRALISATION
 import { PATTERN, RGXR } from '../../utils/Regixr'
 import { URL } from '../../utils/Constantes'
-import { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
-import { useRecaptcha } from '../../utils/recaptcha'
+import { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
 
 // COMPOSANTS
@@ -24,7 +23,7 @@ export default function Footer() {
 
   // const refRecaptcha = useRef(null)
   // const [recaptchaToken, setRecaptchaToken] = useState(null);
-  const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = useRecaptcha();
+  const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
 
   const [abonne, setAbonne] = useState({
     firstname: "",

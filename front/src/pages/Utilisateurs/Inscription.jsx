@@ -16,11 +16,12 @@ import voir from "../../images/Icones/voir.svg"
 import NavBar from "../../components/NavBar/NavBar"
 import Footer from '../../components/Footer/Footer'
 import { PATTERN, RGXR } from '../../utils/Regixr'
-import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
+import { RECAPTCHA_PUBLIC_KEY, Recaptcha } from '../../utils/recaptcha'
 
 
 const Inscription = () => {
 
+    // const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
     const [voirA, setVoirA] = useState(false)
     const [voirB, setVoirB] = useState(false)
     const [mdpTape, setMdpTape] = useState(false)

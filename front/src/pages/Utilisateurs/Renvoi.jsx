@@ -7,7 +7,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 // CENTRALISATION
 import axiosInstance from '../../utils/axiosInstance'
-import { RECAPTCHA_PUBLIC_KEY } from '../../utils/variables'
+import { RECAPTCHA_PUBLIC_KEY, recaptcha } from '../../utils/recaptcha'
 import { URL } from '../../utils/Constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
 
@@ -17,6 +17,7 @@ import Footer from '../../components/Footer/Footer'
 
 const Renvoi = () => {
 
+    // const { refRecaptcha, recaptchaToken, handleRecaptcha, resetRecaptcha } = Recaptcha()
     const [recaptchaToken, setRecaptchaToken] = useState(null);
     const [email, setEmail] = useState("");
     const [responseMessage, setReponseMessage] = useState("");
