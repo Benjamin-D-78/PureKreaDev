@@ -77,7 +77,8 @@ const PanierTotal = () => {
     <div>
       <div className={visuelPanier.gestionUtilisateur}>
         <div className={visuelPanier.contientSelect}>
-          <select value={selection} onChange={select}>
+          <label htmlFor="select-option" className="sr-only">Sélectionnez une option : mon profil ou mon compte</label>
+          <select value={selection} onChange={select} id='select-option' aria-label="Sélectionnez une option : mon profil ou mon compte">
             <option>Mon compte ▼</option>
             <option value="Mon profil">Mon profil</option>
             <option value="Mes commandes">Mes commandes</option>
@@ -104,7 +105,10 @@ const PanierTotal = () => {
           <div key={index} className={visuelPanier.detailsPanier}>
             <p className={visuelPanier.nomArticle}>{article.name}</p>
 
+            <label htmlFor="select-quantite" className="sr-only">Sélectionnez une quantité</label>
             <select
+              id='select-quantite'
+              aria-label="Sélectionnez une quantité"
               className={visuelPanier.selectQTE}
               // On lie la quantité de l'article dans le panier à la valeur de l'option sélectionnée dans le select
               // Chaque modification dans le selecteur appelle la fonction "changerQuantite".
