@@ -105,17 +105,18 @@ export default function Footer() {
           resetRecaptcha()
         }
       } catch (error) {
+        setAbonne({
+          firstname: "",
+          lastname: "",
+          email: ""
+        })
+        resetRecaptcha()
+        
         if (error.response && error.response.status === 400) {
           toast.error("Veuillez réessayer.", { autoClose: 3000 })
         }
         if (error.response && error.response.status === 404) {
           toast.error("Vous êtes déjà abonné.", { autoClose: 3000 })
-          setAbonne({
-            firstname: "",
-            lastname: "",
-            email: ""
-          })
-          resetRecaptcha()
         }
         if (error.response && error.response.status === 409) {
           toast.error("Veuillez réessayer.", { autoClose: 3000 })
@@ -231,7 +232,7 @@ export default function Footer() {
               </div>
               <div className={footerCSS.divCaptcha}>
                 <ReCAPTCHA
-                  ref={refRecaptcha}
+                  ref={refRecaptcha} // ça pointe directement sur l'élément DOM
                   className='g-recaptcha'
                   sitekey={RECAPTCHA_PUBLIC_KEY}
                   action="newsletter" // Donne un nom à l'action que l'utilisateur est en train de réaliser (dans le cas où on a plusieurs captcha sur un site)
