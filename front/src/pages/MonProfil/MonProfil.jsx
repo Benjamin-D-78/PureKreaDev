@@ -87,7 +87,7 @@ const MonProfil = () => {
             if (URL.USER_BY_ID) {
                 try {
                     const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true })
-                        setUtilisateur(response.data);
+                        setUtilisateur(response.data);                        
                 } catch (error) {
                     console.error("Erreur lors de la recherche de l'utilisateur", error.message)
                 }

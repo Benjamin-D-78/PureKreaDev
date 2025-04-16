@@ -2,14 +2,19 @@ import Contact from "../models/contact.model.js";
 import { RGXR } from "../utils/regex.js";
 import { env } from "../config/index.js"
 import axios from "axios"
+import { USER_CHAMPS } from "../utils/champs.js";
 
 // CREATION MESSAGE
 export const creationMessage = async (req, res) => {
     try {
         // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
-        console.log(req.body)
-        const recaptchaToken = req.body.recaptchaToken;
+        // console.log(req.body.recaptchaToken)
+        // console.log(req.body)
+        const { recaptchaToken, motif, firstname, lastname, email, content, verification } = req.body
+
+        if (!motif || !firstname || !lastname || !email || !content || !verification) {
+            return res.status(400).json({ Message: "Un ou plusieurs champs sont manquants." });
+        }
 
         if (!recaptchaToken) {
             return res.status(400).json({ Message: "Le CAPTCHA est requis." });
@@ -29,28 +34,25 @@ export const creationMessage = async (req, res) => {
         if (!response.data.success) {
             return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
         }
+        
+        let errors = {}
+        for (const champ in USER_CHAMPS) {
+            const { regex, minLength, maxLength, min, max, errors, type } = USER_CHAMPS[champ]
+            const value = req.body[champ]
 
-        const firstnameRegexr = RGXR.PRENOM;
-        if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
-            return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
-        }
-        const lastnameRegexr = RGXR.NOM;
-        if (!lastnameRegexr.test(req.body.lastname) || req.body.lastname.length < 2 || req.body.lastname.length > 30) {
-            return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
-        }
-        const emailRegexr = RGXR.EMAIL;
-        if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
-            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
-        }
-        const contentRegexr = RGXR.CONTENT;
-        if (!contentRegexr.test(req.body.content) || req.body.content.length < 3 || req.body.content.length > 500) {
-            return res.status(400).json({ Message: "Format email, entre 3 et 500 caractères attendus." });
-        }
-        if (req.body.phone) {
-            const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(req.body.phone) || req.body.phone < 99999999 > 9999999999) {
-                return res.status(400).json({ Message: "10 chiffres attendus." });
+            if (type === "number") {
+                const number = Number(value)
+                if (!regex.test(value) || number < min || number > max) {
+                    errors[champ] = messageError
+                }
+            } else {
+                if (!regex.test(value) || value.length < minLength || value.length > maxLength) {
+                    errors[champ] = messageError
+                }
             }
+        }
+        if (Object.keys(errors) > 0) {
+            res.status(400).json({message: "Tous les champs doivent êre renseignés correctement."})
         }
 
         const contact = await Contact.create(req.body);
