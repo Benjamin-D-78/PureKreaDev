@@ -1,5 +1,5 @@
-import { RGXR } from "./regex"
-import { ERROR } from "./error"
+import { RGXR } from "./regex.js"
+import { ERROR } from "./error.js"
 
 export const USER_CHAMPS = {
     firstname: {

@@ -51,7 +51,7 @@ export const creationMessage = async (req, res) => {
             }
         }
         if (Object.keys(errors).length > 0) {
-            res.status(400).json({message: "Tous les champs doivent êre renseignés correctement."})
+            return res.status(400).json({message: "Tous les champs doivent êre renseignés correctement."})
         }
 
         const contact = await Contact.create(req.body);
