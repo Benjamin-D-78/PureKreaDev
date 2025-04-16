@@ -24,7 +24,7 @@ export const USER_CHAMPS = {
         regex: RGXR.PHONE,
         min: 99999999,
         max: 9999999999,
-        errorMessage: ERROR.PHONE,
+        errorMessage: ERROR.U_PHONE,
         type: "number"
     },
     postal: {
