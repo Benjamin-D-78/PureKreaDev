@@ -113,7 +113,19 @@ const Contact = () => {
             toast.error("Certains des champs obligatoires sont vides.")
             return;
         }
-        if (!formulaire()) return;
+
+        // On teste chaque champ individuellement
+        let testFormulaire = true
+
+        for (const champ in message) {
+            const isValid = formulaire(champ)
+            if (!isValid) testFormulaire = false
+        }
+
+        if (!testFormulaire) {
+            toast.error("Vous devez saisir les champs correctement.")
+            return;
+        }
 
         if (!message.verification) {
             toast.error("Vous devez accepter d'être recontacté pour envoyer votre message.")
