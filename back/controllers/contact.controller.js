@@ -1,5 +1,4 @@
 import Contact from "../models/contact.model.js";
-import { RGXR } from "../utils/regex.js";
 import { env } from "../config/index.js"
 import axios from "axios"
 import { USER_CHAMPS } from "../utils/champs.js";
@@ -37,21 +36,21 @@ export const creationMessage = async (req, res) => {
         
         let errors = {}
         for (const champ in USER_CHAMPS) {
-            const { regex, minLength, maxLength, min, max, errors, type } = USER_CHAMPS[champ]
+            const { regex, minLength, maxLength, min, max, errorMessage, type } = USER_CHAMPS[champ]
             const value = req.body[champ]
 
             if (type === "number") {
                 const number = Number(value)
                 if (!regex.test(value) || number < min || number > max) {
-                    errors[champ] = messageError
+                    errors[champ] = errorMessage
                 }
             } else {
                 if (!regex.test(value) || value.length < minLength || value.length > maxLength) {
-                    errors[champ] = messageError
+                    errors[champ] = errorMessage
                 }
             }
         }
-        if (Object.keys(errors) > 0) {
+        if (Object.keys(errors).length > 0) {
             res.status(400).json({message: "Tous les champs doivent êre renseignés correctement."})
         }
 
