@@ -40,7 +40,7 @@ const Boutique = () => {
     const [selectionLargeur, setSelectionLargeur] = useState("")
     const [selectionCouleur, setSelectionCouleur] = useState("")
 
-    // VALEURS UNIQUES POUR FILTRAGE
+    // On va réceptionner ici els valeurs uniques pour les filtrages
     const [collections, setCollections] = useState([])
     const [prix, setPrix] = useState([])
     const [largeurs, setLargeurs] = useState([])
@@ -48,19 +48,18 @@ const Boutique = () => {
 
 
 
-    useEffect(() => { // On appelle la fonction "depart" qui déclenche mon action Redux pour indiquer qu'il n'y a pas encore de données (ITEM.DEPART)
+    useEffect(() => {
         const depart = async () => {
             if (URL.ITEM_ALL) {
                 try {
-                    // console.log("URL de l'API:", URL.ITEM_ALL);
                     const response = await axiosInstance.get(URL.ITEM_ALL);
 
                     if (Array.isArray(response.data)) {
                         setItems(response.data);
 
                         // On extrait les valeurs de chaque collection (category).
-                        // "Set" est un objet JS qui stocke uniquement les valeurs uniques en supprimant les doublons.
-                        // La fonction map parcours tous les "item" récupérés et en extrait la category, qui sont ensuite stockés dans "collections", qui appartient à la même lignée que "setCollections"
+                        // "Set" est un objet constructor JS qui stocke uniquement les valeurs uniques en supprimant les doublons.
+                        // Set est un objet, donc on fait un "...new" (spread) pour pouvoir en faire une copie convertie en tableau, auquel on fait un map pour en extraire les valeurs.
                         setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
                         setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
                         setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
@@ -105,6 +104,7 @@ const Boutique = () => {
 
 
 
+    // Fonction de reset lorsqu'on clique sur le nom initial du select
     const handleCollection = (event) => {
         const collectionValue = event.target.value;
         if (collectionValue === "Collection") {
@@ -142,7 +142,7 @@ const Boutique = () => {
     };
 
 
-
+// Pour reset totalment tous les filtres.
     const resetFiltre = () => {
         setSelectionCollection("")
         setSelectionPrix("")
