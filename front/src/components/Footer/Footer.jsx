@@ -5,8 +5,8 @@ import axios from "axios"
 import { toast } from 'react-toastify'
 
 // CENTRALISATION
-import { PATTERN, RGXR } from '../../utils/Regixr'
-import { URL } from '../../utils/Constantes'
+import { PATTERN, RGXR } from '../../utils/regex'
+import { URL } from '../../utils/constantes'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
 

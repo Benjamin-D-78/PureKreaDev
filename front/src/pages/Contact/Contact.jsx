@@ -4,8 +4,9 @@ import ReCAPTCHA from "react-google-recaptcha";
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha';
 
 // CENTRALISATION
-import { URL } from '../../utils/Constantes'
-import { PATTERN, RGXR } from '../../utils/Regixr'
+import { URL } from '../../utils/constantes';
+import { PATTERN } from '../../utils/regex'
+import { USER_CHAMPS } from '../../utils/champs';
 import axiosInstance from '../../utils/axiosInstance'
 
 // ICONES
@@ -49,62 +50,43 @@ const Contact = () => {
 
     useScriptRecaptcha()
 
-    const formulaire = () => {
-        const messageError = {};
+    const formulaire = (champ) => {
+        const messageError = { ...error };
         let isValid = true;
 
-        if (message.lastname) {
-            const lastnameRegexr = RGXR.NOM;
-            if (!lastnameRegexr.test(message.lastname) || message.lastname.length < 2 || message.lastname.length > 30) {
-                messageError.lastname = "Entre 2 et 30 caractères attendus."
-                isValid = false;
+        if (message[champ] && USER_CHAMPS[champ]) {
+            const { regex, minLength, maxLength, type, min, max, errorMessage } = USER_CHAMPS[champ]
+            const value = message[champ]
+
+            if (type === "number") {
+                const number = Number(value)
+                if (!regex.test(value) || number < min || number > max) {
+                    messageError[champ] = errorMessage
+                    isValid = false
+                }
+            } else {
+                if (!regex.test(value) || value < minLength || value > maxLength) {
+                    messageError[champ] = errorMessage
+                    isValid = false
+                }
+            }
+
+            if (isValid && champ in messageError) {
+                messageError[champ] = ""
             }
         }
-        if (message.firstname) {
-            const firstnameRegexr = RGXR.PRENOM;
-            if (!firstnameRegexr.test(message.firstname) || message.firstname.length < 2 || message.firstname.length > 30) {
-                messageError.firstname = "Entre 2 et 30 caractères attendus."
-                isValid = false;
-            }
-        }
-        if (message.email) {
-            const emailRegexr = RGXR.EMAIL;
-            if (!emailRegexr.test(message.email) || message.email.length < 8 || message.email.length > 60) {
-                messageError.email = "Format email, entre 8 et 60 caractères attendus."
-                isValid = false;
-            }
-        }
-        if (message.phone) {
-            const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(message.phone) || message.phone.length !== 10) {
-                messageError.phone = "10 chiffres attendus."
-                isValid = false;
-            }
-        }
-        if (message.content) {
-            const contentRegexr = RGXR.CONTENT;
-            if (!contentRegexr.test(message.content) || message.content.length < 3 || message.content.length > 500) {
-                messageError.content = "Votre message doit contenir entre 3 et 500 caractères."
-                isValid = false;
-            }
-        }
+
         setError(messageError);
         return isValid;
-    }
-
-    // On réupère le champ "name" qui est renseigné par l'utilisateur
-    const checkInput = (event) => {
-        const { name } = event.target;
-        formulaire()
     }
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
         // On utilise prevState comme pour dire qu'on utilise le state le plus récent.
         if (type === "checkbox") {
-            setMessage((prevState) => ({ ...prevState, [name]: checked }))
+            setMessage((prev) => ({ ...prev, [name]: checked }))
         } else {
-            setMessage((prevState) => ({ ...prevState, [name]: value }))
+            setMessage((prev) => ({ ...prev, [name]: value }))
         }
     }
 
@@ -232,7 +214,7 @@ const Contact = () => {
                                             autocomplete="family-name"
                                             value={message.lastname}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("lastname")}
                                             minLength={2}
                                             maxLength={30}
                                             pattern={PATTERN.NOM}
@@ -253,7 +235,7 @@ const Contact = () => {
                                             autocomplete="given-name"
                                             value={message.firstname}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("firstname")}
                                             minLength={2}
                                             maxLength={30}
                                             pattern={PATTERN.PRENOM}
@@ -274,7 +256,7 @@ const Contact = () => {
                                             autocomplete="email"
                                             value={message.email}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("email")}
                                             minLength={8}
                                             maxLength={60}
                                             pattern={PATTERN.EMAIL}
@@ -292,7 +274,7 @@ const Contact = () => {
                                             autocomplete="tel"
                                             value={message.phone}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("phone")}
                                             // max={9999999999}
                                             minLength={10}
                                             maxLength={10}
@@ -312,7 +294,7 @@ const Contact = () => {
                                         className={contact.textarea}
                                         value={message.content}
                                         onChange={handleChange}
-                                        onBlur={checkInput}
+                                        onBlur={() => formulaire("content")}
                                         minLength={3}
                                         maxLength={500}
                                         pattern={PATTERN.CONTENT}
@@ -338,7 +320,7 @@ const Contact = () => {
                                             <p>Matin</p>
                                         </div>
                                         <div>
-                                        <label htmlFor="apres-midi" className="sr-only">Préférence de contact : après-midi</label>
+                                            <label htmlFor="apres-midi" className="sr-only">Préférence de contact : après-midi</label>
                                             <input
                                                 type="radio"
                                                 name='preference'
@@ -355,7 +337,7 @@ const Contact = () => {
                                 </div>
                                 <div className={contact.contientConfirmation}>
                                     <div className={contact.contientinput}>
-                                    <label htmlFor="verification" className="sr-only">Vous acceptez d'être recontacté(e)</label>
+                                        <label htmlFor="verification" className="sr-only">Vous acceptez d'être recontacté(e)</label>
                                         <input
                                             type="checkbox"
                                             name='verification'

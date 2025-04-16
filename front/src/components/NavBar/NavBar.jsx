@@ -22,7 +22,7 @@ export default function NavBar() {
     return (
         <div className={navbar.contientHeader}>
             <header>
-                <nav className={navbar.nav}>
+                <nav className={navbar.nav} role='navigation'>
                     <div className={navbar.divImage}>
                         <img className={navbar.img} src={logo} alt="Logo de l'entreprise PureKréa" onClick={() => navigate("/")} />
                     </div>

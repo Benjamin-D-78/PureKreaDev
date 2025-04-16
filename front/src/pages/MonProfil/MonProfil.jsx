@@ -185,15 +185,6 @@ const MonProfil = () => {
         }
     };
 
-
-    const checkInput = (event) => {
-        const { name } = event.target;
-        formulaire()
-    }
-
-
-
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -295,7 +286,7 @@ const MonProfil = () => {
                                             id='newlastname'
                                             autocomplete="family-name"
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("lastname")}
                                             minLength={2}
                                             maxLength={30}
                                             pattern={PATTERN.NOM}
@@ -321,7 +312,7 @@ const MonProfil = () => {
                                             id='newfirstname'
                                             autocomplete="given-name"
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("firstname")}
                                             minLength={2}
                                             maxLength={30}
                                             pattern={PATTERN.PRENOM}
@@ -347,7 +338,7 @@ const MonProfil = () => {
                                             id='emailProfil'
                                             autocomplete="email"
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("email")}
                                             minLength={8}
                                             maxLength={60}
                                             pattern={PATTERN.EMAIL}
@@ -378,7 +369,7 @@ const MonProfil = () => {
                                                 maxLength={40}
                                                 pattern={PATTERN.PASSWORD}
                                                 onChange={(event) => setAncienMDP(event.target.value)}
-                                                onBlur={checkInput}
+                                                onBlur={() => formulaire("ancienMDP")}
                                                 onInput={(event) => {
                                                     event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
                                                 }} />
@@ -393,7 +384,7 @@ const MonProfil = () => {
                                                 maxLength={40}
                                                 pattern={PATTERN.PASSWORD}
                                                 onChange={(event) => setNewMDP(event.target.value)}
-                                                onBlur={checkInput}
+                                                onBlur={() => formulaire("newMDP")}
                                                 onInput={(event) => {
                                                     event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
                                                 }} />
@@ -407,7 +398,7 @@ const MonProfil = () => {
                                                 maxLength={40}
                                                 pattern={PATTERN.PASSWORD}
                                                 onChange={(event) => setRepeteMDP(event.target.value)}
-                                                onBlur={checkInput}
+                                                onBlur={() => formulaire("repeteMDP")}
                                                 onInput={(event) => {
                                                     event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
                                                 }} />
@@ -439,7 +430,7 @@ const MonProfil = () => {
                                             id='phone'
                                             autocomplete="tel"
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("phone")}
                                             value={utilisateur?.phone || ""}
                                             // max={9999999999}
                                             minLength={10}
@@ -474,7 +465,7 @@ const MonProfil = () => {
                                             maxLength={70}
                                             pattern={PATTERN.ADRESS}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("adress")}
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s\-'^¨èéàù]/g, '');
                                             }} />
@@ -490,7 +481,7 @@ const MonProfil = () => {
                                             minLength={5}
                                             maxLength={5}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("postal")}
                                             pattern={PATTERN.POSTAL}
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(/\D/g, '')
@@ -506,7 +497,7 @@ const MonProfil = () => {
                                             minLength={2}
                                             maxLength={50}
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={() => formulaire("town")}
                                             pattern={PATTERN.TOWN}
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(/[^a-zA-Z\s\-'^¨èéàù]/g, '').toUpperCase();;

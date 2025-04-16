@@ -38,7 +38,7 @@ app.use(cors({
     credentials: true,
     allowedHeaders: ['Content-Type','Authorization','Cookie','recaptchaToken'],
     exposedHeaders: ['Set-Cookie'],
-    preflightContinue: true,
+    preflightContinue: true, // me permet d'avoir un contrôle personnalisé sur les requêtes OPTIONs. CORS ne répond plus automatiquement. Cela permet aussi d'éviter les problème de "cros-origin" et permet de passer des entêtes personnalisés dans les requêtes.
 }));
 app.use(express.json());
 app.use(cookieParser());

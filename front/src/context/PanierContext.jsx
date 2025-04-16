@@ -43,7 +43,7 @@ export const PanierProvider = ({ children }) => {
         let total = 0;
         panier.forEach(item => {
             const itemPrice = parseFloat(item.price);
-            const itemQuantite = parseInt(item.quantite, 10);
+            const itemQuantite = parseInt(item.quantite, 10); // 10 pour deux chiffres après la virgule
 
             // On vérifie que nos données soient des nombres valides.
             if (!isNaN(itemPrice) && !isNaN(itemQuantite)) {
