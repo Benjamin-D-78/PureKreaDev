@@ -65,7 +65,7 @@ const Contact = () => {
                     isValid = false
                 }
             } else {
-                if (!regex.test(value) || value < minLength || value > maxLength) {
+                if (!regex.test(value) || value.length < minLength || value.length > maxLength) {
                     messageError[champ] = errorMessage
                     isValid = false
                 }
