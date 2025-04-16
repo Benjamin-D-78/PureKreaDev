@@ -8,7 +8,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import { ERROR } from '../../utils/error'
 
 // COMPOSANTS
@@ -125,7 +125,7 @@ const Renvoi = () => {
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
                                 onInput={(event) => {
-                                    event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                                    event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                 }} />
                             <br />
                             <div className={coin.divCaptcha}>

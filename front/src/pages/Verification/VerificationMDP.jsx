@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 // CENTRALISATION
 import axiosInstance from '../../utils/axiosInstance';
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import { ERROR } from '../../utils/error'
 
 // COMPOSANTS
@@ -154,7 +154,7 @@ const VerificationMDP = () => {
                                     maxLength={60}
                                     pattern={PATTERN.EMAIL}
                                     onInput={(event) => {
-                                        event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                                        event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                     }} />
                                 {error.email && <span className={coin.spanError}>{error.email}</span>}
                                 <br />
@@ -173,7 +173,7 @@ const VerificationMDP = () => {
                                             maxLength={40}
                                             pattern={PATTERN.PASSWORD}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                                event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                             }} />
                                     </div>
                                     <div className={coin.contientVoir}>
@@ -196,7 +196,7 @@ const VerificationMDP = () => {
                                             maxLength={40}
                                             pattern={PATTERN.PASSWORD}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                                event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                             }} />
                                     </div>
                                     <div className={coin.contientVoir}>

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 
 // EXTERNALISATION
 import { URL } from '../../utils/constantes'
-import { PATTERN } from '../../utils/regex'
+import { ONINPUT, PATTERN } from '../../utils/regex'
 import axiosInstance from '../../utils/axiosInstance'
 
 // CSS
@@ -149,7 +149,7 @@ const Commande = () => {
                         onChange={(event) => setCommentaire(event.target.value)}
                         pattern={PATTERN.CONTENT}
                         onInput={(event) => {
-                          event.target.value = event.target.value.replace(/[^a-zA-Z0-9,?!().\"'éèêàùîôäëïöü -]/g, '');
+                          event.target.value = event.target.value.replace(ONINPUT.U_CONTENT, '');
                         }}
                       >
                       </textarea>

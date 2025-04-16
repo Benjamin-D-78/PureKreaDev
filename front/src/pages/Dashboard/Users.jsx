@@ -7,7 +7,7 @@ import items from "../Dashboard/css/items.module.css"
 // CONSTANTES
 import axiosInstance from "../../utils/axiosInstance";
 import { URL } from "../../utils/constantes";
-import { RGXR, PATTERN } from "../../utils/regex";
+import { RGXR, ONINPUT, PATTERN } from "../../utils/regex";
 import { ERROR } from "../../utils/error";
 
 const AjoutUtilisateur = () => {
@@ -166,7 +166,7 @@ const AjoutUtilisateur = () => {
                         maxLength={30}
                         pattern={PATTERN.PRENOM}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.U_PRENOM, '')
                         }}
                     />
                     {error.firstname && <span className={items.spanError}>{error.firstname}</span>}
@@ -184,7 +184,7 @@ const AjoutUtilisateur = () => {
                         maxLength={30}
                         pattern={PATTERN.NOM}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
+                            event.target.value = event.target.value.replace(ONINPUT.U_NOM, '').toUpperCase();
                         }}
                     />
                     {error.lastname && <span className={items.spanError}>{error.lastname}</span>}
@@ -202,7 +202,7 @@ const AjoutUtilisateur = () => {
                         maxLength={60}
                         pattern={PATTERN.EMAIL}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                            event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                         }} />
                     {error.email && <span className={items.spanError}>{error.email}</span>}
 
@@ -219,7 +219,7 @@ const AjoutUtilisateur = () => {
                         maxLength={10}
                         pattern={PATTERN.PHONE}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/\D/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.U_PHONE, '')
                         }} />
                     {error.phone && <span className={items.spanError}>{error.phone}</span>}
 
@@ -236,7 +236,7 @@ const AjoutUtilisateur = () => {
                         maxLength={70}
                         pattern={PATTERN.ADRESS}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s\-'^¨èéàù]/g, '');
+                            event.target.value = event.target.value.replace(ONINPUT.U_ADRESS, '');
                         }} />
                     {error.adress && <span className={items.spanError}>{error.adress}</span>}
 
@@ -253,7 +253,7 @@ const AjoutUtilisateur = () => {
                         maxLength={5}
                         pattern={PATTERN.POSTAL}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/\D/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.U_POSTAL, '')
                         }} />
                     {error.postal && <span className={items.spanError}>{error.postal}</span>}
 
@@ -270,7 +270,7 @@ const AjoutUtilisateur = () => {
                         maxLength={50}
                         pattern={PATTERN.TOWN}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-Z\s\-'^¨èéàù]/g, '').toUpperCase();;
+                            event.target.value = event.target.value.replace(ONINPUT.U_TOWN, '').toUpperCase();;
                         }} />
                     {error.town && <span className={items.spanError}>{error.town}</span>}
 
@@ -287,7 +287,7 @@ const AjoutUtilisateur = () => {
                         pattern={PATTERN.PASSWORD}
                         onBlur={formulaire}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                            event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                         }} />
                     {error.password && <span className={items.spanError}>{error.password}</span>}
 
@@ -304,7 +304,7 @@ const AjoutUtilisateur = () => {
                         pattern={PATTERN.PASSWORD}
                         onBlur={formulaire}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                            event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                         }} />
 
                     <div className={items.divBtnAjouter}>
@@ -314,8 +314,6 @@ const AjoutUtilisateur = () => {
             </div >
         </div >
     )
-
-
 }
 
 export default AjoutUtilisateur

@@ -5,7 +5,7 @@ import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 
 // CENTRALISATION
 import { URL } from '../../utils/constantes';
-import { PATTERN } from '../../utils/regex'
+import { ONINPUT, PATTERN } from '../../utils/regex'
 import { USER_CHAMPS } from '../../utils/champs';
 import axiosInstance from '../../utils/axiosInstance'
 
@@ -231,7 +231,7 @@ const Contact = () => {
                                             maxLength={30}
                                             pattern={PATTERN.NOM}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
+                                                event.target.value = event.target.value.replace(ONINPUT.U_NOM, '').toUpperCase();
                                             }}
                                         // avec "replace" et "/g, ''", on recherche tous les caractères qui ne correspondent PAS à ceux que l'on a renseigné et on les remplace par des caractères vides.
                                         />
@@ -252,7 +252,7 @@ const Contact = () => {
                                             maxLength={30}
                                             pattern={PATTERN.PRENOM}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
+                                                event.target.value = event.target.value.replace(ONINPUT.U_PRENOM, '')
                                             }} />
                                         {error.firstname && <span className={monProfil.spanError}>{error.firstname}</span>}
 
@@ -273,7 +273,7 @@ const Contact = () => {
                                             maxLength={60}
                                             pattern={PATTERN.EMAIL}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                                                event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                             }} />
                                         {error.email && <span className={monProfil.spanError}>{error.email}</span>}
                                     </div>
@@ -292,7 +292,7 @@ const Contact = () => {
                                             maxLength={10}
                                             pattern={PATTERN.PHONE}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/\D/g, '')
+                                                event.target.value = event.target.value.replace(ONINPUT.U_PHONE, '')
                                             }} />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
                                     </div>
@@ -311,7 +311,7 @@ const Contact = () => {
                                         maxLength={500}
                                         pattern={PATTERN.CONTENT}
                                         onInput={(event) => {
-                                            event.target.value = event.target.value.replace(/[^a-zA-Z0-9,?!().\"'éèêàùîôäëïöü -]/g, '');
+                                            event.target.value = event.target.value.replace(ONINPUT.U_CONTENT, '');
                                         }}
                                     >
                                     </textarea>

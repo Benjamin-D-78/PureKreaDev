@@ -15,7 +15,7 @@ import voir from "../../images/Icones/voir.svg"
 // COMPOSANTS
 import NavBar from "../../components/NavBar/NavBar"
 import Footer from '../../components/Footer/Footer'
-import { RGXR, PATTERN } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 
 
@@ -166,7 +166,7 @@ const Inscription = () => {
                                 maxLength={30}
                                 pattern={PATTERN.PRENOM}
                                 onInput={(event) => {
-                                    event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '');
+                                    event.target.value = event.target.value.replace(ONINPUT.U_PRENOM, '');
                                 }}
                             />
                             {error.firstname && <span className={coin.spanError}>{error.firstname}</span>}
@@ -185,7 +185,7 @@ const Inscription = () => {
                                 maxLength={30}
                                 pattern={PATTERN.NOM}
                                 onInput={(event) => {
-                                    event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase()
+                                    event.target.value = event.target.value.replace(ONINPUT.U_NOM, '').toUpperCase()
                                 }}
                             />
                             {error.lastname && <span className={coin.spanError}>{error.lastname}</span>}
@@ -204,7 +204,7 @@ const Inscription = () => {
                                 maxLength={60}
                                 pattern={PATTERN.EMAIL}
                                 onInput={(event) => {
-                                    event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                                    event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                 }} />
                             <span className={coin.spanAlerte}>Adresse "gmail" recommandée.</span><br />
                             {error.email && <span className={coin.spanError}>{error.email}</span>}
@@ -225,7 +225,7 @@ const Inscription = () => {
                                         maxLength={40}
                                         pattern={PATTERN.PASSWORD}
                                         onInput={(event) => {
-                                            event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                            event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                         }} />
                                 </div>
                                 <div className={coin.contientVoir}>
@@ -249,7 +249,7 @@ const Inscription = () => {
                                         maxLength={40}
                                         pattern={PATTERN.PASSWORD}
                                         onInput={(event) => {
-                                            event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                            event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                         }} />
                                 </div>
                                 <div className={coin.contientVoir}>

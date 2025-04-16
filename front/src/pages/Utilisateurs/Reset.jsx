@@ -11,7 +11,7 @@ import Footer from "../../components/Footer/Footer";
 // CENTRALISATION
 import axiosInstance from "../../utils/axiosInstance";
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from "../../utils/recaptcha";
-import { RGXR, PATTERN } from "../../utils/regex";
+import { RGXR, ONINPUT, PATTERN } from "../../utils/regex";
 import { URL } from "../../utils/constantes";
 import { ERROR } from "../../utils/error";
 
@@ -125,7 +125,7 @@ const Reset = () => {
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
                                 onInput={(event) => {
-                                    event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                                    event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                 }} />
                             <br />
                             <div className={coin.divCaptcha}>

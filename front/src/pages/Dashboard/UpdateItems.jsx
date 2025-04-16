@@ -5,7 +5,7 @@ import items from "./css/items.module.css"
 
 // EXTERNALISATION
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import axiosInstance from '../../utils/axiosInstance'
 import { ERROR } from '../../utils/error'
 
@@ -209,7 +209,7 @@ const UpdateItems = () => {
                         maxLength={30}
                         pattern={PATTERN.ITEM_NAME}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_NAME, '')
                         }}
                     />
                     {error.name && <span className={items.spanError}>{error.name}</span>}
@@ -231,7 +231,7 @@ const UpdateItems = () => {
                         // step="0.1"
                         pattern={PATTERN.ITEM_WIDTH}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^0-9.]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_WIDTH, '')
                         }} 
                         />
                     {error.width && <span className={items.spanError}>{error.width}</span>}
@@ -250,7 +250,7 @@ const UpdateItems = () => {
                         maxLength={30}
                         pattern={PATTERN.ITEM_COLOR}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'()-\s]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_COLOR, '')
                         }}
                     />
                     {error.color && <span className={items.spanError}>{error.color}</span>}
@@ -269,7 +269,7 @@ const UpdateItems = () => {
                         maxLength={60}
                         pattern={PATTERN.ITEM_CONTENT}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'()-\s,]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_CONTENT, '')
                         }}
                     />
                     {error.content && <span className={items.spanError}>{error.content}</span>}
@@ -286,9 +286,9 @@ const UpdateItems = () => {
                         onBlur={formulaire}
                         minLength={2}
                         maxLength={60}
-                        pattern={PATTERN.ITEM_CONTENT}
+                        pattern={PATTERN.ITEM_DETAIL}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'()-\s,]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_DETAILS, '')
                         }}
                     />
                     {error.detail && <span className={items.spanError}>{error.detail}</span>}
@@ -307,7 +307,7 @@ const UpdateItems = () => {
                         maxLength={4}
                         pattern={PATTERN.ITEM_CATEGORY}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/\D/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_CATEGORY, '')
                         }} 
                         />
                     {error.category && <span className={items.spanError}>{error.category}</span>}
@@ -327,7 +327,7 @@ const UpdateItems = () => {
                         // max={999}
                         pattern={PATTERN.ITEM_STOCK}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/\D/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_STOCK, '')
                         }} 
                         />
                     {error.stock && <span className={items.spanError}>{error.stock}</span>}
@@ -348,7 +348,7 @@ const UpdateItems = () => {
                         // step="0.1"
                         pattern={PATTERN.ITEM_PRICE}
                         onInput={(event) => {
-                            event.target.value = event.target.value.replace(/[^0-9.]/g, '')
+                            event.target.value = event.target.value.replace(ONINPUT.I_PRICE, '')
                         }} 
                         />
                     {error.price && <span className={items.spanError}>{error.price}</span>}

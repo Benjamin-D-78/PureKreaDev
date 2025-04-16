@@ -135,6 +135,8 @@ const CommandeUpdate = () => {
               type="number"
               name='quantity'
               value={item.quantity}
+              // event contient les infos du champ (name, value, etc.)
+              // index permet de savoir quel élément du panier je modifie
               onChange={(event) => handleChange(event, index)} />
             <label htmlFor="price">Prix :</label>
             <input

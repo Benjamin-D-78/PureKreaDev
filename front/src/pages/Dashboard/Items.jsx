@@ -6,7 +6,7 @@ import BoutiqueDashboard from './BoutiqueDashboard'
 // EXTERNALISATION
 import axiosInstance from '../../utils/axiosInstance'
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import { ERROR } from '../../utils/error'
 
 const AjoutItem = () => {
@@ -187,7 +187,7 @@ const AjoutItem = () => {
             maxLength={30}
             pattern={PATTERN.ITEM_NAME}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_NAME, '')
             }}
           />
           {error.name && <span className={items.spanError}>{error.name}</span>}
@@ -206,7 +206,7 @@ const AjoutItem = () => {
             maxLength={6}
             pattern={PATTERN.ITEM_WIDTH}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/[^0-9.]/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_WIDTH, '')
             }} />
           {error.width && <span className={items.spanError}>{error.width}</span>}
 
@@ -224,7 +224,7 @@ const AjoutItem = () => {
             maxLength={30}
             pattern={PATTERN.ITEM_COLOR}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'()-\s]/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_COLOR, '')
             }}
           />
           {error.color && <span className={items.spanError}>{error.color}</span>}
@@ -242,7 +242,7 @@ const AjoutItem = () => {
             maxLength={60}
             pattern={PATTERN.ITEM_CONTENT}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'()-\s,]/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_CONTENT, '')
             }}
           />
           {error.content && <span className={items.spanError}>{error.content}</span>}
@@ -258,9 +258,9 @@ const AjoutItem = () => {
             onBlur={formulaire}
             minLength={2}
             maxLength={60}
-            pattern={PATTERN.ITEM_CONTENT}
+            pattern={PATTERN.ITEM_DETAIL}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'()-\s,]/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_DETAILS, '')
             }}
           />
           {error.detail && <span className={items.spanError}>{error.detail}</span>}
@@ -278,7 +278,7 @@ const AjoutItem = () => {
             maxLength={4}
             pattern={PATTERN.ITEM_CATEGORY}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/\D/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_CATEGORY, '')
             }} />
           {error.category && <span className={items.spanError}>{error.category}</span>}
           <br />
@@ -295,7 +295,7 @@ const AjoutItem = () => {
             maxLength={6}
             pattern={PATTERN.ITEM_STOCK}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/\D/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_STOCK, '')
             }} />
           {error.stock && <span className={items.spanError}>{error.stock}</span>}
           <br />
@@ -312,7 +312,7 @@ const AjoutItem = () => {
             maxLength={7}
             pattern={PATTERN.ITEM_PRICE}
             onInput={(event) => {
-              event.target.value = event.target.value.replace(/[^0-9.]/g, '')
+              event.target.value = event.target.value.replace(ONINPUT.I_PRICE, '')
             }} />
           {error.price && <span className={items.spanError}>{error.price}</span>}
           <br />

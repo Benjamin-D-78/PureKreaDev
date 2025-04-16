@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 // EXTERNALISATION
 import { URL } from '../../utils/constantes.js';
-import { RGXR, PATTERN } from '../../utils/regex.js';
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex.js';
 import axiosInstance from '../../utils/axiosInstance.js';
 import { ERROR } from '../../utils/error.js';
 
@@ -279,7 +279,7 @@ const MonProfil = () => {
                                             maxLength={30}
                                             pattern={PATTERN.NOM}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
+                                                event.target.value = event.target.value.replace(ONINPUT.U_NOM, '').toUpperCase();
                                             }}
                                         />
                                         {error.lastname && <span className={monProfil.spanError}>{error.lastname}</span>}
@@ -305,7 +305,7 @@ const MonProfil = () => {
                                             maxLength={30}
                                             pattern={PATTERN.PRENOM}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
+                                                event.target.value = event.target.value.replace(ONINPUT.U_PRENOM, '')
                                             }}
                                         />
                                         {error.firstname && <span className={monProfil.spanError}>{error.firstname}</span>}
@@ -331,7 +331,7 @@ const MonProfil = () => {
                                             maxLength={60}
                                             pattern={PATTERN.EMAIL}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                                                event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                             }} />
                                         {error.email && <span className={monProfil.spanError}>{error.email}</span>}
                                     </div>
@@ -359,7 +359,7 @@ const MonProfil = () => {
                                                 onChange={(event) => setAncienMDP(event.target.value)}
                                                 onBlur={() => formulaire("ancienMDP")}
                                                 onInput={(event) => {
-                                                    event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                                    event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                                 }} />
                                             <input
                                                 className={monProfil.inputsSepare}
@@ -374,7 +374,7 @@ const MonProfil = () => {
                                                 onChange={(event) => setNewMDP(event.target.value)}
                                                 onBlur={() => formulaire("newMDP")}
                                                 onInput={(event) => {
-                                                    event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                                    event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                                 }} />
                                             <input
                                                 type={voirC ? "text" : "password"}
@@ -388,7 +388,7 @@ const MonProfil = () => {
                                                 onChange={(event) => setRepeteMDP(event.target.value)}
                                                 onBlur={() => formulaire("repeteMDP")}
                                                 onInput={(event) => {
-                                                    event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                                                    event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                                 }} />
                                             {error.newMDP && <span className={monProfil.spanError}>{error.newMDP}</span>}
                                         </div>
@@ -425,7 +425,7 @@ const MonProfil = () => {
                                             maxLength={10}
                                             pattern={PATTERN.PHONE}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/\D/g, '')
+                                                event.target.value = event.target.value.replace(ONINPUT.U_PHONE, '')
                                             }} 
                                             />
                                         {error.phone && <span className={monProfil.spanError}>{error.phone}</span>}
@@ -455,7 +455,7 @@ const MonProfil = () => {
                                             onChange={handleChange}
                                             onBlur={() => formulaire("adress")}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s\-'^¨èéàù]/g, '');
+                                                event.target.value = event.target.value.replace(ONINPUT.U_ADRESS, '');
                                             }} />
 
                                         <input
@@ -472,7 +472,7 @@ const MonProfil = () => {
                                             onBlur={() => formulaire("postal")}
                                             pattern={PATTERN.POSTAL}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/\D/g, '')
+                                                event.target.value = event.target.value.replace(ONINPUT.U_POSTAL, '')
                                             }} 
                                             />
 
@@ -488,7 +488,7 @@ const MonProfil = () => {
                                             onBlur={() => formulaire("town")}
                                             pattern={PATTERN.TOWN}
                                             onInput={(event) => {
-                                                event.target.value = event.target.value.replace(/[^a-zA-Z\s\-'^¨èéàù]/g, '').toUpperCase();;
+                                                event.target.value = event.target.value.replace(ONINPUT.U_TOWN, '').toUpperCase();;
                                             }} />
                                         {error.adress && <span className={monProfil.spanError}>{error.adress}</span>}
                                         {error.postal && <span className={monProfil.spanError}>{error.postal}</span>}

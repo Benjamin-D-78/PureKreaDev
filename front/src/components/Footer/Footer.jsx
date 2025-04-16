@@ -4,7 +4,7 @@ import footerCSS from "./footer.module.css"
 import { toast } from 'react-toastify'
 
 // CENTRALISATION
-import { PATTERN, RGXR } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import { URL } from '../../utils/constantes'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
@@ -173,7 +173,7 @@ export default function Footer() {
                   onBlur={formulaire}
                   required
                   onInput={(event) => {
-                    event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
+                    event.target.value = event.target.value.replace(ONINPUT.U_NOM, '').toUpperCase();
                   }}
                 />
                 <label htmlFor="firstname-footer" className="sr-only">Indiquez votre prénom</label>
@@ -192,13 +192,13 @@ export default function Footer() {
                   onBlur={formulaire}
                   required
                   onInput={(event) => {
-                    event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
+                    event.target.value = event.target.value.replace(ONINPUT.U_PRENOM, '')
                   }}
                 />
               </div>
               <div className={footerCSS.divFormNewsletterB}>
-              <label htmlFor="email-footer" className="sr-only">Indiquez votre email</label>
-              <input
+                <label htmlFor="email-footer" className="sr-only">Indiquez votre email</label>
+                <input
                   className={footerCSS.inputFormNewsletterB}
                   autocomplete="email"
                   placeholder='E-mail'
@@ -213,7 +213,7 @@ export default function Footer() {
                   onBlur={formulaire}
                   required
                   onInput={(event) => {
-                    event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                    event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                   }}
                 />
                 <button className={footerCSS.btnEnvoiFormNewsletter}>Je m'abonne</button>
