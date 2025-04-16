@@ -36,7 +36,7 @@ export const creationMessage = async (req, res) => {
         
         const champVerif = {firstname, lastname, email, phone, content}
         let errors = {}
-        for (const champ in USER_CHAMPS) {
+        for (const champ in champVerif) {
             const { regex, minLength, maxLength, min, max, errorMessage, type } = USER_CHAMPS[champ]
             const value = champVerif[champ]
 
