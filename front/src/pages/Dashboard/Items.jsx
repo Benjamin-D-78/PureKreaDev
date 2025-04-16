@@ -7,6 +7,7 @@ import BoutiqueDashboard from './BoutiqueDashboard'
 import axiosInstance from '../../utils/axiosInstance'
 import { URL } from '../../utils/constantes'
 import { RGXR, PATTERN } from '../../utils/regex'
+import { ERROR } from '../../utils/error'
 
 const AjoutItem = () => {
 
@@ -51,7 +52,7 @@ const AjoutItem = () => {
     if (item.name) {
       const nameRegexr = RGXR.ITEM_NAME;
       if (!nameRegexr.test(item.name) || item.name.length < 2 || item.name.length > 30) {
-        messageError.name = "Entre 2 et 30 caractères attendus."
+        messageError.name = ERROR.I_NAME
         isValid = false;
       }
     }
@@ -59,7 +60,7 @@ const AjoutItem = () => {
     if (item.width) {
       const widthRegexr = RGXR.ITEM_WIDTH;
       if (!widthRegexr.test(item.width) || item.width.length < 1 || item.width.length > 6) {
-        messageError.width = "Entre 1 et 6 caractères attendus (virgule compris)."
+        messageError.width = ERROR.I_WIDTH
         isValid = false;
       }
     }
@@ -67,7 +68,7 @@ const AjoutItem = () => {
     if (item.color) {
       const colorRegexr = RGXR.ITEM_COLOR;
       if (!colorRegexr.test(item.color) || item.color.length < 2 || item.color.length > 30) {
-        messageError.color = "Entre 2 et 30 caractères attendus."
+        messageError.color = ERROR.I_COLOR
         isValid = false;
       }
     }
@@ -75,7 +76,7 @@ const AjoutItem = () => {
     if (item.content) {
       const contentRegexr = RGXR.ITEM_CONTENT;
       if (!contentRegexr.test(item.content) || item.content.length < 2 || item.content.length > 60) {
-        messageError.content = "Entre 2 et 60 caractères attendus."
+        messageError.content = ERROR.I_CONTENT
         isValid = false;
       }
     }
@@ -83,7 +84,7 @@ const AjoutItem = () => {
     if (item.detail) {
       const detailRegexr = RGXR.ITEM_DETAIL;
       if (!detailRegexr.test(item.detail) || item.detail.length < 2 || item.detail.length > 60) {
-        messageError.detail = "Entre 2 et 60 caractères attendus."
+        messageError.detail = ERROR.I_DETAILS
         isValid = false;
       }
     }
@@ -91,7 +92,7 @@ const AjoutItem = () => {
     if (item.category) {
       const categoryRegexr = RGXR.ITEM_CATEGORY;
       if (!categoryRegexr.test(item.category) || item.category.length < 1 || item.category.length > 4) {
-        messageError.category = "4 chiffres attendus."
+        messageError.category = ERROR.I_CATEGORY
         isValid = false;
       }
     }
@@ -99,7 +100,7 @@ const AjoutItem = () => {
     if (item.stock) {
       const stockRegexr = RGXR.ITEM_STOCK;
       if (!stockRegexr.test(item.stock) || item.stock.length < 1 || item.stock.length > 6) {
-        messageError.stock = "Entre 1 et 6 caractères attendus."
+        messageError.stock = ERROR.I_STOCK
         isValid = false;
       }
     }
@@ -107,7 +108,7 @@ const AjoutItem = () => {
     if (item.price) {
       const priceRegexr = RGXR.ITEM_PRICE;
       if (!priceRegexr.test(item.price) || item.price.length < 1 || item.price.length > 7) {
-        messageError.price = "Entre 1 et 7 caractères attendus."
+        messageError.price = ERROR.I_PRICE
         isValid = false;
       }
     }
@@ -131,13 +132,9 @@ const AjoutItem = () => {
 
   }
 
-  const checkInput = (event) => {
-    const { name } = event.target;
-    formulaire()
-  }
-
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // Si le champ qu’on est en train de modifier est une image, je vais le ranger dans un objet à part (picture) dans mon state.
     if (name.startsWith("img")) { // On vérifie que la chaîne de caractère commence bien par "img"
       setItem(prev => ({
         ...prev, // Garde toutes les propriétés précédentes
@@ -185,7 +182,7 @@ const AjoutItem = () => {
             name='name'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={30}
             pattern={PATTERN.ITEM_NAME}
@@ -204,7 +201,7 @@ const AjoutItem = () => {
             // step=".1"
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={1}
             maxLength={6}
             pattern={PATTERN.ITEM_WIDTH}
@@ -222,7 +219,7 @@ const AjoutItem = () => {
             name='color'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={30}
             pattern={PATTERN.ITEM_COLOR}
@@ -240,7 +237,7 @@ const AjoutItem = () => {
             name='content'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={60}
             pattern={PATTERN.ITEM_CONTENT}
@@ -258,7 +255,7 @@ const AjoutItem = () => {
             name='detail'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={60}
             pattern={PATTERN.ITEM_CONTENT}
@@ -276,7 +273,7 @@ const AjoutItem = () => {
             name='category'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={4}
             maxLength={4}
             pattern={PATTERN.ITEM_CATEGORY}
@@ -293,7 +290,7 @@ const AjoutItem = () => {
             name='stock'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={1}
             maxLength={6}
             pattern={PATTERN.ITEM_STOCK}
@@ -310,7 +307,7 @@ const AjoutItem = () => {
             name='price'
             required
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={1}
             maxLength={7}
             pattern={PATTERN.ITEM_PRICE}
@@ -333,7 +330,7 @@ const AjoutItem = () => {
                 name={imgName}
                 placeholder={`Image ${imgName.slice(-1)}`}
                 onChange={handleChange}
-                onBlur={checkInput}
+                onBlur={formulaire}
                 minLength={1}
                 maxLength={200}
                 pattern={PATTERN.ITEM_IMAGE}

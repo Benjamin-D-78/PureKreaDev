@@ -4,6 +4,8 @@ import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { URL } from "../utils/constantes";
+import { RGXR } from "../utils/regex";
+import { ERROR } from "../utils/error";
 import axiosInstance from "../utils/axiosInstance";
 
 export const PanierContext = createContext()
@@ -161,6 +163,14 @@ export const PanierProvider = ({ children }) => {
             if (panier.length === 0) {
                 toast.error("Votre panier est vide. Veuillez ajouter des articles pour pouvoir passer commande.");
                 return;
+            }
+
+            if (commentaire) {
+                const regexComment = RGXR.CONTENT
+                if (!regexComment.test(commentaire) || commentaire.length < 2 || commentaire.length > 500) {
+                    toast.error(ERROR.U_CONTENT);
+                    return;
+                }
             }
 
             // On calcule le prix total du panier en ajoutant le prix total pour chaque article

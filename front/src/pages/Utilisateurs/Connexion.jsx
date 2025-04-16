@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext"
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
 import { RGXR, PATTERN } from '../../utils/regex'
+import { ERROR } from '../../utils/error'
 
 // ICONES
 import voir from "../../images/Icones/voir.svg"
@@ -25,14 +26,14 @@ const Connexion = () => {
 
 
 
-  const formulaire = () => {
-    const messageError = {};
+  const formulaire = (champ) => {
+    const messageError = {...error};
     let isValid = true;
 
     if (user.email) {
       const emailRegexr = RGXR.EMAIL;
       if (!emailRegexr.test(user.email) || user.email.length < 8 || user.email.length > 60) {
-        messageError.email = "Format email, entre 10 et 60 caractères attendus."
+        messageError.email = ERROR.U_EMAIL
         isValid = false;
       }
     }
@@ -40,9 +41,13 @@ const Connexion = () => {
     if (user.password) {
       const passwordRegexr = RGXR.PASSWORD;
       if (!passwordRegexr.test(user.password) || user.password.length < 8 || user.password.length > 40) {
-        messageError.password = "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)."
+        messageError.password = ERROR.U_PASSWORD
         isValid = false;
       }
+    }
+
+    if (isValid && champ in messageError) {
+      messageError[champ] = ""
     }
 
     setError(messageError);
@@ -63,8 +68,17 @@ const Connexion = () => {
       toast.error("Veuillez remplir tous les champs", { autoClose: 3000 })
       return;
     }
+
+    let form = true
+    for (const champ in user) {
+      const isValid = formulaire(champ)
+      if (!isValid) form = false
+    }
     
-    if (!formulaire()) return;
+    if (!form){
+      toast.error("Veuillez saisir les champs correctement.", { autoClose: 3000 })
+      return;
+    }
 
     dataFormConnexion(user) // On appelle Context
   }
@@ -85,6 +99,7 @@ const Connexion = () => {
                 autocomplete="email" // Accessibilité
                 className={coin.inputCoIn}
                 onChange={handleChange}
+                onBlur={() => formulaire("email")}
                 minLength={10}
                 maxLength={60}
                 pattern={PATTERN.EMAIL}
@@ -104,6 +119,7 @@ const Connexion = () => {
                     autocomplete="current-password"
                     className={coin.inputCoIn}
                     onChange={handleChange}
+                    onBlur={() => formulaire("password")}
                     minLength={8}
                     maxLength={40}
                     pattern={PATTERN.PASSWORD}

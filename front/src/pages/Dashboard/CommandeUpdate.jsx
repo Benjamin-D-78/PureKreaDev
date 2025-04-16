@@ -20,7 +20,6 @@ const CommandeUpdate = () => {
   })
 
   useEffect(() => {
-
     const commandeById = async () => {
       try {
         const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../../utils/axiosInstance';
 import { URL } from '../../utils/constantes';
 import { RGXR, PATTERN } from '../../utils/regex';
+import { ERROR } from '../../utils/error';
 
 // CSS
 import items from "../Dashboard/css/items.module.css"
@@ -71,7 +72,7 @@ function UpdateUsers() {
     if (utilisateur.lastname) {
       const lastnameRegexr = RGXR.NOM;
       if (!lastnameRegexr.test(utilisateur.lastname) || utilisateur.lastname.length < 2 || utilisateur.lastname.length > 30) {
-        messageError.lastname = "Entre 2 et 30 caractères attendus."
+        messageError.lastname = ERROR.U_LASTNAME
         isValid = false;
       }
     }
@@ -79,7 +80,7 @@ function UpdateUsers() {
     if (utilisateur.firstname) {
       const firstnameRegexr = RGXR.PRENOM;
       if (!firstnameRegexr.test(utilisateur.firstname) || utilisateur.firstname.length < 2 || utilisateur.firstname.length > 30) {
-        messageError.firstname = "Entre 2 et 30 caractères attendus."
+        messageError.firstname = ERROR.U_FIRSTNAME
         isValid = false;
       }
     }
@@ -87,7 +88,7 @@ function UpdateUsers() {
     if (utilisateur.email) {
       const emailRegexr = RGXR.EMAIL;
       if (!emailRegexr.test(utilisateur.email) || utilisateur.email.length < 8 || utilisateur.email.length > 60) {
-        messageError.email = "Entre 8 et 60 caractères attendus."
+        messageError.email = ERROR.U_EMAIL
         isValid = false;
       }
     }
@@ -95,7 +96,7 @@ function UpdateUsers() {
     if (utilisateur.phone) {
       const phoneRegexr = RGXR.PHONE;
       if (!phoneRegexr.test(utilisateur.phone) || utilisateur.phone.length < 10 || utilisateur.phone.length > 10) {
-        messageError.phone = "10 chiffres attendus."
+        messageError.phone = ERROR.U_PHONE
         isValid = false;
       }
     }
@@ -103,7 +104,7 @@ function UpdateUsers() {
     if (utilisateur.adress) {
       const adressRegexr = RGXR.ADRESS;
       if (!adressRegexr.test(utilisateur.adress) || utilisateur.adress.length < 8 || utilisateur.adress.length > 70) {
-        messageError.adress = "Adresse : Entre 8 et 70 caractères attendus."
+        messageError.adress = ERROR.U_ADRESS
         isValid = false;
       }
     }
@@ -111,7 +112,7 @@ function UpdateUsers() {
     if (utilisateur.postal) {
       const postalRegexr = RGXR.POSTAL;
       if (!postalRegexr.test(utilisateur.postal) || utilisateur.postal.length < 5 || utilisateur.postal.length > 5) {
-        messageError.postal = " Code postal : 5 chiffres attendus."
+        messageError.postal = ERROR.U_POSTAL
         isValid = false;
       }
     }
@@ -119,7 +120,7 @@ function UpdateUsers() {
     if (utilisateur.town) {
       const townRegexr = RGXR.TOWN;
       if (!townRegexr.test(utilisateur.town) || utilisateur.town.length < 2 || utilisateur.town.length > 50) {
-        messageError.town = "Ville : Entre 2 et 50 caractères attendus."
+        messageError.town = ERROR.U_TOWN
         isValid = false;
       }
     }
@@ -127,13 +128,6 @@ function UpdateUsers() {
     setError(messageError);
     return isValid;
   }
-
-
-  const checkInput = (event) => {
-    const { name } = event.target;
-    formulaire()
-  }
-
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -201,7 +195,7 @@ function UpdateUsers() {
             name='firstname'
             value={utilisateur.firstname}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={30}
             pattern={PATTERN.PRENOM}
@@ -218,7 +212,7 @@ function UpdateUsers() {
             name='lastname'
             value={utilisateur.lastname}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={30}
             pattern={PATTERN.NOM}
@@ -235,7 +229,7 @@ function UpdateUsers() {
             name='email'
             value={utilisateur.email}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={8}
             maxLength={60}
             pattern={PATTERN.EMAIL}
@@ -251,7 +245,7 @@ function UpdateUsers() {
             name='phone'
             value={utilisateur.phone}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={10}
             maxLength={10}
             pattern={PATTERN.PHONE}
@@ -267,7 +261,7 @@ function UpdateUsers() {
             name='adress'
             value={utilisateur.adress}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={8}
             maxLength={70}
             pattern={PATTERN.ADRESS}
@@ -283,7 +277,7 @@ function UpdateUsers() {
             name='postal'
             value={utilisateur.postal}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={5}
             maxLength={5}
             pattern={PATTERN.POSTAL}
@@ -299,7 +293,7 @@ function UpdateUsers() {
             name='town'
             value={utilisateur.town}
             onChange={handleChange}
-            onBlur={checkInput}
+            onBlur={formulaire}
             minLength={2}
             maxLength={50}
             pattern={PATTERN.TOWN}

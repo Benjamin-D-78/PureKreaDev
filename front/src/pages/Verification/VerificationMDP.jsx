@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../../utils/axiosInstance';
 import { URL } from '../../utils/constantes'
 import { RGXR, PATTERN } from '../../utils/regex'
+import { ERROR } from '../../utils/error'
 
 // COMPOSANTS
 import NavBar from '../../components/NavBar/NavBar';
@@ -66,7 +67,7 @@ const VerificationMDP = () => {
         if (user.email) {
             const emailRegexr = RGXR.EMAIL;
             if (!emailRegexr.test(user.email) || user.email.length < 8 || user.email.length > 60) {
-                messageError.email = "Format email, entre 8 et 60 caractères attendus."
+                messageError.email = ERROR.U_EMAIL
                 isValid = false;
             }
         }
@@ -96,12 +97,6 @@ const VerificationMDP = () => {
             setMdpTape(true);
         }
     }
-
-    const checkInput = (event) => {
-        const { name } = event.target; // On récupère le nom du champ qui a perdu le focus
-        formulaire(); // on rappelle la fonction formumaire pour tenter de revalider.
-    }
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -154,7 +149,7 @@ const VerificationMDP = () => {
                                     name='email'
                                     id='email-inscription'
                                     onChange={handleChange}
-                                    onBlur={checkInput}
+                                    onBlur={formulaire}
                                     minLength={8}
                                     maxLength={60}
                                     pattern={PATTERN.EMAIL}
@@ -173,7 +168,7 @@ const VerificationMDP = () => {
                                             name='password'
                                             id='password-inscription'
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={formulaire}
                                             minLength={8}
                                             maxLength={40}
                                             pattern={PATTERN.PASSWORD}
@@ -196,7 +191,7 @@ const VerificationMDP = () => {
                                             name='repeatPassword'
                                             id='repeatPassword-inscription'
                                             onChange={handleChange}
-                                            onBlur={checkInput}
+                                            onBlur={formulaire}
                                             minLength={8}
                                             maxLength={40}
                                             pattern={PATTERN.PASSWORD}

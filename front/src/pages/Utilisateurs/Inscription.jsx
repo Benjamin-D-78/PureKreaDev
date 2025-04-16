@@ -5,6 +5,7 @@ import coin from "./coin.module.css"
 
 // CENRALISATION
 import { URL } from '../../utils/constantes'
+import { ERROR } from '../../utils/error'
 import axiosInstance from '../../utils/axiosInstance'
 import ReCAPTCHA from 'react-google-recaptcha'
 
@@ -49,21 +50,21 @@ const Inscription = () => {
         if (user.lastname) {
             const lastnameRegexr = RGXR.NOM;
             if (!lastnameRegexr.test(user.lastname) || user.lastname.length < 2 || user.lastname.length > 30) {
-                messageError.lastname = "Entre 2 et 30 caractères attendus."
+                messageError.lastname = ERROR.U_LASTNAME
                 isValid = false;
             }
         }
         if (user.firstname) {
             const firstnameRegexr = RGXR.PRENOM;
             if (!firstnameRegexr.test(user.firstname) || user.firstname.length < 2 || user.firstname.length > 30) {
-                messageError.firstname = "Entre 2 et 30 caractères attendus."
+                messageError.firstname = ERROR.U_FIRSTNAME
                 isValid = false;
             }
         }
         if (user.email) {
             const emailRegexr = RGXR.EMAIL;
             if (!emailRegexr.test(user.email) || user.email.length < 8 || user.email.length > 60) {
-                messageError.email = "Format email, entre 8 et 60 caractères attendus."
+                messageError.email = ERROR.U_EMAIL
                 isValid = false;
             }
         }
@@ -104,11 +105,6 @@ const Inscription = () => {
         if (refRecaptcha.current) {
             refRecaptcha.current.reset()
         }
-    }
-
-    const checkInput = (event) => {
-        const { name } = event.target; // On récupère le nom du champ qui a perdu le focus
-        formulaire(); // on rappelle la fonction formumaire pour tenter de revalider.
     }
 
     const handleSubmit = async (event) => {
@@ -165,7 +161,7 @@ const Inscription = () => {
                                 id='firstname-inscription'
                                 autocomplete="off"
                                 onChange={handleChange}
-                                onBlur={checkInput}
+                                onBlur={formulaire}
                                 minLength={2}
                                 maxLength={30}
                                 pattern={PATTERN.PRENOM}
@@ -184,7 +180,7 @@ const Inscription = () => {
                                 id='lastname-inscription'
                                 autocomplete="off"
                                 onChange={handleChange}
-                                onBlur={checkInput}
+                                onBlur={formulaire}
                                 minLength={2}
                                 maxLength={30}
                                 pattern={PATTERN.NOM}
@@ -203,7 +199,7 @@ const Inscription = () => {
                                 id='email-inscription'
                                 autocomplete="off"
                                 onChange={handleChange}
-                                onBlur={checkInput}
+                                onBlur={formulaire}
                                 minLength={8}
                                 maxLength={60}
                                 pattern={PATTERN.EMAIL}
@@ -224,7 +220,7 @@ const Inscription = () => {
                                         id='password-inscription'
                                         autocomplete="off"
                                         onChange={handleChange}
-                                        onBlur={checkInput}
+                                        onBlur={formulaire}
                                         minLength={8}
                                         maxLength={40}
                                         pattern={PATTERN.PASSWORD}
@@ -248,7 +244,7 @@ const Inscription = () => {
                                         id='repeatPassword-inscription'
                                         autocomplete="off"
                                         onChange={handleChange}
-                                        onBlur={checkInput}
+                                        onBlur={formulaire}
                                         minLength={8}
                                         maxLength={40}
                                         pattern={PATTERN.PASSWORD}

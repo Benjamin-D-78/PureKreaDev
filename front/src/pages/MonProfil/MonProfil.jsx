@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { URL } from '../../utils/constantes.js';
 import { RGXR, PATTERN } from '../../utils/regex.js';
 import axiosInstance from '../../utils/axiosInstance.js';
+import { ERROR } from '../../utils/error.js';
 
 // ICONES
 import voir from "../../images/Icones/voir.png"
@@ -47,12 +48,6 @@ const MonProfil = () => {
     const voirMDPC = () => {
         setVoirC(!voirC)
     }
-
-
-
-
-
-
 
 
     const [ancienMDP, setAncienMDP] = useState("");
@@ -97,10 +92,6 @@ const MonProfil = () => {
     }, [id])
 
 
-
-
-
-
     const formulaire = () => {
         const messageError = {};
         let isValid = true;
@@ -108,7 +99,7 @@ const MonProfil = () => {
         if (utilisateur.lastname) {
             const lastnameRegexr = RGXR.NOM;
             if (!lastnameRegexr.test(utilisateur.lastname) || utilisateur.lastname.length < 2 || utilisateur.lastname.length > 30) {
-                messageError.lastname = "Entre 2 et 30 caractères attendus."
+                messageError.lastname = ERROR.U_LASTNAME
                 isValid = false;
             }
         }
@@ -116,7 +107,7 @@ const MonProfil = () => {
         if (utilisateur.firstname) {
             const firstnameRegexr = RGXR.PRENOM;
             if (!firstnameRegexr.test(utilisateur.firstname) || utilisateur.firstname.length < 2 || utilisateur.firstname.length > 30) {
-                messageError.firstname = "Entre 2 et 30 caractères attendus."
+                messageError.firstname = ERROR.U_FIRSTNAME
                 isValid = false;
             }
         }
@@ -124,21 +115,21 @@ const MonProfil = () => {
         if (utilisateur.email) {
             const emailRegexr = RGXR.EMAIL;
             if (!emailRegexr.test(utilisateur.email) || utilisateur.email.length < 8 || utilisateur.email.length > 60) {
-                messageError.email = "Entre 8 et 60 caractères attendus."
+                messageError.email = ERROR.U_EMAIL
                 isValid = false;
             }
         }
 
         const passwordRegexr = RGXR.PASSWORD;
         if (newMDP && !passwordRegexr.test(newMDP)) {
-            messageError.newMDP = "Entre 8 et 40 caractères, (au moins une minuscule, une majuscule, un chiffre et un caractère spécial)."
+            messageError.newMDP = ERROR.U_PASSWORD
             isValid = false;
         }
 
         if (utilisateur.phone) {
             const phoneRegexr = RGXR.PHONE;
             if (!phoneRegexr.test(utilisateur.phone) || utilisateur.phone.length < 10 || utilisateur.phone.length > 10) {
-                messageError.phone = "10 chiffres attendus."
+                messageError.phone = ERROR.U_PHONE
                 isValid = false;
             }
         }
@@ -146,7 +137,7 @@ const MonProfil = () => {
         if (utilisateur.adress) {
             const adressRegexr = RGXR.ADRESS;
             if (!adressRegexr.test(utilisateur.adress) || utilisateur.adress.length < 8 || utilisateur.adress.length > 70) {
-                messageError.adress = "Adresse : Entre 8 et 70 caractères attendus."
+                messageError.adress = ERROR.U_ADRESS
                 isValid = false;
             }
         }
@@ -154,7 +145,7 @@ const MonProfil = () => {
         if (utilisateur.postal) {
             const postalRegexr = RGXR.POSTAL;
             if (!postalRegexr.test(utilisateur.postal) || utilisateur.postal.length < 5 || utilisateur.postal.length > 5) {
-                messageError.postal = " Code postal : 5 chiffres attendus."
+                messageError.postal = ERROR.U_POSTAL
                 isValid = false;
             }
         }
@@ -162,7 +153,7 @@ const MonProfil = () => {
         if (utilisateur.town) {
             const townRegexr = RGXR.TOWN;
             if (!townRegexr.test(utilisateur.town) || utilisateur.town.length < 2 || utilisateur.town.length > 50) {
-                messageError.town = "Ville : Entre 2 et 50 caractères attendus."
+                messageError.town = ERROR.U_TOWN
                 isValid = false;
             }
         }
@@ -170,8 +161,6 @@ const MonProfil = () => {
         setError(messageError);
         return isValid;
     }
-
-
 
 
     // Permet de mettre à jour les valeurs dans le state "utilisateur"

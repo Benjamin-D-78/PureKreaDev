@@ -13,6 +13,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from "../../utils/recaptcha";
 import { RGXR, PATTERN } from "../../utils/regex";
 import { URL } from "../../utils/constantes";
+import { ERROR } from "../../utils/error";
 
 const Reset = () => {
 
@@ -37,7 +38,7 @@ const Reset = () => {
         if (user.email) {
             const emailRegexr = RGXR.EMAIL;
             if (!emailRegexr.test(user.email) || user.email.length < 8 || user.email.length > 60) {
-                messageError.email = "Format email, entre 8 et 60 caractères attendus."
+                messageError.email = ERROR.U_EMAIL
                 isValid = false;
             }
         }

@@ -7,6 +7,7 @@ import items from "./css/items.module.css"
 import { URL } from '../../utils/constantes'
 import { RGXR, PATTERN } from '../../utils/regex'
 import axiosInstance from '../../utils/axiosInstance'
+import { ERROR } from '../../utils/error'
 
 const UpdateItems = () => {
 
@@ -52,7 +53,7 @@ const UpdateItems = () => {
         if (item.name) {
             const nameRegexr = RGXR.ITEM_NAME;
             if (!nameRegexr.test(item.name) || item.name.length < 2 || item.name.length > 30) {
-                messageError.name = "Entre 2 et 30 caractères attendus."
+                messageError.name = ERROR.I_NAME
                 isValid = false;
             }
         }
@@ -60,7 +61,7 @@ const UpdateItems = () => {
         if (item.width) {
             const widthRegexr = RGXR.ITEM_WIDTH;
             if (!widthRegexr.test(item.width) || item.width.length < 1 || item.width.length > 6) {
-                messageError.width = "Entre 1 et 6 caractères attendus (virgule compris)."
+                messageError.width = ERROR.I_WIDTH
                 isValid = false;
             }
         }
@@ -68,7 +69,7 @@ const UpdateItems = () => {
         if (item.color) {
             const colorRegexr = RGXR.ITEM_COLOR;
             if (!colorRegexr.test(item.color) || item.color.length < 2 || item.color.length > 30) {
-                messageError.color = "Entre 2 et 30 caractères attendus."
+                messageError.color = ERROR.I_COLOR
                 isValid = false;
             }
         }
@@ -76,7 +77,7 @@ const UpdateItems = () => {
         if (item.content) {
             const contentRegexr = RGXR.ITEM_CONTENT;
             if (!contentRegexr.test(item.content) || item.content.length < 2 || item.content.length > 60) {
-                messageError.content = "Entre 2 et 60 caractères attendus."
+                messageError.content = ERROR.I_CONTENT
                 isValid = false;
             }
         }
@@ -84,7 +85,7 @@ const UpdateItems = () => {
         if (item.detail) {
             const detailRegexr = RGXR.ITEM_DETAIL;
             if (!detailRegexr.test(item.detail) || item.detail.length < 2 || item.detail.length > 60) {
-                messageError.detail = "Entre 2 et 60 caractères attendus."
+                messageError.detail = ERROR.I_DETAILS
                 isValid = false;
             }
         }
@@ -92,7 +93,7 @@ const UpdateItems = () => {
         if (item.category) {
             const categoryRegexr = RGXR.ITEM_CATEGORY;
             if (!categoryRegexr.test(item.category) || item.category.length < 1 || item.category.length > 4) {
-                messageError.category = "4 chiffres attendus."
+                messageError.category = ERROR.I_CATEGORY
                 isValid = false;
             }
         }
@@ -100,7 +101,7 @@ const UpdateItems = () => {
         if (item.stock) {
             const stockRegexr = RGXR.ITEM_STOCK;
             if (!stockRegexr.test(item.stock) || item.stock.length < 1 || item.stock.length > 6) {
-                messageError.stock = "Entre 1 et 6 caractères attendus."
+                messageError.stock = ERROR.I_STOCK
                 isValid = false;
             }
         }
@@ -108,7 +109,7 @@ const UpdateItems = () => {
         if (item.price) {
             const priceRegexr = RGXR.ITEM_PRICE;
             if (!priceRegexr.test(item.price) || item.price.length < 1 || item.price.length > 7) {
-                messageError.price = "Entre 1 et 7 caractères attendus."
+                messageError.price = ERROR.I_PRICE
                 isValid = false;
             }
         }
@@ -130,14 +131,6 @@ const UpdateItems = () => {
         setError(messageError);
         return isValid;
     }
-
-
-    const checkInput = (event) => {
-        const { name } = event.target;
-        formulaire()
-    }
-
-
 
     useEffect(() => {
         const itemById = async () => {
@@ -211,7 +204,7 @@ const UpdateItems = () => {
                         value={item.name}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={2}
                         maxLength={30}
                         pattern={PATTERN.ITEM_NAME}
@@ -230,7 +223,7 @@ const UpdateItems = () => {
                         value={item.width}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={1}
                         maxLength={6}
                         // min={1}
@@ -252,7 +245,7 @@ const UpdateItems = () => {
                         value={item.color}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={2}
                         maxLength={30}
                         pattern={PATTERN.ITEM_COLOR}
@@ -271,7 +264,7 @@ const UpdateItems = () => {
                         value={item.content}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={2}
                         maxLength={60}
                         pattern={PATTERN.ITEM_CONTENT}
@@ -290,7 +283,7 @@ const UpdateItems = () => {
                         value={item.detail}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={2}
                         maxLength={60}
                         pattern={PATTERN.ITEM_CONTENT}
@@ -309,7 +302,7 @@ const UpdateItems = () => {
                         value={item.category}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={4}
                         maxLength={4}
                         pattern={PATTERN.ITEM_CATEGORY}
@@ -328,7 +321,7 @@ const UpdateItems = () => {
                         value={item.stock}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={1}
                         maxLength={6}
                         // max={999}
@@ -348,7 +341,7 @@ const UpdateItems = () => {
                         value={item.price}
                         required
                         onChange={handleChange}
-                        onBlur={checkInput}
+                        onBlur={formulaire}
                         minLength={1}
                         maxLength={7}
                         // max={9999}
@@ -372,7 +365,7 @@ const UpdateItems = () => {
                                 name={imgName}
                                 onChange={handleChange}
                                 value={item.picture[imgName] ? item.picture[imgName] : ""}
-                                onBlur={checkInput}
+                                onBlur={formulaire}
                                 minLength={1}
                                 maxLength={200}
                                 pattern={PATTERN.ITEM_IMAGE}
