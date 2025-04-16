@@ -34,10 +34,11 @@ export const creationMessage = async (req, res) => {
             return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
         }
         
+        const champVerif = {firstname, lastname, email, phone, content}
         let errors = {}
         for (const champ in USER_CHAMPS) {
             const { regex, minLength, maxLength, min, max, errorMessage, type } = USER_CHAMPS[champ]
-            const value = req.body[champ]
+            const value = champVerif[champ]
 
             if (type === "number") {
                 const number = Number(value)

@@ -82,10 +82,10 @@ const Contact = () => {
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
-        // On utilise prevState comme pour dire qu'on utilise le state le plus récent.
-        if (type === "checkbox") {
+        // On utilise prev comme pour dire qu'on utilise le state le plus récent.
+        if (type === "checkbox") { // si l'élément est de type checked
             setMessage((prev) => ({ ...prev, [name]: checked }))
-        } else {
+        } else { // si l'élément est d'un autre type
             setMessage((prev) => ({ ...prev, [name]: value }))
         }
     }
