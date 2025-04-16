@@ -1,5 +1,5 @@
-import { RGXR } from "./regex"
-import { ERROR } from "./error"
+import { RGXR } from "./regex.js"
+import { ERROR } from "./error.js"
 
 export const USER_CHAMPS = {
     firstname: {
@@ -19,6 +19,12 @@ export const USER_CHAMPS = {
         minLength: 8,
         maxLength: 60,
         errorMessage: ERROR.U_EMAIL
+    },
+    content: {
+        regex: RGXR.CONTENT,
+        minLength: 2,
+        maxLength: 500,
+        errorMessage: ERROR.U_CONTENT
     },
     phone: {
         regex: RGXR.PHONE,
