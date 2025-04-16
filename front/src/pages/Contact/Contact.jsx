@@ -280,7 +280,7 @@ const Contact = () => {
                                     <div className={contact.contientLabelInput}>
                                         <label htmlFor="phone">Téléphone</label>
                                         <input
-                                            type="text"
+                                            type="number"
                                             name='phone'
                                             id='phone'
                                             autocomplete="tel"
