@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
-import { RGXR, PATTERN } from '../../utils/regex'
+import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
 import { ERROR } from '../../utils/error'
 
 // ICONES
@@ -104,7 +104,7 @@ const Connexion = () => {
                 maxLength={60}
                 pattern={PATTERN.EMAIL}
                 onInput={(event) => {
-                  event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
+                  event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                 }} />
               {error.email && <span className={coin.spanError}>{error.email}</span>}
 
@@ -124,7 +124,7 @@ const Connexion = () => {
                     maxLength={40}
                     pattern={PATTERN.PASSWORD}
                     onInput={(event) => {
-                      event.target.value = event.target.value.replace(/[^a-zA-Z0-9,;.?!\*\(\)]/g, '');
+                      event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                     }} />
                   {error.password && <span className={coin.spanError}>{error.password}</span>}
 

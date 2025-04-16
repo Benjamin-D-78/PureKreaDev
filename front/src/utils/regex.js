@@ -20,6 +20,11 @@ export const RGXR = {
     ITEM_IMAGE: /^https:\/\/.*$/
 }
 
+export const ONINPUT = {
+    U_EMAIL: /[^a-z0-9.@_-]/g,
+    U_PASSWORD: /[^a-zA-Z0-9,;.?!\*\(\)]/g,
+}
+
 export const PATTERN = {
     PRENOM: "^(?=[a-zA-ZàèéùÀÈÉÙ'-\s]*[a-zA-ZàèéùÀÈÉÙ]{2})[a-zA-ZàèéùÀÈÉÙ'-\s]{2,30}$",
     NOM: "^[a-zA-ZàèéùÀÈÉÙ'-\s]{2,30}$",
