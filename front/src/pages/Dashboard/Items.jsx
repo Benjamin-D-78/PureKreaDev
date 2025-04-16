@@ -6,7 +6,7 @@ import BoutiqueDashboard from './BoutiqueDashboard'
 // EXTERNALISATION
 import axiosInstance from '../../utils/axiosInstance'
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/Regixr'
+import { RGXR, PATTERN } from '../../utils/regex'
 
 const AjoutItem = () => {
 

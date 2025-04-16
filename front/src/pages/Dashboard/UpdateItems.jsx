@@ -5,7 +5,7 @@ import items from "./css/items.module.css"
 
 // EXTERNALISATION
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/Regixr'
+import { RGXR, PATTERN } from '../../utils/regex'
 import axiosInstance from '../../utils/axiosInstance'
 
 const UpdateItems = () => {

@@ -8,7 +8,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import axiosInstance from '../../utils/axiosInstance'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 import { URL } from '../../utils/constantes'
-import { RGXR, PATTERN } from '../../utils/Regixr'
+import { RGXR, PATTERN } from '../../utils/regex'
 
 // COMPOSANTS
 import NavBar from '../../components/NavBar/NavBar'

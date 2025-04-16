@@ -11,7 +11,7 @@ import Footer from "../../components/Footer/Footer";
 // CENTRALISATION
 import axiosInstance from "../../utils/axiosInstance";
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from "../../utils/recaptcha";
-import { RGXR, PATTERN } from "../../utils/Regixr";
+import { RGXR, PATTERN } from "../../utils/regex";
 import { URL } from "../../utils/constantes";
 
 const Reset = () => {

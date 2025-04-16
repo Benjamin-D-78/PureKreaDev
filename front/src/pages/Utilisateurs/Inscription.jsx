@@ -14,7 +14,7 @@ import voir from "../../images/Icones/voir.svg"
 // COMPOSANTS
 import NavBar from "../../components/NavBar/NavBar"
 import Footer from '../../components/Footer/Footer'
-import { PATTERN, RGXR } from '../../utils/Regixr'
+import { RGXR, PATTERN } from '../../utils/regex'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
 
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
-import { RGXR, PATTERN } from '../../utils/Regixr'
+import { RGXR, PATTERN } from '../../utils/regex'
 
 // ICONES
 import voir from "../../images/Icones/voir.svg"

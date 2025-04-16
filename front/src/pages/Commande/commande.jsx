@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 
 // EXTERNALISATION
 import { URL } from '../../utils/constantes'
-import { PATTERN } from '../../utils/Regixr'
+import { PATTERN } from '../../utils/regex'
 import axiosInstance from '../../utils/axiosInstance'
 
 // CSS

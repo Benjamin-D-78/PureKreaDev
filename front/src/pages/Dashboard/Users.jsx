@@ -7,7 +7,7 @@ import items from "../Dashboard/css/items.module.css"
 // CONSTANTES
 import axiosInstance from "../../utils/axiosInstance";
 import { URL } from "../../utils/constantes";
-import { RGXR, PATTERN } from "../../utils/Regixr";
+import { RGXR, PATTERN } from "../../utils/regex";
 
 const AjoutUtilisateur = () => {
 

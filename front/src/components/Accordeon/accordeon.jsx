@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import accordeon from "./accordeon.module.css"
 
-
-
-
 export default function Accordeon() {
 
     const [ouvrirA, setOuvrirA] = useState(false)

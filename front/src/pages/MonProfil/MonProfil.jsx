@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 // EXTERNALISATION
 import { URL } from '../../utils/constantes.js';
-import { RGXR, PATTERN } from '../../utils/Regixr.jsx';
+import { RGXR, PATTERN } from '../../utils/regex.js';
 import axiosInstance from '../../utils/axiosInstance.js';
 
 // ICONES

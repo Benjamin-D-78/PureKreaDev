@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { NavLink } from "react-router-dom"
 import footerCSS from "./footer.module.css"
 import { toast } from 'react-toastify'
