@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import axios from "axios"
 import { useParams, Link } from "react-router-dom";
 import notfound from "../NotFound/notfound.module.css"
-import { URL } from '../../utils/Constantes';
+import { URL } from '../../utils/constantes';
 import axiosInstance from '../../utils/axiosInstance';
 
 const VerificationEmail = () => {

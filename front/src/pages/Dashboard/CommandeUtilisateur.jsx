@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from "axios"
 import items from "../Dashboard/css/items.module.css"
 
 // EXTERNALISATION
-import { URL } from '../../utils/Constantes';
+import { URL } from '../../utils/constantes';
 import axiosInstance from '../../utils/axiosInstance';
 
 const CommandeUtilisateur = () => {

@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import axios from "axios"
 import { toast } from 'react-toastify'
 import items from "./css/items.module.css"
 import BoutiqueDashboard from './BoutiqueDashboard'
 
 // EXTERNALISATION
 import axiosInstance from '../../utils/axiosInstance'
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
 
 const AjoutItem = () => {

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import footerCSS from "./footer.module.css"
-import axios from "axios"
 import { toast } from 'react-toastify'
 
 // CENTRALISATION

@@ -1,10 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from "axios"
 import { toast } from 'react-toastify'
 
 // EXTERNALISATION
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 import { PATTERN } from '../../utils/Regixr'
 import axiosInstance from '../../utils/axiosInstance'
 

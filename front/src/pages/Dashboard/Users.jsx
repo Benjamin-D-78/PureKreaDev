@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios"
 import { toast } from "react-toastify";
 
 // CSS
@@ -7,7 +6,7 @@ import items from "../Dashboard/css/items.module.css"
 
 // CONSTANTES
 import axiosInstance from "../../utils/axiosInstance";
-import { URL } from "../../utils/Constantes";
+import { URL } from "../../utils/constantes";
 import { RGXR, PATTERN } from "../../utils/Regixr";
 
 const AjoutUtilisateur = () => {

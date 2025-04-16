@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from "axios";
 import visuelPanier from "./visuelPanier.module.css"
-import { URL } from '../../utils/Constantes';
+import { URL } from '../../utils/constantes';
 import axiosInstance from '../../utils/axiosInstance';
 
 // CONTEXT

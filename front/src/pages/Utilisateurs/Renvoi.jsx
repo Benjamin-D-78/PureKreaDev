@@ -1,14 +1,13 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import coin from "./coin.module.css"
-import axios from "axios"
 import { toast } from 'react-toastify'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 // CENTRALISATION
 import axiosInstance from '../../utils/axiosInstance'
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from '../../utils/recaptcha'
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 import { RGXR, PATTERN } from '../../utils/Regixr'
 
 // COMPOSANTS

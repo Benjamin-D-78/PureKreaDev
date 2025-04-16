@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from "axios"
 import items from "../Dashboard/css/items.module.css"
 import { toast } from 'react-toastify'
 
 // EXTERNALISATION
 import axiosInstance from '../../utils/axiosInstance'
-import { URL } from '../../utils/Constantes'
-
+import { URL } from '../../utils/constantes'
 
 const CommandeUpdate = () => {
 

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 // CENTRALISATION
 import axiosInstance from '../../utils/axiosInstance';
-import { URL } from '../../utils/Constantes';
+import { URL } from '../../utils/constantes'
 import { PATTERN, RGXR } from '../../utils/Regixr';
 
 // COMPOSANTS

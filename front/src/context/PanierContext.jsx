@@ -2,9 +2,8 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { debounce } from "lodash"
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
 import { toast } from "react-toastify";
-import { URL } from "../utils/Constantes";
+import { URL } from "../utils/constantes";
 import axiosInstance from "../utils/axiosInstance";
 
 export const PanierContext = createContext()

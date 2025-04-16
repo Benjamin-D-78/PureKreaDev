@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import { toast } from 'react-toastify'
 
-// EXTERNALISATION
+// CENTRALISATION
 import axiosInstance from '../../utils/axiosInstance'
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 
 // ICONES
 import supprimer from "../../images/Icones/supprimer.png"

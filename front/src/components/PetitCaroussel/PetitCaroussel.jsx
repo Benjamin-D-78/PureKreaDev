@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import axios from "axios";
 import { Link } from 'react-router-dom';
 import gauche from "../../images/Icones/gauche.png";
 import droite from "../../images/Icones/droite.png";
 import caroussel from "./petitcaroussel.module.css";
-import { URL } from '../../utils/Constantes';
+import { URL } from '../../utils/constantes';
 import axiosInstance from '../../utils/axiosInstance';
 
 const PetitCaroussel = () => {

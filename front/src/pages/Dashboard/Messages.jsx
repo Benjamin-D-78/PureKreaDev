@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import supprimer from "../../images/Icones/supprimer.png"
 import { toast } from 'react-toastify'
-import axios from "axios"
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 import axiosInstance from '../../utils/axiosInstance'
 
 

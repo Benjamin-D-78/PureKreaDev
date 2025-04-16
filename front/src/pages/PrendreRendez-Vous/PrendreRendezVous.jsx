@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import rdv from "./prendrerdv.module.css"
 
 // COMPOSANTS

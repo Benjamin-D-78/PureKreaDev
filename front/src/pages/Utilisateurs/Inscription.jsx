@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
-import axios from "axios"
+import { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
 
 // CENRALISATION
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 import axiosInstance from '../../utils/axiosInstance'
 import ReCAPTCHA from 'react-google-recaptcha'
 

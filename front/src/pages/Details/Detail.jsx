@@ -1,8 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios"
-import { URL } from "../../utils/Constantes.jsx";
+import { URL } from "../../utils/constantes.js";
 import axiosInstance from "../../utils/axiosInstance.js";
 
 // CSS

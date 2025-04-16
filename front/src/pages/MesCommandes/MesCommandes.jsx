@@ -1,8 +1,7 @@
 // import { useContext } from 'react'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from "axios"
-import { URL } from '../../utils/Constantes.jsx';
+import { URL } from '../../utils/constantes.js';
 import axiosInstance from '../../utils/axiosInstance.js';
 
 // COMPOSANTS

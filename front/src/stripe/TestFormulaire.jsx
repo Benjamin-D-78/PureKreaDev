@@ -1,11 +1,10 @@
 import { useContext, useState, useEffect } from 'react'
-import axios from "axios"
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
 
 // EXTERNALISATION
-import { URL } from '../utils/Constantes'
+import { URL } from '../utils/constantes'
 import axiosInstance from '../utils/axiosInstance'
 
 // CONTEXT

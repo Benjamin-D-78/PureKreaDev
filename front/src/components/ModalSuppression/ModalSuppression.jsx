@@ -1,8 +1,7 @@
 import { useState, useContext } from 'react'
-import axios from "axios"
 import { toast } from 'react-toastify'
 import { AuthContext } from '../../context/AuthContext'
-import { URL } from '../../utils/Constantes'
+import { URL } from '../../utils/constantes'
 import axiosInstance from '../../utils/axiosInstance'
 
 // CSS

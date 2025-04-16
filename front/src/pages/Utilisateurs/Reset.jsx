@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import coin from "./coin.module.css"
@@ -12,7 +12,7 @@ import Footer from "../../components/Footer/Footer";
 import axiosInstance from "../../utils/axiosInstance";
 import useScriptRecaptcha, { RECAPTCHA_PUBLIC_KEY } from "../../utils/recaptcha";
 import { RGXR, PATTERN } from "../../utils/Regixr";
-import { URL } from "../../utils/Constantes";
+import { URL } from "../../utils/constantes";
 
 const Reset = () => {
 

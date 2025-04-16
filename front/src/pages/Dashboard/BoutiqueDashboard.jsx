@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
-import axios from "axios"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { URL } from "../../utils/Constantes";
+import { URL } from "../../utils/constantes";
 import axiosInstance from "../../utils/axiosInstance";
 
 // ICONES
