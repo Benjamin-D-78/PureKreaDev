@@ -43,7 +43,7 @@ export default function Footer() {
 
     if (abonne.firstname) {
       const firstnameRegexr = RGXR.PRENOM;
-      if (!firstnameRegexr.test(abonne.firstname) || abonne.firstname.length < 2 || abonne.firstname > 30) {
+      if (!firstnameRegexr.test(abonne.firstname) || abonne.firstname.length < 2 || abonne.firstname.length > 30) {
         isValid = false;
       }
     }
