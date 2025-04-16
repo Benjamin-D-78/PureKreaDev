@@ -170,6 +170,7 @@ export default function Footer() {
                   pattern={PATTERN.NOM}
                   value={abonne.lastname}
                   onChange={handleChange}
+                  onBlur={formulaire}
                   required
                   onInput={(event) => {
                     event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '').toUpperCase();
@@ -188,6 +189,7 @@ export default function Footer() {
                   pattern={PATTERN.PRENOM}
                   value={abonne.firstname}
                   onChange={handleChange}
+                  onBlur={formulaire}
                   required
                   onInput={(event) => {
                     event.target.value = event.target.value.replace(/[^a-zA-ZàèéùÀÈÉÙ'-\s]/g, '')
@@ -208,6 +210,7 @@ export default function Footer() {
                   pattern={PATTERN.EMAIL}
                   value={abonne.email}
                   onChange={handleChange}
+                  onBlur={formulaire}
                   required
                   onInput={(event) => {
                     event.target.value = event.target.value.replace(/[^a-z0-9.@_-]/g, '').toLowerCase();
