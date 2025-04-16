@@ -9,7 +9,7 @@ export const creationMessage = async (req, res) => {
         // On vérifie si le token est dans la requête
         // console.log(req.body.recaptchaToken)
         // console.log(req.body)
-        const { recaptchaToken, motif, firstname, lastname, email, content, verification } = req.body
+        const { recaptchaToken, motif, firstname, lastname, email, phone, content, verification } = req.body
 
         if (!motif || !firstname || !lastname || !email || !content || !verification) {
             return res.status(400).json({ Message: "Un ou plusieurs champs sont manquants." });
