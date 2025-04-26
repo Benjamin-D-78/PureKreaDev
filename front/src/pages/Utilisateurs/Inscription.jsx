@@ -206,7 +206,7 @@ const Inscription = () => {
                                 onInput={(event) => {
                                     event.target.value = event.target.value.replace(ONINPUT.U_EMAIL, '').toLowerCase();
                                 }} />
-                            <span className={coin.spanAlerte}>Adresse "gmail" recommandée.</span><br />
+                            {/* <span className={coin.spanAlerte}>Adresse "gmail" recommandée.</span><br /> */}
                             {error.email && <span className={coin.spanError}>{error.email}</span>}
                             <br />
 
