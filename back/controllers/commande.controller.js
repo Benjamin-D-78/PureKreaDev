@@ -6,9 +6,9 @@ export const creationCommande = async (req, res) => {
 
     const { userId, panier, comment, statut } = req.body;
     try {
-        if (req.body.comment) {
+        if (comment) {
             const contentRegexr = RGXR.CONTENT;
-            if (!contentRegexr.test(req.body.comment) || req.body.comment.length < 3 || req.body.comment.length > 500) {
+            if (!contentRegexr.test(comment) || comment.length < 3 || comment.length > 500) {
                 return res.status(400).json({ Message: "Format email, entre 3 et 500 caractères attendus." });
             }
         }
