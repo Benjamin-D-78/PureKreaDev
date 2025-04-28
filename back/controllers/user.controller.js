@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { env } from "../config/index.js";
 import { sendEmail, resetMDP } from "../services/nodemailer.js";
 import { RGXR } from "../utils/regex.js";
+import { ERROR } from "../utils/error.js";
 import axios from "axios"
 
 
@@ -12,13 +13,13 @@ import axios from "axios"
 // SIGNUP ( hashage du MDP avec "bcrypt" contenu dans une variable)
 export const inscription = async (req, res, next) => {
     try {
-        // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
-        // console.log(req.body)
-        const recaptchaToken = req.body.recaptchaToken;
+        const {recaptchaToken, firstname, lastname, email, password} = req.body
 
         if (!recaptchaToken) {
-            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+            return res.status(400).json({ message: "Le CAPTCHA est requis." });
+        }
+        if(!firstname || !lastname || !email || !password) {
+            return res.status(400).json({message: "Tous les champs sont requis."})
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -33,24 +34,24 @@ export const inscription = async (req, res, next) => {
 
         // On vérifie la validation recaptcha
         if (!captcha.data.success) {
-            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+            return res.status(400).json({ message: "Echec de la Vérification reCAPTCHA." });
         }
 
         const firstnameRegexr = RGXR.PRENOM;
-        if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
-            return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
+        if (!firstnameRegexr.test(firstname) || firstname.length < 2 || firstname.length > 30) {
+            return res.status(400).json({ message: ERROR.U_FIRSTNAME });
         }
         const lastnameRegexr = RGXR.NOM;
-        if (!lastnameRegexr.test(req.body.lastname) || req.body.lastname.length < 2 || req.body.lastname.length > 30) {
-            return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
+        if (!lastnameRegexr.test(lastname) || lastname.length < 2 || lastname.length > 30) {
+            return res.status(400).json({ message: ERROR.U_LASTNAME });
         }
         const emailRegexr = RGXR.EMAIL;
-        if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
-            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
+        if (!emailRegexr.test(email) || email.length < 10 || email.length > 60) {
+            return res.status(400).json({ message: ERROR.U_EMAIL });
         }
         const passwordRegexr = RGXR.PASSWORD;
-        if (!passwordRegexr.test(req.body.password) || req.body.password.length < 8 || req.body.password.length > 40) {
-            return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
+        if (!passwordRegexr.test(password) || password.length < 8 || password.length > 40) {
+            return res.status(400).json({ message: ERROR.U_PASSWORD });
         }
 
         // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé. Plus il y en a, plus c'est lent et donc mieux c'est.
@@ -59,10 +60,10 @@ export const inscription = async (req, res, next) => {
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        // On envoi le mail à notre utilisateur avecle lien de vérification.
+        // On envoi le mail à notre utilisateur avec le lien de vérification.
         await sendEmail(req.body, verificationToken);
 
-        res.status(201).json({ Message: "L'utilisateur a bien été créé et l'email envoyé." });
+        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
     } catch (error) {
         console.log("Echec lors de l'inscription : ", error)
@@ -82,12 +83,11 @@ export const verifyEmail = async (req, res, next) => {
             new: true,
         });
 
-        res.status(200).json({ message: 'Email vérifié avec succès.' });
+        res.status(200).json({ message: "Email vérifié avec succès." });
 
     } catch (error) {
-        // On peut aussi utiliser la fonction next()
-        console.error('Erreur de vérification:', error);
-        res.status(400).json({ message: 'Lien invalide ou expiré.' });
+        console.error("Erreur de vérification : ", error);
+        res.status(400).json({ message: "Lien invalide ou expiré." });
     }
 };
 
@@ -143,8 +143,7 @@ export const renvoieEmail = async (req, res, next) => {
 
 export const mdpOublie = async (req, res) => {
     try {
-        // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
+        // console.log(req.body.recaptchaToken)
         // console.log(req.body)
         const recaptchaToken = req.body.recaptchaToken;
 
@@ -269,19 +268,22 @@ export const mdpModifie = async (req, res) => {
 // CONNEXION
 export const connexion = async (req, res, next) => {
     try {
+        const {email, password} = req.body
+        if (!email || !password) {
+            return res.status(400).json({message: "Tous les champs sont requis."})
+        }
+
         const emailRegexr = RGXR.EMAIL;
-        if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
-            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
+        if (!emailRegexr.test(email) || email.length < 10 || email.length > 60) {
+            return res.status(400).json({ message: ERROR.U_EMAIL});
         }
         const passwordRegexr = RGXR.PASSWORD;
-        if (!passwordRegexr.test(req.body.password) || req.body.password.length < 8 || req.body.password.length > 40) {
-            return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
+        if (!passwordRegexr.test(password) || password.length < 8 || password.length > 40) {
+            return res.status(400).json({ message: ERROR.U_PASSWORD});
         }
 
-        // Recherche de l'utilisateur dans la BDD
-        const rechercheUser = await userModel.findOne({ email: req.body.email });
-
-        if (!rechercheUser) return res.status(404).json({ Message: "Utilisateur non trouvé." });
+        const rechercheUser = await userModel.findOne({ email: email });
+        if (!rechercheUser) return res.status(404).json({ message: "Utilisateur non trouvé." });
 
         // On vérifie si l'utilisateur a confirmé son email.
         if (!rechercheUser.isVerified) {
@@ -289,32 +291,25 @@ export const connexion = async (req, res, next) => {
         }
 
         // Comparaison du MDP fourni dans la requête avec le MDP dans la BDD.
-        const compareMDP = await bcrypt.compare(req.body.password, rechercheUser.password)
-
+        const compareMDP = await bcrypt.compare(password, rechercheUser.password)
         if (!compareMDP) return res.status(400).json({ Message: "Mauvais Mot De Passe." })
 
-        // Création du Token de connexion avec expiration sous 24h.
-        // Ici nous incluons l'ID de l'utilisateur dans lequel on signe le token via la clé secrète (env.token).
-        // L'expiration prend au bout de 24h.
-        const tokenUser = jwt.sign({ id: rechercheUser._id, role: rechercheUser.role }, env.TOKEN, { expiresIn: "24h" }) // TOKEN = valeur du token renseigné dans mon ".env"
+        const tokenUser = jwt.sign({ id: rechercheUser._id, role: rechercheUser.role }, env.TOKEN, { expiresIn: "24h" })
 
-        // On procède à l'extraction du MDP. Les autres propriétés sont regroupées dans un nouvel objet : "others".
-        const { password, ...others } = rechercheUser._doc
+        // "_doc" est l'objet renvoyé par mongoose, contenant plein de propriétés.
+        const { password: _, ...reste } = rechercheUser._doc
 
         // Envoi du token sous forme de cookie HTTPonly, alors qu'avant le MDP était stocké dans le local storage.
         res.cookie("access_token", tokenUser, {
             httpOnly: true,
             secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
-            sameSite: "None", // Protège des attaques CSRF (usurpation d'identité, etc.) // Lex
-            //Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
+            sameSite: "None", // Protège des attaques CSRF // Lex // Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
-        })
-            .status(200)
-            .json(others) // Renvoie les données en réponse à l'exception du MDP.
+        }).status(200).json(reste) // Renvoie les données en réponse à l'exception du MDP.
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)
-        next(error)
+        res.status(500).json({message: "Echec lors de la tentative de connexion."})
     }
 };
 

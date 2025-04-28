@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
-import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
+import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
 import coin from "./coin.module.css"
 import { RGXR, ONINPUT, PATTERN } from '../../utils/regex'
@@ -16,9 +16,12 @@ import Footer from '../../components/Footer/Footer'
 
 const Connexion = () => {
 
-  const [user, setUser] = useState({});
   const { dataFormConnexion } = useContext(AuthContext);
   const [voirA, setVoirA] = useState(false)
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
   const [error, setError] = useState({
     email: "",
     password: "",
