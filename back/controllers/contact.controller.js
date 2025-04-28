@@ -6,17 +6,13 @@ import { USER_CHAMPS } from "../utils/champs.js";
 // CREATION MESSAGE
 export const creationMessage = async (req, res) => {
     try {
-        // On vérifie si le token est dans la requête
-        // console.log(req.body.recaptchaToken)
-        // console.log(req.body)
         const { recaptchaToken, motif, firstname, lastname, email, phone, content, verification } = req.body
 
-        if (!motif || !firstname || !lastname || !email || !content || !verification) {
-            return res.status(400).json({ Message: "Un ou plusieurs champs sont manquants." });
-        }
-
         if (!recaptchaToken) {
-            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+            return res.status(400).json({ message: "Le CAPTCHA est requis." });
+        }
+        if (!motif || !firstname || !lastname || !email || !content || !verification) {
+            return res.status(400).json({ message: "Un ou plusieurs champs sont manquants." });
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -31,7 +27,7 @@ export const creationMessage = async (req, res) => {
 
         // On vérifie la validation recaptcha
         if (!response.data.success) {
-            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+            return res.status(400).json({ message: "Echec de la Vérification reCAPTCHA." });
         }
         
         const champVerif = {firstname, lastname, email, phone, content}

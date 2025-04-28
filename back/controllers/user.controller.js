@@ -10,7 +10,7 @@ import axios from "axios"
 
 
 
-// SIGNUP ( hashage du MDP avec "bcrypt" contenu dans une variable)
+// SIGNUP
 export const inscription = async (req, res, next) => {
     try {
         const {recaptchaToken, firstname, lastname, email, password} = req.body
@@ -54,7 +54,8 @@ export const inscription = async (req, res, next) => {
             return res.status(400).json({ message: ERROR.U_PASSWORD });
         }
 
-        // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé. Plus il y en a, plus c'est lent et donc mieux c'est.
+        // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
+        // Plus il y en a, plus c'est lent et donc mieux c'est.
         const hashedMDP = await bcrypt.hash(req.body.password, 10)
         const user = await userModel.create({ ...req.body, password: hashedMDP, isVerified: false });
 
@@ -67,7 +68,7 @@ export const inscription = async (req, res, next) => {
 
     } catch (error) {
         console.log("Echec lors de l'inscription : ", error)
-        next(error);
+        res.status(500).json({message : "Echec de la tentative d'inscription."})
     }
 }
 
@@ -386,32 +387,27 @@ export const upUser = async (req, res) => {
             }
         }
 
-        // On vérifie si l'utilisateur existe :
         const response = await userModel.findById(req.params.id);
         if (!response) return res.status(404).json({ Message: "Utilisateur non trouvé." });
 
-        // toString (avec majuscule !) ; ici on compare si l'id de l'utilisateur à updater est le même id que l'utilisateur qui souhaite faire cet update.
-        // req.user.id car on fait appel au "user" définit dans le "auth.js".
         if (req.user.id !== response._id.toString() && req.user.role !== "admin") {
             return res.status(403).json({ Message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         }
 
-        // Si le mot de passe est modifié, on le hache avant de le sauvegarder
         if (req.body.password) {
             if (!req.body.ancienMDP) {
                 return res.status(400).json({ Message: "Le mot de passe actuel est requis." })
             }
 
-            // On vérifie que le mot de passe actuel envoyé par l'utilisateur coresspond à celui stocké dans la BDD
             const correspond = await bcrypt.compare(req.body.ancienMDP, response.password);
             if (!correspond) {
                 return res.status(400).json({ Message: "Le mot de passe actuel est incorrect." })
             }
 
-            // On hashe le nouveau MDP
-            // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé. Plus il y en a, plus c'est lent et donc mieux c'est.
-            const hashedPassword = await bcrypt.hash(req.body.password, 10); // On hache le nouveau mot de passe
-            req.body.password = hashedPassword //On remplace le MDP par sa version hachée.
+            // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
+            // Plus il y en a, plus c'est lent et donc mieux c'est.
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            req.body.password = hashedPassword
         }
         // Mise à jour de l'utilisateur :
         const update = await userModel.findByIdAndUpdate(

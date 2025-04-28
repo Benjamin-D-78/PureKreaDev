@@ -14,14 +14,10 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmail = async (user, verifieToken) => {
 
-  const verificationURL = process.env.NODE_ENV === 'development'
-    ? `http://localhost:3000/verification/${verifieToken}`
-    : `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
-
-  // const verificationLink = `<a href="${verificationURL}">${verificationURL}</a>`;
+  const verificationURL = `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
 
   const mailData = {
-    from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
+    from: env.EMAIL_USER,  // Expéditeur (l'email de l'expéditeur)
     to: user.email,  // Destinataire (l'email de l'utilisateur)
     subject: "PureKréa - Vérifiez votre email",  // Sujet de l'email
     html: `

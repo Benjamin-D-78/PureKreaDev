@@ -133,8 +133,8 @@ const Boutique = () => {
     };
 
     const handleCouleur = (event) => {
-        const couleurValue = event.target.value; // On récupère la valeur de l'option sélectionnée dans le menu
-        if (couleurValue === "Couleur") { // Si l'option sélectionnée est "couleur" alors on réinitialise le filtre, sinon, on maintient sur la valeur déjà sélectionnée.
+        const couleurValue = event.target.value;
+        if (couleurValue === "Couleur") {
             setSelectionCouleur("");
         } else {
             setSelectionCouleur(couleurValue);
