@@ -27,22 +27,26 @@ const Connexion = () => {
 
 
   const formulaire = (champ) => {
-    const messageError = {...error};
+    const messageError = { ...error };
     let isValid = true;
 
-    if (user.email) {
-      const emailRegexr = RGXR.EMAIL;
-      if (!emailRegexr.test(user.email) || user.email.length < 8 || user.email.length > 60) {
-        messageError.email = ERROR.U_EMAIL
-        isValid = false;
+    if (champ === "email") {
+      if (user.email) {
+        const emailRegexr = RGXR.EMAIL;
+        if (!emailRegexr.test(user.email) || user.email.length < 8 || user.email.length > 60) {
+          messageError.email = ERROR.U_EMAIL
+          isValid = false;
+        }
       }
     }
 
-    if (user.password) {
-      const passwordRegexr = RGXR.PASSWORD;
-      if (!passwordRegexr.test(user.password) || user.password.length < 8 || user.password.length > 40) {
-        messageError.password = ERROR.U_PASSWORD
-        isValid = false;
+    if (champ === "password") {
+      if (user.password) {
+        const passwordRegexr = RGXR.PASSWORD;
+        if (!passwordRegexr.test(user.password) || user.password.length < 8 || user.password.length > 40) {
+          messageError.password = ERROR.U_PASSWORD
+          isValid = false;
+        }
       }
     }
 
@@ -63,7 +67,7 @@ const Connexion = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    
+
     if (!user.email || !user.password) {
       toast.error("Veuillez remplir tous les champs", { autoClose: 3000 })
       return;
@@ -74,8 +78,8 @@ const Connexion = () => {
       const isValid = formulaire(champ)
       if (!isValid) form = false
     }
-    
-    if (!form){
+
+    if (!form) {
       toast.error("Veuillez saisir les champs correctement.", { autoClose: 3000 })
       return;
     }
