@@ -9,7 +9,7 @@ export const creationCommande = async (req, res) => {
         if (comment) {
             const contentRegexr = RGXR.CONTENT;
             if (!contentRegexr.test(comment) || comment.length < 3 || comment.length > 500) {
-                return res.status(400).json({ Message: "Format email, entre 3 et 500 caractères attendus." });
+                return res.status(400).json({ Message: "Entre 3 et 500 caractères attendus." });
             }
         }
 
