@@ -131,7 +131,7 @@ const Inscription = () => {
             try {
                 const response = await axiosInstance.post(URL.USER_INSCRIPTION, { ...user, recaptchaToken })
                 if (response.status === 201) {
-                    console.log(response.data);
+                    console.log(response);
                     navigate("/");
                     toast.success("Merci pour votre inscription ! Pensez à valider votre email pour pouvoir vous connecter.", { autoClose: 5000 })
                     resetRecaptcha()

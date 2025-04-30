@@ -54,6 +54,11 @@ export const inscription = async (req, res, next) => {
             return res.status(400).json({ message: ERROR.U_PASSWORD });
         }
 
+        const userExist = await userModel.findOne({email: email})
+        if (userExist) {
+            return res.status(409).json({message: "Cet email est déjà utilisé."}) // code 409 pour les conflits
+        }
+
         // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
         // Plus il y en a, plus c'est lent et donc mieux c'est.
         const hashedMDP = await bcrypt.hash(req.body.password, 10)
@@ -64,7 +69,9 @@ export const inscription = async (req, res, next) => {
         // On envoi le mail à notre utilisateur avec le lien de vérification.
         await sendEmail(req.body, verificationToken);
 
-        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
+        const {password: _, ...reste} = userExist._doc
+
+        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé : ", reste });
 
     } catch (error) {
         console.log("Echec lors de l'inscription : ", error)
