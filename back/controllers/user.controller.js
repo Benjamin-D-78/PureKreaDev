@@ -67,9 +67,9 @@ export const inscription = async (req, res, next) => {
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
 
-        if (req.body.role === "user") {
+        if (!req.body.role) {
             await sendEmail(req.body, verificationToken);
-        } else if (req.body.role === "admin") {
+        } else if (req.body.role) {
             await compteAdmin(req.body, verificationToken)
         }
 
