@@ -2,7 +2,7 @@ import userModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "../config/index.js";
-import { sendEmail, resetMDP, compteAdmin } from "../services/nodemailer.js";
+import { sendEmail, resetMDP } from "../services/nodemailer.js";
 import { RGXR } from "../utils/regex.js";
 import { ERROR } from "../utils/error.js";
 import axios from "axios"
@@ -66,12 +66,8 @@ export const inscription = async (req, res, next) => {
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-
-        if (!req.body.role) {
-            await sendEmail(user, verificationToken);
-        } else if (req.body.role) {
-            await compteAdmin(user, verificationToken)
-        }
+        
+        await sendEmail(user, verificationToken);
 
         res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé."});
 
@@ -316,10 +312,11 @@ export const connexion = async (req, res, next) => {
 // GET ALL USERS
 export const allUsers = async (req, res) => {
     try {
-        const response = await userModel.find();
+        const response = await userModel.find().select("-password");
         res.status(200).json(response);
     } catch (error) {
         console.log("Echec lors de la réception des utilisateurs : ", error);
+        res.status(500).json({message: "Echec lors de la récupération des utilisateurs."})
     }
 };
 
