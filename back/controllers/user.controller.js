@@ -100,10 +100,6 @@ export const verifyEmail = async (req, res, next) => {
 // RENVOIE EMAIL
 export const renvoieEmail = async (req, res, next) => {
     try {
-
-        // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
-        // console.log(req.body)
         const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
@@ -149,10 +145,6 @@ export const renvoieEmail = async (req, res, next) => {
 
 export const mdpOublie = async (req, res) => {
     try {
-        // console.log(req.body.recaptchaToken)
-        // console.log(req.body)
-        const recaptchaToken = req.body.recaptchaToken;
-
         if (!recaptchaToken) {
             return res.status(400).json({ message: "Le CAPTCHA est requis." });
         }
@@ -177,9 +169,7 @@ export const mdpOublie = async (req, res) => {
             return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
         }
 
-        // Recherche de l'utilisateur dans la BDD
         const rechercheUser = await userModel.findOne({ email: req.body.email });
-
         if (!rechercheUser) return res.status(404).json({ Message: "Utilisateur non trouvé." });
 
         // On vérifie si l'utilisateur a confirmé son email.
@@ -191,8 +181,7 @@ export const mdpOublie = async (req, res) => {
         const verificationToken = jwt.sign({ email: rechercheUser.email }, env.TOKEN, { expiresIn: "1h" });
         // On envoi le mail à notre utilisateur avecle lien de vérification.
         await resetMDP(req.body, verificationToken);
-
-        res.status(201).json({ Message: "L'utilisateur a bien été créé et l'email envoyé." });
+        res.status(200).json({ Message: "L'utilisateur a bien été créé et l'email envoyé." });
 
     } catch (error) {
         res.status(500).json({ Message: "Echec de l'envoie du mail", error })
