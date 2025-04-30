@@ -68,9 +68,9 @@ export const inscription = async (req, res, next) => {
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
 
         if (!req.body.role) {
-            await sendEmail(req.body, verificationToken);
+            await sendEmail(user, verificationToken);
         } else if (req.body.role) {
-            await compteAdmin(req.body, verificationToken)
+            await compteAdmin(user, verificationToken)
         }
 
         res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé."});
