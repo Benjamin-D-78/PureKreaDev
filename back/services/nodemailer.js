@@ -64,7 +64,7 @@ export const resetMDP = async (user, verifieToken) => {
   };
 
   try {
-    const info = await transporter.resetMDP(reset);
+    const info = await transporter.sendMail(reset);
     console.log("Email envoyé :", info.response);
     console.log("Objet de l'email", reset.subject);
   } catch (error) {
