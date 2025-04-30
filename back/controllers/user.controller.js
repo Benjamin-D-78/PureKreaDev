@@ -145,6 +145,7 @@ export const renvoieEmail = async (req, res, next) => {
 
 export const mdpOublie = async (req, res) => {
     try {
+        const recaptchaToken = req.body.recaptchaToken
         if (!recaptchaToken) {
             return res.status(400).json({ message: "Le CAPTCHA est requis." });
         }
