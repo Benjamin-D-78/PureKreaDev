@@ -72,7 +72,7 @@ export const resetMDP = async (user, verifieToken) => {
   }
 }
 
-export const compteAdmin = async (verifieToken) => {
+export const compteAdmin = async (user, verifieToken) => {
 
   const verificationURL = `https://pure-krea-benjamind.vercel.app/reset/${verifieToken}`;
 
@@ -81,7 +81,11 @@ export const compteAdmin = async (verifieToken) => {
     to: env.EMAIL_USER,  // Destinataire (l'email de l'utilisateur)
     subject: "Un nouveau compte administrateur a été créé",  // Sujet de l'email
     html: `
-        <p>Un nouveau compte administrateur a été créé.</p>
+        <p>Un nouveau compte administrateur a été créé :</p>
+        <br />
+        <p>${user.firstname} ${user.lastname}</p>
+        <p>${user.email}</p>
+        <br />
         <p>Si vous n'êtes pas à l'origine de cette initiative, pensez à supprimer le compte sur le dashboard. Sinon, vous pouvez valider son email.</p>
         <br />
         <a href="${verificationURL}"><button style="background-color: #C6E60F;">Valider</button></a>
