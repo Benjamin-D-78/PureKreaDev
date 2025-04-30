@@ -103,7 +103,7 @@ const Connexion = () => {
                 type="email"
                 name='email'
                 id='email-connexion'
-                autocomplete="email" // Accessibilité
+                autocomplete="email"
                 className={coin.inputCoIn}
                 onChange={handleChange}
                 onBlur={() => formulaire("email")}

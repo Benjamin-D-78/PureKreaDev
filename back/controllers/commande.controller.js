@@ -9,7 +9,7 @@ export const creationCommande = async (req, res) => {
         if (comment) {
             const contentRegexr = RGXR.CONTENT;
             if (!contentRegexr.test(comment) || comment.length < 3 || comment.length > 500) {
-                return res.status(400).json({ Message: "Entre 3 et 500 caractères attendus." });
+                return res.status(400).json({ message: "Entre 3 et 500 caractères attendus." });
             }
         }
 
@@ -30,7 +30,7 @@ export const creationCommande = async (req, res) => {
 
     } catch (error) {
         console.error("Erreur lors de la création de la commande :", error);
-        res.status(500).json({ Message: "Erreur lors de la création de la commande", error });
+        res.status(500).json({ message: "Erreur lors de la création de la commande", error });
     }
 };
 

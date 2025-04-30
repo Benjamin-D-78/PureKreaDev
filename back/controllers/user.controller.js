@@ -102,7 +102,7 @@ export const renvoieEmail = async (req, res, next) => {
         const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
-            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+            return res.status(400).json({ message: "Le CAPTCHA est requis." });
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -117,12 +117,12 @@ export const renvoieEmail = async (req, res, next) => {
 
         // On vérifie la validation recaptcha
         if (!captcha.data.success) {
-            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+            return res.status(400).json({ message: "Echec de la Vérification reCAPTCHA." });
         }
 
         // On regarde dans la BDD si un utilisateur a l'email correspondant à ce qui est indiqué dans le req.body
         const user = await userModel.findOne({ email: req.body.email });
-        if (!user) return res.status(404).json({ Message: "Utilisateur non trouvé." })
+        if (!user) return res.status(404).json({ message: "Utilisateur non trouvé." })
 
         if (user.isVerified) {
             return res.status(400).json({ message: "L'email est déjà vérifié." });
@@ -134,7 +134,7 @@ export const renvoieEmail = async (req, res, next) => {
         // L'option d'expiration (24h).
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
         await sendEmail(user, verificationToken);
-        res.status(200).json({ Message: "Nouveau mail de vérification envoyé." })
+        res.status(200).json({ message: "Nouveau mail de vérification envoyé." })
 
     } catch (error) {
         console.log("Erreur lors de l'envoi du nouveau mail de vérification : ", error)
@@ -149,7 +149,7 @@ export const mdpOublie = async (req, res) => {
         const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
-            return res.status(400).json({ Message: "Le CAPTCHA est requis." });
+            return res.status(400).json({ message: "Le CAPTCHA est requis." });
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -164,7 +164,7 @@ export const mdpOublie = async (req, res) => {
 
         // On vérifie la validation recaptcha
         if (!captcha.data.success) {
-            return res.status(400).json({ Message: "Echec de la Vérification reCAPTCHA." });
+            return res.status(400).json({ message: "Echec de la Vérification reCAPTCHA." });
         }
 
         const emailRegexr = RGXR.EMAIL;
