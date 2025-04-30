@@ -42,9 +42,7 @@ export const sendEmail = async (user, verifieToken) => {
 
 export const resetMDP = async (user, verifieToken) => {
 
-  const verificationURL = process.env.NODE_ENV === 'development'
-    ? `http://localhost:3000/reset/${verifieToken}`
-    : `https://pure-krea-benjamind.vercel.app/reset/${verifieToken}`;
+  const verificationURL = `https://pure-krea-benjamind.vercel.app/reset/${verifieToken}`;
 
   const reset = {
     from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
@@ -66,7 +64,7 @@ export const resetMDP = async (user, verifieToken) => {
   };
 
   try {
-    const info = await transporter.sendMail(reset);
+    const info = await transporter.resetMDP(reset);
     console.log("Email envoyé :", info.response);
     console.log("Objet de l'email", reset.subject);
   } catch (error) {

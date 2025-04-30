@@ -69,10 +69,7 @@ export const inscription = async (req, res, next) => {
         // On envoi le mail à notre utilisateur avec le lien de vérification.
         await sendEmail(req.body, verificationToken);
 
-
-        const {hashedMDP: _, ...reste} = user._doc
-
-        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé : ", reste });
+        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé : "});
 
     } catch (error) {
         console.log("Echec lors de l'inscription : ", error)
