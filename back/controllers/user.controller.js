@@ -2,7 +2,7 @@ import userModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "../config/index.js";
-import { sendEmail, resetMDP } from "../services/nodemailer.js";
+import { sendEmail, resetMDP, compteAdmin } from "../services/nodemailer.js";
 import { RGXR } from "../utils/regex.js";
 import { ERROR } from "../utils/error.js";
 import axios from "axios"
@@ -13,13 +13,13 @@ import axios from "axios"
 // SIGNUP
 export const inscription = async (req, res, next) => {
     try {
-        const {recaptchaToken, firstname, lastname, email, password} = req.body
+        const { recaptchaToken, firstname, lastname, email, password } = req.body
 
         if (!recaptchaToken) {
             return res.status(400).json({ message: "Le CAPTCHA est requis." });
         }
-        if(!firstname || !lastname || !email || !password) {
-            return res.status(400).json({message: "Tous les champs sont requis."})
+        if (!firstname || !lastname || !email || !password) {
+            return res.status(400).json({ message: "Tous les champs sont requis." })
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -54,9 +54,9 @@ export const inscription = async (req, res, next) => {
             return res.status(400).json({ message: ERROR.U_PASSWORD });
         }
 
-        const userExist = await userModel.findOne({email: email})
+        const userExist = await userModel.findOne({ email: email })
         if (userExist) {
-            return res.status(409).json({message: "Cet email est déjà utilisé."}) // code 409 pour les conflits
+            return res.status(409).json({ message: "Cet email est déjà utilisé." }) // code 409 pour les conflits
         }
 
         // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
@@ -66,14 +66,18 @@ export const inscription = async (req, res, next) => {
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        // On envoi le mail à notre utilisateur avec le lien de vérification.
-        await sendEmail(req.body, verificationToken);
 
-        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé : "});
+        if (req.body.role === "user") {
+            await sendEmail(req.body, verificationToken);
+        } else if (req.body.role === "admin") {
+            await compteAdmin(req.body, verificationToken)
+        }
+
+        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé."});
 
     } catch (error) {
         console.log("Echec lors de l'inscription : ", error)
-        res.status(500).json({message : "Echec de la tentative d'inscription."})
+        res.status(500).json({ message: "Echec de la tentative d'inscription." })
     }
 }
 
@@ -264,18 +268,18 @@ export const mdpModifie = async (req, res) => {
 // CONNEXION
 export const connexion = async (req, res, next) => {
     try {
-        const {email, password} = req.body
+        const { email, password } = req.body
         if (!email || !password) {
-            return res.status(400).json({message: "Tous les champs sont requis."})
+            return res.status(400).json({ message: "Tous les champs sont requis." })
         }
 
         const emailRegexr = RGXR.EMAIL;
         if (!emailRegexr.test(email) || email.length < 10 || email.length > 60) {
-            return res.status(400).json({ message: ERROR.U_EMAIL});
+            return res.status(400).json({ message: ERROR.U_EMAIL });
         }
         const passwordRegexr = RGXR.PASSWORD;
         if (!passwordRegexr.test(password) || password.length < 8 || password.length > 40) {
-            return res.status(400).json({ message: ERROR.U_PASSWORD});
+            return res.status(400).json({ message: ERROR.U_PASSWORD });
         }
 
         const rechercheUser = await userModel.findOne({ email: email });
@@ -305,7 +309,7 @@ export const connexion = async (req, res, next) => {
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)
-        res.status(500).json({message: "Echec lors de la tentative de connexion."})
+        res.status(500).json({ message: "Echec lors de la tentative de connexion." })
     }
 };
 
@@ -359,7 +363,7 @@ export const upUser = async (req, res) => {
         }
         if (req.body.phone) {
             const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(req.body.phone) || req.body.phone <0 || req.body.phone >9999999999) {
+            if (!phoneRegexr.test(req.body.phone) || req.body.phone < 0 || req.body.phone > 9999999999) {
                 return res.status(400).json({ Message: "10 chiffres attendus." })
             }
         }

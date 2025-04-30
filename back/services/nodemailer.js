@@ -71,3 +71,30 @@ export const resetMDP = async (user, verifieToken) => {
     console.error("Erreur lors de l'envoie de l'email : ", error.message);
   }
 }
+
+export const compteAdmin = async (verifieToken) => {
+
+  const verificationURL = `https://pure-krea-benjamind.vercel.app/reset/${verifieToken}`;
+
+  const admin = {
+    from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
+    to: env.EMAIL_USER,  // Destinataire (l'email de l'utilisateur)
+    subject: "Un nouveau compte administrateur a été créé",  // Sujet de l'email
+    html: `
+        <p>Un nouveau compte administrateur a été créé.</p>
+        <p>Si vous n'êtes pas à l'origine de cette initiative, pensez à supprimer le compte sur le dashboard. Sinon, vous pouvez valider son email.</p>
+        <br />
+        <a href="${verificationURL}"><button style="background-color: #C6E60F;">Valider</button></a>
+        <br />
+        <br />
+        <p>L'équipe PureKréa</p>`,
+  };
+
+  try {
+    const info = await transporter.sendMail(admin);
+    console.log("Email envoyé :", info.response);
+    console.log("Objet de l'email", reset.subject);
+  } catch (error) {
+    console.error("Erreur lors de l'envoie de l'email : ", error.message);
+  }
+}
