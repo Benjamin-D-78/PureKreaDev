@@ -214,13 +214,7 @@ export const resetPassword = async (req, res) => {
 
 export const mdpModifie = async (req, res) => {
     try {
-        // On récupère le token depuis l'URL
-        // console.log("req.body : ",req.body)
-        // console.log("req.params : ",req.params)
         const { token } = req.params;
-        // console.log(token)
-
-        // On déstructure le req.body pour mieux le réutiliser
         const { email, password, repeatPassword } = req.body;
 
         if (repeatPassword !== password) {
@@ -288,7 +282,7 @@ export const connexion = async (req, res, next) => {
 
         // Comparaison du MDP fourni dans la requête avec le MDP dans la BDD.
         const compareMDP = await bcrypt.compare(password, rechercheUser.password)
-        if (!compareMDP) return res.status(400).json({ Message: "Mauvais Mot De Passe." })
+        if (!compareMDP) return res.status(400).json({ Message: "Identifiants incorrects." })
 
         const tokenUser = jwt.sign({ id: rechercheUser._id, role: rechercheUser.role }, env.TOKEN, { expiresIn: "24h" })
 
@@ -313,9 +307,12 @@ export const connexion = async (req, res, next) => {
 export const allUsers = async (req, res) => {
     try {
         const response = await userModel.find().select("-password");
+        if (response.length === 0){
+            return res.status(404).json({message: "Aucun utilisateur n'a été trouvé."})
+        }
         res.status(200).json(response);
     } catch (error) {
-        console.log("Echec lors de la réception des utilisateurs : ", error);
+        console.error("Echec lors de la réception des utilisateurs.");
         res.status(500).json({message: "Echec lors de la récupération des utilisateurs."})
     }
 };
@@ -324,10 +321,15 @@ export const allUsers = async (req, res) => {
 export const userID = async (req, res) => {
     try {
         const response = await userModel.findById(req.params.id)
+        if (!response){
+            return res.status(404).json({message: "Utilisateur non trouvé"})
+        }
 
-        if (response) res.status(200).json(response)
+        const {password: _, ...reste} = response._doc
+        res.status(200).json(reste)
     } catch (error) {
-        console.log("Echec lors de la réception de l'utilisateur : ", error)
+        console.error(error)
+        res.status(500).json({message: "Echec lors de la recherche de l'utilisateur"})
     }
 }
 
@@ -424,7 +426,7 @@ export const deleteUser = async (req, res) => {
 
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });
         console.log("req.user.role : ", req.user);
-        if (req.user.id !== response._id.toString() && req.user.role !== 'admin') {
+        if (req.user.id !== response._id.toString() && req.user.role !== "admin") {
             return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         }
 
