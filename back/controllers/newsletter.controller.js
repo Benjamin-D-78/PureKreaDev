@@ -59,9 +59,10 @@ export const creationAbonne = async (req, res) => {
 // GET ALL NEWSLETTER
 export const allAbonnes = async (req, res) => {
     try {
-        const response = await Newsletter.find().sort({date: -1})
+        const response = await Newsletter.find().select("-password").sort({date: -1})
         if (response.length === 0) return res.status(404).json({message: "Aucune personne n'est abonnée."})
-        res.status(200).json(response.firstname, response.lastname, response.email, response.statut);
+
+        res.status(200).json({message: "Liste d'abonnés récupérée avec succès : ", response});
     } catch (error) {
         console.error(error)
         res.status(500).json({Message: "Erreur lors de la réception des abonnés.", error});
@@ -73,7 +74,9 @@ export const abonneID = async (req, res) => {
     try {
         const response = await Newsletter.findById(req.params.id)
         if (!response) return res.status(404).json({message: "Utilisateur non trouvé."})
-        res.status(200).json(response.firstname, response.lastname, response.email, response.statut)
+
+        const {password: _, ...reste}= response._doc
+        res.status(200).json({message: "Utilisateur abonné récupéré avec succès : ", response: reste})
     } catch (error) {
         console.error(error);
         res.status(500).json({Message: "Echec lors de la récupération de l'abonné.", error})
@@ -88,7 +91,7 @@ export const updateAbonne = async (req, res) => {
         //  "{new: true}" : C'est une option qui permet à la méthode de retourner le document mis à jour plutôt que l'original.
         //  Si on ne met pas cette option, la méthode retournera l'état du document avant la MAJ.
         const response = await Newsletter.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        res.status(200).json(response.firstname, response.lastname, response.email, response.statut)
+        res.status(200).json({message: "Utilisateur modifié avec succès."})
     } catch (error) {
         console.error(error);
         res.status(500).json({Message: "Echec lors de la modification de l'abonné."});
