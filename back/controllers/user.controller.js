@@ -321,6 +321,10 @@ export const allUsers = async (req, res) => {
 // GET USER BY ID
 export const userID = async (req, res) => {
     try {
+        if (req.user.id !== req.params.id && req.user.role !== "admin") {
+            return res.status(403).json({message: "Accès non autorisé."})
+        }
+
         const response = await userModel.findById(req.params.id)
         if (!response){
             return res.status(404).json({message: "Utilisateur non trouvé"})
@@ -426,7 +430,7 @@ export const deleteUser = async (req, res) => {
     try {
         const response = await userModel.findById(req.params.id);
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });
-        
+
         if (req.user.id !== response._id.toString() && req.user.role !== "admin") {
             return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         }

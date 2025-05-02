@@ -2,14 +2,13 @@ import Newsletter from "../models/newsletter.model.js";
 import { RGXR } from "../utils/regex.js";
 import { env } from "../config/index.js";
 import axios from "axios"
+import { ERROR } from "../utils/error.js";
 
 
 // CREATION NEWSLETTER
 export const creationAbonne = async (req, res) => {
     try {
-        // On vérifie si le token est dans la requête
-        console.log(req.body.recaptchaToken)
-        console.log(req.body)
+        const {firstname, lastname, email} = req.body;
         const recaptchaToken = req.body.recaptchaToken;
 
         if (!recaptchaToken) {
@@ -32,16 +31,16 @@ export const creationAbonne = async (req, res) => {
         }
 
         const firstnameRegexr = RGXR.PRENOM;
-        if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
-            return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
+        if (!firstnameRegexr.test(firstname) || firstname.length < 2 || firstname.length > 30) {
+            return res.status(400).json({ Message: ERROR.U_FIRSTNAME });
         }
         const lastnameRegexr = RGXR.NOM;
-        if (!lastnameRegexr.test(req.body.lastname) || req.body.lastname.length < 2 || req.body.lastname.length > 30) {
-            return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
+        if (!lastnameRegexr.test(lastname) || lastname.length < 2 || lastname.length > 30) {
+            return res.status(400).json({ Message: ERROR.U_LASTNAME });
         }
         const emailRegexr = RGXR.EMAIL;
-        if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
-            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
+        if (!emailRegexr.test(email) || email.length < 10 || email.length > 60) {
+            return res.status(400).json({ Message: ERROR.U_EMAIL });
         }
 
         const emailExistant = await Newsletter.findOne({ email: req.body.email});
@@ -49,7 +48,7 @@ export const creationAbonne = async (req, res) => {
             res.status(404).json({Message: "Utilisateur déjà abonné."})
         }
 
-        const response = await Newsletter.create(req.body);
+        await Newsletter.create(req.body);
         res.status(201).json({Message: "Abonnement réalisé avec succès."})
     } catch (error) {
         console.error(error)
@@ -61,7 +60,8 @@ export const creationAbonne = async (req, res) => {
 export const allAbonnes = async (req, res) => {
     try {
         const response = await Newsletter.find().sort({date: -1})
-        res.status(200).json(response);
+        if (response.length === 0) return res.status(404).json({message: "Aucune personne n'est abonnée."})
+        res.status(200).json(response.firstname, response.lastname, response.email, response.statut);
     } catch (error) {
         console.error(error)
         res.status(500).json({Message: "Erreur lors de la réception des abonnés.", error});
@@ -72,7 +72,8 @@ export const allAbonnes = async (req, res) => {
 export const abonneID = async (req, res) => {
     try {
         const response = await Newsletter.findById(req.params.id)
-        res.status(200).json(response)
+        if (!response) return res.status(404).json({message: "Utilisateur non trouvé."})
+        res.status(200).json(response.firstname, response.lastname, response.email, response.statut)
     } catch (error) {
         console.error(error);
         res.status(500).json({Message: "Echec lors de la récupération de l'abonné.", error})
@@ -84,9 +85,10 @@ export const updateAbonne = async (req, res) => {
     try {
         //  "req.params.id" : on récupère l'id du document qu'on veut metre à jour.
         //  "req.body" : contient les nouvelles données envoyées par le client dans le corps de la requête.
-        //  "{new: true}" : C'est une option qui permet à la méthode de retourner le document mis à jour plutôt que l'original. Si on ne met pas cette option, la méthode retournera l'état du document avant la MAJ.
+        //  "{new: true}" : C'est une option qui permet à la méthode de retourner le document mis à jour plutôt que l'original.
+        //  Si on ne met pas cette option, la méthode retournera l'état du document avant la MAJ.
         const response = await Newsletter.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        res.status(200).json({Message: "Abonné modifié avec succès." ,response})
+        res.status(200).json(response.firstname, response.lastname, response.email, response.statut)
     } catch (error) {
         console.error(error);
         res.status(500).json({Message: "Echec lors de la modification de l'abonné."});
@@ -96,8 +98,8 @@ export const updateAbonne = async (req, res) => {
 // DELETE NEWSLETTER
 export const deleteAbonne = async (req, res) => {
     try {
-        const response = await Newsletter.findByIdAndDelete(req.params.id)
-        res.status(200).json({Message: "Abonné supprimé avec succès.", response})
+        await Newsletter.findByIdAndDelete(req.params.id)
+        res.status(200).json({Message: "Abonné supprimé avec succès."})
     } catch (error) {
         console.error(error);
         res.status(500).json({Message: "Echec lors de la suppression de l'abonné.", error})
