@@ -288,7 +288,7 @@ export const connexion = async (req, res, next) => {
         const tokenUser = jwt.sign({ id: rechercheUser._id, role: rechercheUser.role }, env.TOKEN, { expiresIn: "24h" })
 
         // "_doc" est l'objet renvoyé par mongoose, contenant plein de propriétés.
-        // const { password: _, ...reste } = rechercheUser._doc
+        const { password: _, ...reste } = rechercheUser._doc
 
         // Envoi du token sous forme de cookie HTTPonly, alors qu'avant le MDP était stocké dans le local storage.
         res.cookie("access_token", tokenUser, {
@@ -296,7 +296,7 @@ export const connexion = async (req, res, next) => {
             secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
             sameSite: "None", // Protège des attaques CSRF // Lex // Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
-        }).status(200).json({message: "Connexion réussie."}) // Renvoie les données en réponse à l'exception du MDP.
+        }).status(200).json(reste) // Renvoie les données en réponse à l'exception du MDP.
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)
@@ -409,24 +409,24 @@ export const upUser = async (req, res) => {
             req.body.password = hashedPassword
         }
         // Mise à jour de l'utilisateur :
-        const update = await userModel.findByIdAndUpdate(
+        await userModel.findByIdAndUpdate(
             req.params.id,
             { $set: req.body }, // set est propre à mongoose, et spécifie les champs qui doivent être mis à jour.
             { new: true }) // On envoie le nouveau document mis à jour.
-        res.status(200).json({ message: "Informations mises à jour avec succès.", update })
+        res.status(200).json({ message: "Informations mises à jour avec succès."})
 
     } catch (error) {
-        console.log("Erreur lors de la tentative de mise à jour : ", error)
+        console.error(error)
+        res.status(500).json({message: "Echec lors de la modification du profil utilisateur."})
     }
 }
 
 // DELETE USER
 export const deleteUser = async (req, res) => {
-    try { // On vérifie si l'utilisateur existe
+    try {
         const response = await userModel.findById(req.params.id);
-
         if (!response) return res.status(404).json({ message: "Utilisateur non trouvé." });
-        console.log("req.user.role : ", req.user);
+        
         if (req.user.id !== response._id.toString() && req.user.role !== "admin") {
             return res.status(403).json({ message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         }
@@ -436,6 +436,7 @@ export const deleteUser = async (req, res) => {
         res.status(200).json({ message: "Utilisateur supprimé avec succès." });
 
     } catch (error) {
-        console.log("Erreur lors de la tentative de suppression : ", error.message);
+        console.error(error)
+        res.status(500).json({message: "Echec lors de la tentative de suppression du profil utilisateur."})
     }
 };
