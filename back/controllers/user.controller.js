@@ -67,12 +67,12 @@ export const inscription = async (req, res, next) => {
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
         
-        await sendEmail(user, verificationToken);
+        await sendEmail(user.firstname, user.lastname, verificationToken);
 
         res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé."});
 
     } catch (error) {
-        console.log("Echec lors de l'inscription : ", error)
+        console.error(error)
         res.status(500).json({ message: "Echec de la tentative d'inscription." })
     }
 }
@@ -82,6 +82,7 @@ export const verifyEmail = async (req, res, next) => {
     try {
         // On récupère le token depuis l'URL
         const { token } = req.params;
+        if (!token) return res.status(400).json({message: "Token manquant."})
         // On vérifie si le token est valide
         const decoded = jwt.verify(token, env.TOKEN);
         // Maintenant on active le compte de l'utilisateur
@@ -134,12 +135,12 @@ export const renvoieEmail = async (req, res, next) => {
         // La clé secrète qui permet de signer le token et donc de le sécuriser.
         // L'option d'expiration (24h).
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        await sendEmail(user, verificationToken);
+        await sendEmail(user.firstname, user.lastname, verificationToken);
         res.status(200).json({ message: "Nouveau mail de vérification envoyé." })
 
     } catch (error) {
-        console.log("Erreur lors de l'envoi du nouveau mail de vérification : ", error)
-        next(error)
+        console.error(error)
+        res.status(500).json({message: "Echec lors du renvoie de l'email"})
     }
 }
 
@@ -167,11 +168,11 @@ export const mdpOublie = async (req, res) => {
 
         const emailRegexr = RGXR.EMAIL;
         if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
-            return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
+            return res.status(400).json({ message: "Format email, entre 10 et 60 caractères attendus." });
         }
 
         const rechercheUser = await userModel.findOne({ email: req.body.email });
-        if (!rechercheUser) return res.status(404).json({ Message: "Utilisateur non trouvé." });
+        if (!rechercheUser) return res.status(404).json({ message: "Utilisateur non trouvé." });
 
         // On vérifie si l'utilisateur a confirmé son email.
         if (!rechercheUser.isVerified) {
@@ -181,11 +182,12 @@ export const mdpOublie = async (req, res) => {
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ email: rechercheUser.email }, env.TOKEN, { expiresIn: "1h" });
         // On envoi le mail à notre utilisateur avecle lien de vérification.
-        await resetMDP(req.body, verificationToken);
-        res.status(200).json({ Message: "L'utilisateur a bien été créé et l'email envoyé." });
+        await resetMDP(verificationToken);
+        res.status(200).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
     } catch (error) {
-        res.status(500).json({ Message: "Echec de l'envoie du mail", error })
+        console.error(error)
+        res.status(500).json({ message: "Echec de l'envoie du mail."})
     }
 }
 
@@ -204,11 +206,11 @@ export const resetPassword = async (req, res) => {
             return res.status(400).json({ Message: "Email non validé." });
         }
 
-        res.status(200).json({ Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe", user });
+        res.status(200).json({ Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe."});
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ Message: "Echec lors du décodage du token : ", error })
+        res.status(500).json({ Message: "Echec lors du décodage du token."})
     }
 }
 
@@ -237,7 +239,6 @@ export const mdpModifie = async (req, res) => {
         // On vérifie si le token est valide
         const decoded = jwt.verify(token, env.TOKEN);
         const user = await userModel.findOne({ email: decoded.email });
-
         if (!user) {
             return res.status(404).json({ message: "Utilisateur non trouvé" });
         }
@@ -287,7 +288,7 @@ export const connexion = async (req, res, next) => {
         const tokenUser = jwt.sign({ id: rechercheUser._id, role: rechercheUser.role }, env.TOKEN, { expiresIn: "24h" })
 
         // "_doc" est l'objet renvoyé par mongoose, contenant plein de propriétés.
-        const { password: _, ...reste } = rechercheUser._doc
+        // const { password: _, ...reste } = rechercheUser._doc
 
         // Envoi du token sous forme de cookie HTTPonly, alors qu'avant le MDP était stocké dans le local storage.
         res.cookie("access_token", tokenUser, {
@@ -295,7 +296,7 @@ export const connexion = async (req, res, next) => {
             secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
             sameSite: "None", // Protège des attaques CSRF // Lex // Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
-        }).status(200).json(reste) // Renvoie les données en réponse à l'exception du MDP.
+        }).status(200).json({message: "Connexion réussie."}) // Renvoie les données en réponse à l'exception du MDP.
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)

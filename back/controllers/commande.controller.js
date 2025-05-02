@@ -69,7 +69,7 @@ export const commandeByUser = async (req, res) => {
         res.status(200).json(commandes)
     } catch (error) {
         console.error("Erreur lors de la réception des commandes.", error)
-        res.status(500).json({ Message: "Echec lors de la réception des commandes." })
+        res.status(500).json({ message: "Echec lors de la réception des commandes." })
     }
 }
 

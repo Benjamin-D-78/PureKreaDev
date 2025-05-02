@@ -59,7 +59,6 @@ export const allItems = async (req, res) => {
     try {
         const response = await Item.find();
         res.status(200).json(response);
-
     } catch (error) {
         res.status(500).json({ Message: "Echec de la récupération de tous les items.", error });
     }

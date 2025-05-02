@@ -70,7 +70,6 @@ const Boutique = () => {
                     console.log("Erreur lors de l'appel API", error)
                     setError(error.message);
                     setLoading(false)
-
                 }
             }
         };

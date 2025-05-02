@@ -162,7 +162,6 @@ const MonProfil = () => {
         return isValid;
     }
 
-
     // Permet de mettre à jour les valeurs dans le state "utilisateur"
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -237,7 +236,6 @@ const MonProfil = () => {
     };
 
 
-
     return (
         <div>
             <NavBar />
@@ -274,7 +272,7 @@ const MonProfil = () => {
                                             id='newlastname'
                                             autocomplete="family-name"
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("lastname")}
+                                            onBlur={formulaire}
                                             minLength={2}
                                             maxLength={30}
                                             pattern={PATTERN.NOM}
@@ -300,7 +298,7 @@ const MonProfil = () => {
                                             id='newfirstname'
                                             autocomplete="given-name"
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("firstname")}
+                                            onBlur={formulaire}
                                             minLength={2}
                                             maxLength={30}
                                             pattern={PATTERN.PRENOM}
@@ -326,7 +324,7 @@ const MonProfil = () => {
                                             id='emailProfil'
                                             autocomplete="email"
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("email")}
+                                            onBlur={formulaire}
                                             minLength={8}
                                             maxLength={60}
                                             pattern={PATTERN.EMAIL}
@@ -357,7 +355,7 @@ const MonProfil = () => {
                                                 maxLength={40}
                                                 pattern={PATTERN.PASSWORD}
                                                 onChange={(event) => setAncienMDP(event.target.value)}
-                                                onBlur={() => formulaire("ancienMDP")}
+                                                onBlur={formulaire}
                                                 onInput={(event) => {
                                                     event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                                 }} />
@@ -372,7 +370,7 @@ const MonProfil = () => {
                                                 maxLength={40}
                                                 pattern={PATTERN.PASSWORD}
                                                 onChange={(event) => setNewMDP(event.target.value)}
-                                                onBlur={() => formulaire("newMDP")}
+                                                onBlur={formulaire}
                                                 onInput={(event) => {
                                                     event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                                 }} />
@@ -386,7 +384,7 @@ const MonProfil = () => {
                                                 maxLength={40}
                                                 pattern={PATTERN.PASSWORD}
                                                 onChange={(event) => setRepeteMDP(event.target.value)}
-                                                onBlur={() => formulaire("repeteMDP")}
+                                                onBlur={formulaire}
                                                 onInput={(event) => {
                                                     event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                                                 }} />
@@ -418,7 +416,7 @@ const MonProfil = () => {
                                             id='phone'
                                             autocomplete="tel"
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("phone")}
+                                            onBlur={formulaire}
                                             value={utilisateur?.phone || ""}
                                             // max={9999999999}
                                             minLength={10}
@@ -453,7 +451,7 @@ const MonProfil = () => {
                                             maxLength={70}
                                             pattern={PATTERN.ADRESS}
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("adress")}
+                                            onBlur={formulaire}
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(ONINPUT.U_ADRESS, '');
                                             }} />
@@ -469,7 +467,7 @@ const MonProfil = () => {
                                             minLength={5}
                                             maxLength={5}
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("postal")}
+                                            onBlur={formulaire}
                                             pattern={PATTERN.POSTAL}
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(ONINPUT.U_POSTAL, '')
@@ -485,7 +483,7 @@ const MonProfil = () => {
                                             minLength={2}
                                             maxLength={50}
                                             onChange={handleChange}
-                                            onBlur={() => formulaire("town")}
+                                            onBlur={formulaire}
                                             pattern={PATTERN.TOWN}
                                             onInput={(event) => {
                                                 event.target.value = event.target.value.replace(ONINPUT.U_TOWN, '').toUpperCase();;

@@ -122,6 +122,7 @@ const Reset = () => {
                                 minLength={8}
                                 maxLength={60}
                                 pattern={PATTERN.EMAIL}
+                                onBlur={formulaire}
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
                                 onInput={(event) => {
