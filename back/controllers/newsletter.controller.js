@@ -59,7 +59,7 @@ export const creationAbonne = async (req, res) => {
 // GET ALL NEWSLETTER
 export const allAbonnes = async (req, res) => {
     try {
-        const response = await Newsletter.find().sort({date: -1}).select("-password")
+        const response = await Newsletter.find().sort({date: -1})
         if (response.length === 0) return res.status(404).json({message: "Aucune personne n'est abonnée."})
 
         res.status(200).json({message: "Liste d'abonnés récupérée avec succès : ", response});
@@ -75,8 +75,7 @@ export const abonneID = async (req, res) => {
         const response = await Newsletter.findById(req.params.id)
         if (!response) return res.status(404).json({message: "Utilisateur non trouvé."})
 
-        const {password: _, ...reste}= response._doc
-        res.status(200).json({message: "Utilisateur abonné récupéré avec succès : ", response: reste})
+        res.status(200).json({message: "Utilisateur abonné récupéré avec succès : "})
     } catch (error) {
         console.error(error);
         res.status(500).json({Message: "Echec lors de la récupération de l'abonné.", error})
