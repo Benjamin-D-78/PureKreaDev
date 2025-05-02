@@ -60,7 +60,7 @@ export const creationAbonne = async (req, res) => {
 export const allAbonnes = async (req, res) => {
     try {
         const response = await Newsletter.find().sort({date: -1})
-        if (response.length === 0) return res.status(404).json({message: "Aucune personne n'est abonnée."})
+        // if (response.length === 0) return res.status(404).json({message: "Aucune personne n'est abonnée."})
 
         res.status(200).json({message: "Liste d'abonnés récupérée avec succès : ", response});
     } catch (error) {
