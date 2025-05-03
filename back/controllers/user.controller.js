@@ -184,7 +184,7 @@ export const mdpOublie = async (req, res) => {
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ email: rechercheUser.email }, env.TOKEN, { expiresIn: "1h" });
         // On envoi le mail à notre utilisateur avecle lien de vérification.
-        await resetMDP(rechercheUser.email, verificationToken);
+        await resetMDP(rechercheUser, verificationToken);
         res.status(200).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
     } catch (error) {
