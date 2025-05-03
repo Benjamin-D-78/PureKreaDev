@@ -66,14 +66,14 @@ export const inscription = async (req, res, next) => {
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        
+
         await sendEmail(user.firstname, user.lastname, verificationToken);
 
-        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé."});
+        res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ message: "Echec de la tentative d'inscription." })
+        res.status(500).json({ message: "Echec de la tentative d'inscription : ", error })
     }
 }
 
@@ -82,19 +82,21 @@ export const verifyEmail = async (req, res, next) => {
     try {
         // On récupère le token depuis l'URL
         const { token } = req.params;
-        if (!token) return res.status(400).json({message: "Token manquant."})
+        if (!token) return res.status(400).json({ message: "Token manquant." })
         // On vérifie si le token est valide
         const decoded = jwt.verify(token, env.TOKEN);
         // Maintenant on active le compte de l'utilisateur
-        await userModel.findByIdAndUpdate(decoded.id, { isVerified: true }, {
-            new: true,
-        });
+        const user = await userModel.findByIdAndUpdate(decoded.id, { isVerified: true }, { new: true, });
+        if (!user) return res.status(404).json({ message: "Utilisateur non trouvé."})
 
         res.status(200).json({ message: "Email vérifié avec succès." });
 
     } catch (error) {
         console.error("Erreur de vérification : ", error);
-        res.status(400).json({ message: "Lien invalide ou expiré." });
+        if (error.name === 'TokenExpiredError') {
+            return res.status(400).json({ message: "Lien invalide ou expiré." });
+        }
+        res.status(500).json({message: "Echec lors de vérification du token."})
     }
 };
 
@@ -140,7 +142,7 @@ export const renvoieEmail = async (req, res, next) => {
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Echec lors du renvoie de l'email"})
+        res.status(500).json({ message: "Echec lors du renvoie de l'email : ", error })
     }
 }
 
@@ -187,7 +189,7 @@ export const mdpOublie = async (req, res) => {
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ message: "Echec de l'envoie du mail."})
+        res.status(500).json({ message: "Echec de l'envoie du mail : ", error })
     }
 }
 
@@ -206,11 +208,11 @@ export const resetPassword = async (req, res) => {
             return res.status(400).json({ Message: "Email non validé." });
         }
 
-        res.status(200).json({ Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe."});
+        res.status(200).json({ Message: "Token valide, vous pouvez maintenant réinitialiser votre mot de passe." });
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ Message: "Echec lors du décodage du token."})
+        res.status(500).json({ Message: "Echec lors du décodage du token : ", error })
     }
 }
 
@@ -252,7 +254,7 @@ export const mdpModifie = async (req, res) => {
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ Message: "Echec de la modification du mot de passe." })
+        res.status(500).json({ Message: "Echec de la modification du mot de passe : ", error })
     }
 }
 
@@ -300,7 +302,7 @@ export const connexion = async (req, res, next) => {
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)
-        res.status(500).json({ message: "Echec lors de la tentative de connexion." })
+        res.status(500).json({ message: "Echec lors de la tentative de connexion : ", error })
     }
 };
 
@@ -308,13 +310,13 @@ export const connexion = async (req, res, next) => {
 export const allUsers = async (req, res) => {
     try {
         const response = await userModel.find().select("-password");
-        if (response.length === 0){
-            return res.status(404).json({message: "Aucun utilisateur n'a été trouvé."})
+        if (response.length === 0) {
+            return res.status(404).json({ message: "Aucun utilisateur n'a été trouvé." })
         }
         res.status(200).json(response);
     } catch (error) {
         console.error("Echec lors de la réception des utilisateurs.");
-        res.status(500).json({message: "Echec lors de la récupération des utilisateurs."})
+        res.status(500).json({ message: "Echec lors de la récupération des utilisateurs : ", error })
     }
 };
 
@@ -322,19 +324,19 @@ export const allUsers = async (req, res) => {
 export const userID = async (req, res) => {
     try {
         if (req.user.id !== req.params.id && req.user.role !== "admin") {
-            return res.status(403).json({message: "Accès non autorisé."})
+            return res.status(403).json({ message: "Accès non autorisé." })
         }
 
         const response = await userModel.findById(req.params.id)
-        if (!response){
-            return res.status(404).json({message: "Utilisateur non trouvé"})
+        if (!response) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" })
         }
 
-        const {password: _, ...reste} = response._doc
+        const { password: _, ...reste } = response._doc
         res.status(200).json(reste)
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Echec lors de la recherche de l'utilisateur"})
+        res.status(500).json({ message: "Echec lors de la recherche de l'utilisateur : ", error })
     }
 }
 
@@ -417,11 +419,11 @@ export const upUser = async (req, res) => {
             req.params.id,
             { $set: req.body }, // set est propre à mongoose, et spécifie les champs qui doivent être mis à jour.
             { new: true }) // On envoie le nouveau document mis à jour.
-        res.status(200).json({ message: "Informations mises à jour avec succès."})
+        res.status(200).json({ message: "Informations mises à jour avec succès." })
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Echec lors de la modification du profil utilisateur."})
+        res.status(500).json({ message: "Echec lors de la modification du profil utilisateur : ", error })
     }
 }
 
@@ -441,6 +443,6 @@ export const deleteUser = async (req, res) => {
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Echec lors de la tentative de suppression du profil utilisateur."})
+        res.status(500).json({ message: "Echec lors de la tentative de suppression du profil utilisateur : ", error })
     }
 };

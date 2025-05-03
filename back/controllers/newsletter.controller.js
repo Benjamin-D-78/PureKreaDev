@@ -92,7 +92,7 @@ export const updateAbonne = async (req, res) => {
         res.status(200).json({message: "Utilisateur modifié avec succès."})
     } catch (error) {
         console.error(error);
-        res.status(500).json({message: "Echec lors de la modification de l'abonné."});
+        res.status(500).json({message: "Echec lors de la modification de l'abonné : ", error});
     }
 }
 
