@@ -62,7 +62,9 @@ export const commandeByUser = async (req, res) => {
     try {
         // On déclare un "objet de filtre" qui nous permet de récupérer uniquement les commandes associées à l'utilisateur concerné.
         const commandes = await Commande.find({ userId: req.user.id })
-            // On vient peupler la référence qui se trouve dans le champ "panier.itemId" de chaque commande. Par ex, on a chaque commande qui possède un panier (un tableau d'objets) et chaque objet dans ce panier a une référence à un autre document dans une autre collection (ex : une collection de produits). On va donc récupérer les infos complètes de ces produits en utilisant leur identifiant stocké dans itemId.
+            // On vient peupler la référence qui se trouve dans le champ "panier.itemId" de chaque commande.
+            // Par ex, on a chaque commande qui possède un panier (un tableau d'objets) et chaque objet dans ce panier a une référence à un autre document dans une autre collection (ex : une collection de produits).
+            // On va donc récupérer les infos complètes de ces produits en utilisant leur identifiant stocké dans itemId.
             .populate("panier.itemId")
             .sort({ date: -1 })
 
@@ -78,7 +80,7 @@ export const commandeByUser = async (req, res) => {
 export const upCommande = async (req, res) => {
     try {
         const response = await Commande.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).json({ Message: "Commande mise à jour avec succès" })
+        res.status(200).json({ Message: "Commande mise à jour avec succès : ", response })
     } catch (error) {
         res.status(500).json({ Message: "Echec lors de la mise à jour de la commande." })
     }

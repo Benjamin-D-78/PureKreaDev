@@ -44,7 +44,6 @@ const CommandeDashboard = () => {
     try {
       const response = await axiosInstance.get(URL.COMMANDE_ALL)
       if (Array.isArray(response.data)) {
-        console.log(response.data);
         setCommandes(response.data)
       }
     } catch (error) {
