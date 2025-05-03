@@ -67,7 +67,7 @@ export const inscription = async (req, res, next) => {
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
 
-        await sendEmail(user.firstname, user.lastname, verificationToken);
+        await sendEmail(user, verificationToken);
 
         res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
@@ -137,7 +137,7 @@ export const renvoieEmail = async (req, res, next) => {
         // La clé secrète qui permet de signer le token et donc de le sécuriser.
         // L'option d'expiration (24h).
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        await sendEmail(user.firstname, user.lastname, verificationToken);
+        await sendEmail(user, verificationToken);
         res.status(200).json({ message: "Nouveau mail de vérification envoyé." })
 
     } catch (error) {
