@@ -31,13 +31,7 @@ const Boutique = () => {
     const [itemsAffiches, setItemsAffiches] = useState(8)
     const [loading, setLoading] = useState(true)
 
-    // Me permet de réceptionner les valeurs uniques pour les utiliser ensuite dans la fonction de filtrage
-    // const [collections, setCollections] = useState([])
-    // const [prix, setPrix] = useState([])
-    // const [largeurs, setLargeurs] = useState([])
-    // const [couleurs, setCouleurs] = useState([])
-
-    // SELECT - c'est la valeur du filtre de collection (on démarre avec une chaîne vide)
+    // Pour récupérer les valeurs sélectionnées
     const [selectionCollection, setSelectionCollection] = useState("")
     const [selectionPrix, setSelectionPrix] = useState("")
     const [selectionLargeur, setSelectionLargeur] = useState("")
@@ -55,14 +49,6 @@ const Boutique = () => {
 
                     if (Array.isArray(response.data)) {
                         setItems(response.data);
-
-                        // Je veux extraire toutes les valeurs de "category" via "item.category" donc on les map
-                        // "Set" permet de supprimer les doublons mais renvoie un objet.
-                        // Je fais donc une copie de "new" avec le spread operator et met le tout entre crochet pour obtenir un tableau et y appliquer le ".sort"
-                        // setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
-                        // setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
-                        // setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
-                        // setCouleurs([...new Set(response.data.map(item => item.color))].sort())
                     }
                     setLoading(false)
                 } catch (error) {
@@ -80,7 +66,7 @@ const Boutique = () => {
     // EN FONCTION DE CE QUI EST SELECTIONNE DANS LE SELECT ET STOCKE DANS "selectionCollection", "selectionLargeur", etc.
     const filtreItems = Array.isArray(items) ? items.filter(item => {
 
-        const testCollection = selectionCollection ? item.category === Number(selectionCollection) : true;
+        const testCollection = selectionCollection ? item.category === Number(selectionCollection) : true; // "true" = accepte tout
         const testLargeur = selectionLargeur ? item.width === Number(selectionLargeur) : true;
         const testCouleur = selectionCouleur ? item.color === selectionCouleur : true;
         const testPrix = selectionPrix ? item.price === Number(selectionPrix) : true;
@@ -271,3 +257,19 @@ const Boutique = () => {
 };
 
 export default Boutique;
+
+
+    // Me permet de réceptionner les valeurs uniques pour les utiliser ensuite dans la fonction de filtrage
+    // const [collections, setCollections] = useState([])
+    // const [prix, setPrix] = useState([])
+    // const [largeurs, setLargeurs] = useState([])
+    // const [couleurs, setCouleurs] = useState([])
+
+    
+    // Je veux extraire toutes les valeurs de "category" via "item.category" donc on les map
+    // "Set" permet de supprimer les doublons mais renvoie un objet.
+    // Je fais donc une copie de "new" avec le spread operator et met le tout entre crochet pour obtenir un tableau et y appliquer le ".sort"
+    // setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
+    // setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
+    // setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
+    // setCouleurs([...new Set(response.data.map(item => item.color))].sort())
