@@ -33,7 +33,7 @@ const CommandeUpdate = () => {
           totalPrice: item.price * item.quantity
         }));
 
-        // On calcule maintenant le prix total de la commande en utilisant reduce. On additionne ici les totalPrice de chaque article pour obtenir le "upPrixTotal"
+        // On réduit les valeurs des totalPrice des articles à un seul prix total global :
         const upPrixTotal = upPanier.reduce((total, item) => total + item.totalPrice, 0);
 
         // On met le state commande à jour 
@@ -50,18 +50,14 @@ const CommandeUpdate = () => {
       }
     };
     commandeById()
-  }, [id]) // L'effet se déclenche chaque fois que la valeur de l'ID change. 
+  }, [id])
 
 
-
+  // SI LE STATUT EST CHANGE, ON VA LE VOIR DYNAMIQUEMENT
+  // SI LA QUANTITE OU LE PRIX D'UN ARTICLE CHANGE, ON ACTUALISE LE NOUVEAU PRIX PAR RAPPORT A LA QUANTITE OU VICE VERSA EN TEMPS REEL
   const handleChange = (event, index) => {
-    // "event.target" est l'élément sur le DOM qui a déclenché l'évènement.
-    // "name" : attribut name de l'input
-    // "value" : la valeur qui est en train d'être saisie par l'utilisateur.
     const { name, value } = event.target
-
-    // On met à jour le state commande en incorporant le nouveau statut.
-    // "...commande" permet de conserver toutes les autres propriétés d'origine sans qu'elles soient écrasées par les nouvelles.
+    // On met juste à jour le "statut" si le statut est changé
     if (name === "statut") {
       setCommande({
         ...commande,
@@ -80,9 +76,7 @@ const CommandeUpdate = () => {
         // On recalcule le totalPrice pour chaque item
         updateItem.totalPrice = updateItem.price * updateItem.quantity;
       }
-
-      // On utilise reduce pour recalculer le prixTotal
-      // reduce parcourt tous les éléments du panier et additionne leur totalPrice pour obtenir le prixTotal
+      // On recalcule le prix global total.
       const updatePrixTotal = updatePanier.reduce((total, item) => total + item.totalPrice, 0)
 
       // On met à jour le state commande
@@ -101,12 +95,12 @@ const CommandeUpdate = () => {
 
     // On envoie la commande mise à jour en conservant les propriétés déjà existantes sans qu'elles écrasées.
     const updateCommande = {
-      ...commande,
-      panier: commande.panier,
-      prixTotal: commande.prixTotal,
-      statut: commande.statut
+      ...commande
+      // panier: commande.panier,
+      // prixTotal: commande.prixTotal,
+      // statut: commande.statut
     }
-    console.log("Réponse avant envoie", updateCommande)
+    // console.log("Réponse avant envoie", updateCommande)
 
     try {
       const response = await axiosInstance.put(`${URL.COMMANDE_UPDATE}/${id}`, updateCommande)
@@ -151,7 +145,7 @@ const CommandeUpdate = () => {
               type="number"
               name='totalPrice'
               value={item.quantity * item.price}
-              onChange={handleChange}
+              // onChange={handleChange}
               readOnly />
           </div>
         ))}
@@ -163,7 +157,7 @@ const CommandeUpdate = () => {
             type="number"
             name='prixTotal'
             value={commande.prixTotal}
-            onChange={handleChange}
+            // onChange={handleChange}
             readOnly />
           <label htmlFor="statut">Statut :</label>
           <select
