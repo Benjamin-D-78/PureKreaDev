@@ -31,8 +31,11 @@ const Boutique = () => {
     const [itemsAffiches, setItemsAffiches] = useState(8)
     const [loading, setLoading] = useState(true)
 
-
-
+    // Me permet de réceptionner les valeurs uniques pour les utiliser ensuite dans la fonction de filtrage
+    // const [collections, setCollections] = useState([])
+    // const [prix, setPrix] = useState([])
+    // const [largeurs, setLargeurs] = useState([])
+    // const [couleurs, setCouleurs] = useState([])
 
     // SELECT - c'est la valeur du filtre de collection (on démarre avec une chaîne vide)
     const [selectionCollection, setSelectionCollection] = useState("")
@@ -40,11 +43,7 @@ const Boutique = () => {
     const [selectionLargeur, setSelectionLargeur] = useState("")
     const [selectionCouleur, setSelectionCouleur] = useState("")
 
-    // On va réceptionner ici els valeurs uniques pour les filtrages
-    const [collections, setCollections] = useState([])
-    const [prix, setPrix] = useState([])
-    const [largeurs, setLargeurs] = useState([])
-    const [couleurs, setCouleurs] = useState([])
+
 
 
 
@@ -57,13 +56,13 @@ const Boutique = () => {
                     if (Array.isArray(response.data)) {
                         setItems(response.data);
 
-                        // On extrait les valeurs de chaque collection (category).
-                        // "Set" est un objet constructor JS qui stocke uniquement les valeurs uniques en supprimant les doublons.
-                        // Set est un objet, donc on fait un "...new" (spread) pour pouvoir en faire une copie convertie en tableau, auquel on fait un map pour en extraire les valeurs.
-                        setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
-                        setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
-                        setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
-                        setCouleurs([...new Set(response.data.map(item => item.color))].sort())
+                        // Je veux extraire toutes les valeurs de "category" via "item.category" donc on les map
+                        // "Set" permet de supprimer les doublons mais renvoie un objet.
+                        // Je fais donc une copie de "new" avec le spread operator et met le tout entre crochet pour obtenir un tableau et y appliquer le ".sort"
+                        // setCollections([...new Set(response.data.map(item => item.category))].sort((a, b) => b - a))
+                        // setPrix([...new Set(response.data.map(item => item.price))].sort((a, b) => a - b))
+                        // setLargeurs([...new Set(response.data.map(item => item.width))].sort((a, b) => a - b))
+                        // setCouleurs([...new Set(response.data.map(item => item.color))].sort())
                     }
                     setLoading(false)
                 } catch (error) {
@@ -77,34 +76,32 @@ const Boutique = () => {
     }, []);
 
 
-    // On créer une fonction de filtrage pour les items en fonction de l'option sélectionnée.
-    // Avec filter, on va créer un nouveau tableau contenant seulement les éléments "items" qui passent le test de filtrage :
+    // JE CREE UN FILTRE DYNAMIQUE EN TEMPS REEL, QUI FILTRE LES VALEURS CONTENUES DANS "ITEMS" DANS UN TABLEAU
+    // EN FONCTION DE CE QUI EST SELECTIONNE DANS LE SELECT ET STOCKE DANS "selectionCollection", "selectionLargeur", etc.
     const filtreItems = Array.isArray(items) ? items.filter(item => {
-        // Si "selectionCollection" (qui contient la valeur de la catégorie sélectionnée) a une valeur définie et si cette valeur n'est pas une chaîne vide (car si aucun champ n'est sélectionné, alors c'est une chaîne vide).
-        // Si la condition précédente est true, alors on compare la catégorie de l'item avec la catégorie sélectionnée (convertie en nombre car selectCollections est une chaîne de caractère, or, "category" est un nombre.)
-        // Si aucune collection n'a été sélectionnée, alors la partie après ":" est exécutée et on retourne simplement "true", ce qui affiche donc tous les items par défauts.
-        const testCollection = selectionCollection && selectionCollection !== "" ? item.category === Number(selectionCollection) : true;
-        const testLargeur = selectionLargeur && selectionLargeur !== "" ? item.width === Number(selectionLargeur) : true;
+
+        const testCollection = selectionCollection ? item.category === Number(selectionCollection) : true;
+        const testLargeur = selectionLargeur ? item.width === Number(selectionLargeur) : true;
         const testCouleur = selectionCouleur ? item.color === selectionCouleur : true;
-        const testPrix = selectionPrix && selectionPrix !== "" ? item.price === Number(selectionPrix) : true;
+        const testPrix = selectionPrix ? item.price === Number(selectionPrix) : true;
 
         return testCollection && testPrix && testLargeur && testCouleur
     }
     ) : [];
 
 
-    // On utilise "..." pour créer un nouveau tableau à partir de l'objet Set (qui supprime les doublons)
-    // On extrait toutes les valeurs de la prop category de chaque objet item dans filtreItems.
-    // "map" créé un nouveau tableau où chaque élément est le résultat de l'exécution de la fonction fournie sur chaque élément de filtreItems. C'est ce qui rend les filtres dynamiques en focntion de ce qui est cliqué
+    // SERT JUSTE POUR LES VALEURS DISPONIBLES DANS LE SELECT EN TEMPS REEL
+    // Je veux extraire toutes les valeurs de "category" via "item.category" donc on les map
+    // "Set" permet de supprimer les doublons mais renvoie un objet.
+    // Je fais donc une copie de "new" avec le spread operator et met le tout entre crochet pour obtenir un tableau et y appliquer le ".sort"
     const collectionDisponible = [...new Set(filtreItems.map(item => item.category))].sort((a, b) => b - a);
     const prixDisponible = [...new Set(filtreItems.map(item => item.price))].sort((a, b) => a - b);
     const largeurDisponible = [...new Set(filtreItems.map(item => item.width))].sort((a, b) => a - b);
     const couleurDisponible = [...new Set(filtreItems.map(item => item.color))].sort();
 
 
-
-    // Fonction de reset lorsqu'on clique sur le nom initial du select
-    const handleCollection = (event) => {
+     // ME PERMET DE RECUPERER LA VALEUR SELECTIONNEE EN TEMPS REEL
+     const handleCollection = (event) => {
         const collectionValue = event.target.value;
         if (collectionValue === "Collection") {
             setSelectionCollection("");
@@ -112,7 +109,6 @@ const Boutique = () => {
             setSelectionCollection(collectionValue);
         }
     }
-
     const handlePrix = (event) => {
         const prixValue = event.target.value;
         if (prixValue === "Prix") {
@@ -120,8 +116,7 @@ const Boutique = () => {
         } else {
             setSelectionPrix(prixValue);
         }
-    };
-
+    }
     const handleLargeur = (event) => {
         const largeurValue = event.target.value;
         if (largeurValue === "Largeur") {
@@ -129,8 +124,7 @@ const Boutique = () => {
         } else {
             setSelectionLargeur(largeurValue);
         }
-    };
-
+    }
     const handleCouleur = (event) => {
         const couleurValue = event.target.value;
         if (couleurValue === "Couleur") {
@@ -138,17 +132,14 @@ const Boutique = () => {
         } else {
             setSelectionCouleur(couleurValue);
         }
-    };
+    }
 
-
-// Pour reset totalment tous les filtres.
     const resetFiltre = () => {
         setSelectionCollection("")
         setSelectionPrix("")
         setSelectionLargeur("")
         setSelectionCouleur("")
     }
-
 
 
     if (error) return <> <p>{error}</p> </>
@@ -177,7 +168,6 @@ const Boutique = () => {
                             {/* <div className={boutique.refresh}> */}
                             <img className={boutique.refresh} onClick={resetFiltre} src={raffraichir} alt="réinitialisation des filtres" />
                             {/* </div> */}
-                            {/* sr-only est principalement utilisé par bootstrap, ça sert à mettre le label spécifique aux normes d'accessibilité, tout en le rendant invisible pour les autres utilisateurs. Utile quand on a pas assez de place, tout en permettant d'être utilisé par technologies d'assistance. */}
                             <label for="width" className="sr-only">Choisissez la largeur :</label>
                             <select
                                 aria-label="Sélectionnez une classe de produits par sa largeur."
@@ -186,7 +176,7 @@ const Boutique = () => {
                                 id="width"
                                 value={selectionLargeur}
                                 onChange={handleLargeur}>
-                                <option onClick={resetFiltre}>Largeur</option>
+                                <option>Largeur</option>
                                 {largeurDisponible.map(largeur => (
                                     <option key={largeur} value={largeur}>{largeur} cm</option>
                                 ))}
