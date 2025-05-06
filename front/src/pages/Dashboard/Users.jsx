@@ -19,10 +19,6 @@ const AjoutUtilisateur = () => {
         email: "",
         password: "",
         repeatPassword: "",
-        phone: "",
-        adress: "",
-        postal: "",
-        town: ""
     });
 
     const [error, setError] = useState({
@@ -31,10 +27,6 @@ const AjoutUtilisateur = () => {
         email: "",
         password: "",
         repeatPassword: "",
-        phone: "",
-        adress: "",
-        postal: "",
-        town: ""
     })
 
     const formulaire = () => {
@@ -73,44 +65,9 @@ const AjoutUtilisateur = () => {
             }
         }
 
-        if (utilisateur.repeatPassword) {
-            const passwordRegexr = RGXR.PASSWORD;
-            if (!passwordRegexr.test(utilisateur.repeatPassword) || utilisateur.repeatPassword.length < 8 || utilisateur.repeatPassword.length > 40) {
-                messageError.password = ERROR.U_PASSWORD
-                isValid = false;
-            }
-        }
-
-        if (utilisateur.phone) {
-            const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(utilisateur.phone) || utilisateur.phone.length < 10 || utilisateur.phone.length > 10) {
-                messageError.phone = ERROR.U_PHONE
-                isValid = false;
-            }
-        }
-
-        if (utilisateur.adress) {
-            const adressRegexr = RGXR.ADRESS;
-            if (!adressRegexr.test(utilisateur.adress) || utilisateur.adress.length < 8 || utilisateur.adress.length > 70) {
-                messageError.adress = ERROR.U_ADRESS
-                isValid = false;
-            }
-        }
-
-        if (utilisateur.postal) {
-            const postalRegexr = RGXR.POSTAL;
-            if (!postalRegexr.test(utilisateur.postal) || utilisateur.postal.length < 5 || utilisateur.postal.length > 5) {
-                messageError.postal = ERROR.U_POSTAL
-                isValid = false;
-            }
-        }
-
-        if (utilisateur.town) {
-            const townRegexr = RGXR.TOWN;
-            if (!townRegexr.test(utilisateur.town) || utilisateur.town.length < 2 || utilisateur.town.length > 50) {
-                messageError.town = ERROR.U_TOWN
-                isValid = false;
-            }
+        if (utilisateur.password !== utilisateur.repeatPassword) {
+            messageError.repeatPassword = "Les mots de passe ne sont pas identiques."
+            isValid = false;
         }
 
         setError(messageError);
@@ -137,12 +94,10 @@ const AjoutUtilisateur = () => {
             toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
             return;
         }
-        const {repeatPassword, ...reste} = utilisateur
 
         if (URL.USER_INSCRIPTION) {
             try {
-                console.log("avant : ", reste);
-                const response = await axiosInstance.post(URL.USER_INSCRIPTION, {reste, dashboard: true})
+                const response = await axiosInstance.post(URL.USER_INSCRIPTION, { ...utilisateur, dashboard: true })
                 console.log(response)
                 if (response.status === 201) {
                     toast.success("Utilisateur ajouté avec succès.", { autoClose: 1000 })
@@ -219,74 +174,6 @@ const AjoutUtilisateur = () => {
                         }} />
                     {error.email && <span className={items.spanError}>{error.email}</span>}
 
-                    <label htmlFor="phone">Téléphone : </label>
-                    <input
-                        className={items.inputItem}
-                        type="text"
-                        name='phone'
-                        id='phone'
-                        autocomplete="off"
-                        onChange={handleChange}
-                        onBlur={formulaire}
-                        minLength={10}
-                        maxLength={10}
-                        pattern={PATTERN.PHONE}
-                        onInput={(event) => {
-                            event.target.value = event.target.value.replace(ONINPUT.U_PHONE, '')
-                        }} />
-                    {error.phone && <span className={items.spanError}>{error.phone}</span>}
-
-                    <label htmlFor="adress">Adresse : </label>
-                    <input
-                        className={items.inputItem}
-                        type="text"
-                        name='adress'
-                        id='adress'
-                        autocomplete="off"
-                        onChange={handleChange}
-                        onBlur={formulaire}
-                        minLength={8}
-                        maxLength={70}
-                        pattern={PATTERN.ADRESS}
-                        onInput={(event) => {
-                            event.target.value = event.target.value.replace(ONINPUT.U_ADRESS, '');
-                        }} />
-                    {error.adress && <span className={items.spanError}>{error.adress}</span>}
-
-                    <label htmlFor="postal">Code postal : </label>
-                    <input
-                        className={items.inputItem}
-                        type="text"
-                        name='postal'
-                        id='postal'
-                        autocomplete="off"
-                        onChange={handleChange}
-                        onBlur={formulaire}
-                        minLength={5}
-                        maxLength={5}
-                        pattern={PATTERN.POSTAL}
-                        onInput={(event) => {
-                            event.target.value = event.target.value.replace(ONINPUT.U_POSTAL, '')
-                        }} />
-                    {error.postal && <span className={items.spanError}>{error.postal}</span>}
-
-                    <label htmlFor="town">Ville : </label>
-                    <input
-                        className={items.inputItem}
-                        type="text"
-                        name='town'
-                        id='town'
-                        autocomplete="off"
-                        onChange={handleChange}
-                        onBlur={formulaire}
-                        minLength={2}
-                        maxLength={50}
-                        pattern={PATTERN.TOWN}
-                        onInput={(event) => {
-                            event.target.value = event.target.value.replace(ONINPUT.U_TOWN, '').toUpperCase();;
-                        }} />
-                    {error.town && <span className={items.spanError}>{error.town}</span>}
-
                     <label htmlFor="password">Mot de passe * :</label>
                     <input
                         className={items.inputItem}
@@ -319,6 +206,8 @@ const AjoutUtilisateur = () => {
                         onInput={(event) => {
                             event.target.value = event.target.value.replace(ONINPUT.U_PASSWORD, '');
                         }} />
+                    {error.repeatPassword && <span className={items.spanError}>{error.repeatPassword}</span>}
+
 
                     <div className={items.divBtnAjouter}>
                         <button className={items.boutonItem}>Ajouter</button>
