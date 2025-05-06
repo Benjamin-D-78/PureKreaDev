@@ -6,8 +6,8 @@ export const creationCommande = async (req, res) => {
 
     const { userId, panier, comment, statut } = req.body;
     try {
-        if (req.user.id !== userId && req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès refusé."})
+        if (req.user.id !== userId && req.user.role !== "admin") {
+            return res.status(403).json({ message: "Accès refusé." })
         }
         if (comment) {
             const contentRegexr = RGXR.CONTENT;
@@ -41,8 +41,8 @@ export const creationCommande = async (req, res) => {
 // GET ALL COMMANDES
 export const allCommandes = async (req, res) => {
     try {
-        if (req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "Accès réservé à l'administrateur." })
         }
         const response = await Commande.find().sort({ date: -1 });
         res.status(200).json(response);
@@ -66,11 +66,12 @@ export const commandeID = async (req, res) => {
 // ALL COMMANDES BY ID USER
 export const commandeByUser = async (req, res) => {
     try {
-        if (req.user.id !== userId && req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès refusé."})
+        const { id } = req.params
+        if (req.user.id !== id && req.user.role !== "admin") {
+            return res.status(403).json({ message: "Accès refusé." })
         }
         // On déclare un "objet de filtre" qui nous permet de récupérer uniquement les commandes associées à l'utilisateur concerné.
-        const commandes = await Commande.find({ userId: req.user.id })
+        const commandes = await Commande.find({ userId: id })
             // On vient peupler la référence qui se trouve dans le champ "panier.itemId" de chaque commande.
             // Par ex, on a chaque commande qui possède un panier (un tableau d'objets) et chaque objet dans ce panier a une référence à un autre document dans une autre collection (ex : une collection de produits).
             // On va donc récupérer les infos complètes de ces produits en utilisant leur identifiant stocké dans itemId.
@@ -88,8 +89,8 @@ export const commandeByUser = async (req, res) => {
 // PUT - UPDATE BY ID
 export const upCommande = async (req, res) => {
     try {
-        if (req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "Accès réservé à l'administrateur." })
         }
         const response = await Commande.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).json({ Message: "Commande mise à jour avec succès : ", response })
@@ -102,8 +103,8 @@ export const upCommande = async (req, res) => {
 // DELETE
 export const deleteCommande = async (req, res) => {
     try {
-        if (req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "Accès réservé à l'administrateur." })
         }
         const response = await Commande.findByIdAndDelete(req.params.id)
         res.status(200).json({ Message: "Commande supprimée avec succès.", response })
