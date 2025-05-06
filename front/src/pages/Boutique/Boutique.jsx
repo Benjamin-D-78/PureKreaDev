@@ -24,7 +24,7 @@ import { PanierContext } from "../../context/PanierContext.jsx";
 const Boutique = () => {
 
     const { auth } = useContext(AuthContext)
-    const { incremente, decremente, ajouterArticle, retirerArticle, prixParQuantite, totalArticle, panier, prixTotal } = useContext(PanierContext)
+    const { ajouterArticle } = useContext(PanierContext)
 
     const [items, setItems] = useState([])
     const [error, setError] = useState(null)
@@ -36,9 +36,6 @@ const Boutique = () => {
     const [selectionPrix, setSelectionPrix] = useState("")
     const [selectionLargeur, setSelectionLargeur] = useState("")
     const [selectionCouleur, setSelectionCouleur] = useState("")
-
-
-
 
 
     useEffect(() => {
@@ -60,30 +57,6 @@ const Boutique = () => {
         };
         depart();
     }, []);
-
-
-    // JE CREE UN FILTRE DYNAMIQUE EN TEMPS REEL, QUI FILTRE LES VALEURS CONTENUES DANS "ITEMS" DANS UN TABLEAU
-    // EN FONCTION DE CE QUI EST SELECTIONNE DANS LE SELECT ET STOCKE DANS "selectionCollection", "selectionLargeur", etc.
-    const filtreItems = Array.isArray(items) ? items.filter(item => {
-
-        const testCollection = selectionCollection ? item.category === Number(selectionCollection) : true; // "true" = accepte tout
-        const testLargeur = selectionLargeur ? item.width === Number(selectionLargeur) : true;
-        const testCouleur = selectionCouleur ? item.color === selectionCouleur : true;
-        const testPrix = selectionPrix ? item.price === Number(selectionPrix) : true;
-
-        return testCollection && testPrix && testLargeur && testCouleur
-    }
-    ) : [];
-
-
-    // SERT JUSTE POUR LES VALEURS DISPONIBLES DANS LE SELECT EN TEMPS REEL
-    // Je veux extraire toutes les valeurs de "category" via "item.category" donc on les map
-    // "Set" permet de supprimer les doublons mais renvoie un objet.
-    // Je fais donc une copie de "new" avec le spread operator et met le tout entre crochet pour obtenir un tableau et y appliquer le ".sort"
-    const collectionDisponible = [...new Set(filtreItems.map(item => item.category))].sort((a, b) => b - a);
-    const prixDisponible = [...new Set(filtreItems.map(item => item.price))].sort((a, b) => a - b);
-    const largeurDisponible = [...new Set(filtreItems.map(item => item.width))].sort((a, b) => a - b);
-    const couleurDisponible = [...new Set(filtreItems.map(item => item.color))].sort();
 
 
      // ME PERMET DE RECUPERER LA VALEUR SELECTIONNEE EN TEMPS REEL
@@ -126,6 +99,30 @@ const Boutique = () => {
         setSelectionLargeur("")
         setSelectionCouleur("")
     }
+
+
+    // JE CREE UN FILTRE DYNAMIQUE EN TEMPS REEL, QUI FILTRE LES VALEURS CONTENUES DANS "ITEMS" DANS UN TABLEAU
+    // EN FONCTION DE CE QUI EST SELECTIONNE DANS LE SELECT ET STOCKE DANS "selectionCollection", "selectionLargeur", etc.
+    const filtreItems = Array.isArray(items) ? items.filter(item => {
+
+        const testCollection = selectionCollection ? item.category === Number(selectionCollection) : true; // "true" = accepte tout
+        const testLargeur = selectionLargeur ? item.width === Number(selectionLargeur) : true;
+        const testCouleur = selectionCouleur ? item.color === selectionCouleur : true;
+        const testPrix = selectionPrix ? item.price === Number(selectionPrix) : true;
+
+        return testCollection && testPrix && testLargeur && testCouleur
+    }
+    ) : [];
+
+
+    // SERT JUSTE POUR LES VALEURS DISPONIBLES DANS LE SELECT EN TEMPS REEL
+    // Je veux extraire toutes les valeurs de "category" via "item.category" donc on les map
+    // "Set" permet de supprimer les doublons mais renvoie un objet.
+    // Je fais donc une copie de "new" avec le spread operator et met le tout entre crochet pour obtenir un tableau et y appliquer le ".sort"
+    const collectionDisponible = [...new Set(filtreItems.map(item => item.category))].sort((a, b) => b - a);
+    const prixDisponible = [...new Set(filtreItems.map(item => item.price))].sort((a, b) => a - b);
+    const largeurDisponible = [...new Set(filtreItems.map(item => item.width))].sort((a, b) => a - b);
+    const couleurDisponible = [...new Set(filtreItems.map(item => item.color))].sort();
 
 
     if (error) return <> <p>{error}</p> </>

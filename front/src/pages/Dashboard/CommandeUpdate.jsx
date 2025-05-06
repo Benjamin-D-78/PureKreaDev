@@ -94,12 +94,7 @@ const CommandeUpdate = () => {
     event.preventDefault();
 
     // On envoie la commande mise à jour en conservant les propriétés déjà existantes sans qu'elles écrasées.
-    const updateCommande = {
-      ...commande
-      // panier: commande.panier,
-      // prixTotal: commande.prixTotal,
-      // statut: commande.statut
-    }
+    const updateCommande = {...commande}
     // console.log("Réponse avant envoie", updateCommande)
 
     try {

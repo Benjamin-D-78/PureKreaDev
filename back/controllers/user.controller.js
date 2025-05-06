@@ -13,13 +13,16 @@ import axios from "axios"
 // SIGNUP
 export const inscription = async (req, res, next) => {
     try {
-        const { recaptchaToken, firstname, lastname, email, password } = req.body
+        const { recaptchaToken, firstname, lastname, email, password,} = req.body
 
         if (!recaptchaToken) {
             return res.status(400).json({ message: "Le CAPTCHA est requis." });
         }
         if (!firstname || !lastname || !email || !password) {
             return res.status(400).json({ message: "Tous les champs sont requis." })
+        }
+        if (req.body.role && req.body.role === "admin") {
+            return res.status(403).json({ message: "Non autorisé." })
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -61,8 +64,15 @@ export const inscription = async (req, res, next) => {
 
         // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
         // Plus il y en a, plus c'est lent et donc mieux c'est.
-        const hashedMDP = await bcrypt.hash(req.body.password, 10)
-        const user = await userModel.create({ ...req.body, password: hashedMDP, isVerified: false });
+        const hashedMDP = await bcrypt.hash(password, 10)
+        const user = await userModel.create({
+            firstname,
+            lastname,
+            email,
+            password: hashedMDP,
+            isVerified: false,
+            role: "user"
+        });
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
@@ -87,7 +97,7 @@ export const verifyEmail = async (req, res, next) => {
         const decoded = jwt.verify(token, env.TOKEN);
         // Maintenant on active le compte de l'utilisateur
         const user = await userModel.findByIdAndUpdate(decoded.id, { isVerified: true }, { new: true, });
-        if (!user) return res.status(404).json({ message: "Utilisateur non trouvé."})
+        if (!user) return res.status(404).json({ message: "Utilisateur non trouvé." })
 
         res.status(200).json({ message: "Email vérifié avec succès." });
 
@@ -96,7 +106,7 @@ export const verifyEmail = async (req, res, next) => {
         if (error.name === 'TokenExpiredError') {
             return res.status(400).json({ message: "Lien invalide ou expiré." });
         }
-        res.status(500).json({message: "Echec lors de vérification du token."})
+        res.status(500).json({ message: "Echec lors de vérification du token." })
     }
 };
 
@@ -343,51 +353,63 @@ export const userID = async (req, res) => {
 // UPDATE USER
 export const upUser = async (req, res) => {
     try {
-        if (req.body.firstname) {
+        const { firstname, lastname, email, password, ancienMDP, phone, adress, postal, town } = req.body
+
+        if (req.body.role && req.user.role !== "admin") {
+            return res.status(403).json({ Message: "Seul l'administrateur peut modifier le rôle." });
+        }
+
+        if (firstname) {
             const firstnameRegexr = RGXR.PRENOM;
-            if (!firstnameRegexr.test(req.body.firstname) || req.body.firstname.length < 2 || req.body.firstname.length > 30) {
+            if (!firstnameRegexr.test(firstname) || firstname.length < 2 || firstname.length > 30) {
                 return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
             }
         }
-        if (req.body.lastname) {
+        if (lastname) {
             const lastnameRegexr = RGXR.NOM;
-            if (!lastnameRegexr.test(req.body.lastname) || req.body.lastname.length < 2 || req.body.lastname.length > 30) {
+            if (!lastnameRegexr.test(lastname) || lastname.length < 2 || lastname.length > 30) {
                 return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
             }
         }
-        if (req.body.email) {
+        if (email) {
             const emailRegexr = RGXR.EMAIL;
-            if (!emailRegexr.test(req.body.email) || req.body.email.length < 10 || req.body.email.length > 60) {
+            if (!emailRegexr.test(email) || email.length < 10 || email.length > 60) {
                 return res.status(400).json({ Message: "Format email, entre 10 et 60 caractères attendus." });
             }
         }
-        if (req.body.password) {
+        if (password) {
             const passwordRegexr = RGXR.PASSWORD;
-            if (!passwordRegexr.test(req.body.password) || req.body.password.length < 8 || req.body.password.length > 40) {
+            if (!passwordRegexr.test(password) || password.length < 8 || password.length > 40) {
                 return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
             }
         }
-        if (req.body.phone) {
+        if (ancienMDP) {
+            const passwordRegexr = RGXR.PASSWORD;
+            if (!passwordRegexr.test(ancienMDP) || ancienMDP.length < 8 || ancienMDP.length > 40) {
+                return res.status(400).json({ Message: "Entre 8 et 40 caractères, (au moins une minuscule, une majusculte, un chiffre et un caractère spécial)." });
+            }
+        }
+        if (phone) {
             const phoneRegexr = RGXR.PHONE;
-            if (!phoneRegexr.test(req.body.phone) || req.body.phone < 0 || req.body.phone > 9999999999) {
+            if (!phoneRegexr.test(phone) || phone < 0 || phone > 9999999999) {
                 return res.status(400).json({ Message: "10 chiffres attendus." })
             }
         }
-        if (req.body.adress) {
+        if (adress) {
             const adressRegexr = RGXR.ADRESS;
-            if (!adressRegexr.test(req.body.adress) || req.body.adress.length < 8 || req.body.adress.length > 70) {
+            if (!adressRegexr.test(adress) || adress.length < 8 || adress.length > 70) {
                 return res.status(400).json({ Message: "Entre 8 et 70 aractères attendus." })
             }
         }
-        if (req.body.postal) {
+        if (postal) {
             const postalRegexr = RGXR.POSTAL;
-            if (!postalRegexr.test(req.body.postal) || req.body.postal < 1 || req.body.postal > 99999) {
+            if (!postalRegexr.test(postal) || postal < 1 || postal > 99999) {
                 return res.status(400).json({ Message: "5 chiffres attendus." })
             }
         }
-        if (req.body.town) {
+        if (town) {
             const townRegexr = RGXR.TOWN;
-            if (!townRegexr.test(req.body.town) || req.body.town.length < 2 || req.body.town.length > 50) {
+            if (!townRegexr.test(town) || town.length < 2 || town.length > 50) {
                 return res.status(400).json({ Message: "Entre 2 et 50 caractères attendus." })
             }
         }
@@ -399,25 +421,41 @@ export const upUser = async (req, res) => {
             return res.status(403).json({ Message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         }
 
-        if (req.body.password) {
-            if (!req.body.ancienMDP) {
+        let hashedPassword
+        if (password) {
+            if (!ancienMDP) {
                 return res.status(400).json({ Message: "Le mot de passe actuel est requis." })
             }
 
-            const correspond = await bcrypt.compare(req.body.ancienMDP, response.password);
+            const correspond = await bcrypt.compare(ancienMDP, response.password);
             if (!correspond) {
                 return res.status(400).json({ Message: "Le mot de passe actuel est incorrect." })
             }
 
             // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
             // Plus il y en a, plus c'est lent et donc mieux c'est.
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            req.body.password = hashedPassword
+            hashedPassword = await bcrypt.hash(password, 10);
+            // password = hashedPassword
         }
+
+        const update = {}
+        if (firstname) update.firstname = firstname
+        if (lastname) update.lastname = lastname
+        if (email) update.email = email
+        if (hashedPassword) update.password = hashedPassword
+        if (phone) update.phone = phone
+        if (adress) update.adress = adress
+        if (postal) update.postal = postal
+        if (town) update.town = town
+        if (req.body.role && req.user.role === "admin"){
+            update.role = role
+        }
+        
+
         // Mise à jour de l'utilisateur :
         await userModel.findByIdAndUpdate(
             req.params.id,
-            { $set: req.body }, // set est propre à mongoose, et spécifie les champs qui doivent être mis à jour.
+            { $set: update }, // set est propre à mongoose, et spécifie les champs qui doivent être mis à jour.
             { new: true }) // On envoie le nouveau document mis à jour.
         res.status(200).json({ message: "Informations mises à jour avec succès." })
 
