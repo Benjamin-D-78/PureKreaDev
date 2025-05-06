@@ -22,7 +22,7 @@ export const inscription = async (req, res, next) => {
             return res.status(400).json({ message: "Tous les champs sont requis." })
         }
         if (req.body.role && req.body.role === "admin") {
-            return res.status(403).json({ message: "Non autorisé." })
+            return res.status(403).json({ message: "Vous n'êtes pas autorisé à créer un compte administrateur." })
         }
 
         // Vérification du token recaptcha via l'API de Google
@@ -103,9 +103,6 @@ export const verifyEmail = async (req, res, next) => {
 
     } catch (error) {
         console.error("Erreur de vérification : ", error);
-        if (error.name === 'TokenExpiredError') {
-            return res.status(400).json({ message: "Lien invalide ou expiré." });
-        }
         res.status(500).json({ message: "Echec lors de vérification du token." })
     }
 };
@@ -319,6 +316,9 @@ export const connexion = async (req, res, next) => {
 // GET ALL USERS
 export const allUsers = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await userModel.find().select("-password");
         if (response.length === 0) {
             return res.status(404).json({ message: "Aucun utilisateur n'a été trouvé." })

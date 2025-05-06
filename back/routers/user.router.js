@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post("/inscription", inscription)
 router.post("/connexion", connexion)
-router.get("/all", allUsers)
+router.get("/all", Token, allUsers)
 router.get("/obtenir/:id", Token, userID)
 router.put("/update/:id", Token, upUser)
 router.put("/verification/:token", verifyEmail)

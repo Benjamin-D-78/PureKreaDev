@@ -6,6 +6,9 @@ export const creationCommande = async (req, res) => {
 
     const { userId, panier, comment, statut } = req.body;
     try {
+        if (req.user.id !== userId._id && req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès refusé."})
+        }
         if (comment) {
             const contentRegexr = RGXR.CONTENT;
             if (!contentRegexr.test(comment) || comment.length < 3 || comment.length > 500) {
@@ -38,6 +41,9 @@ export const creationCommande = async (req, res) => {
 // GET ALL COMMANDES
 export const allCommandes = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Commande.find().sort({ date: -1 });
         res.status(200).json(response);
     } catch (error) {
@@ -60,6 +66,9 @@ export const commandeID = async (req, res) => {
 // ALL COMMANDES BY ID USER
 export const commandeByUser = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         // On déclare un "objet de filtre" qui nous permet de récupérer uniquement les commandes associées à l'utilisateur concerné.
         const commandes = await Commande.find({ userId: req.user.id })
             // On vient peupler la référence qui se trouve dans le champ "panier.itemId" de chaque commande.
@@ -79,6 +88,9 @@ export const commandeByUser = async (req, res) => {
 // PUT - UPDATE BY ID
 export const upCommande = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Commande.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).json({ Message: "Commande mise à jour avec succès : ", response })
     } catch (error) {
@@ -90,6 +102,9 @@ export const upCommande = async (req, res) => {
 // DELETE
 export const deleteCommande = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Commande.findByIdAndDelete(req.params.id)
         res.status(200).json({ Message: "Commande supprimée avec succès.", response })
     } catch (error) {

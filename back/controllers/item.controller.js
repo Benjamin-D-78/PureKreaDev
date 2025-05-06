@@ -4,6 +4,10 @@ import { RGXR } from "../utils/regex.js";
 // CREATION ITEM
 export const creationItem = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
+
         const nameRegexr = RGXR.ITEM_NAME;
         if (!nameRegexr.test(req.body.name) || req.body.name.length < 2 || req.body.name.length > 30) {
             return res.status(400).json({ Message: "Entre 2 et 30 caractères attendus." });
@@ -78,6 +82,10 @@ export const itemID = async (req, res) => {
 // PUT - UPDATE BY ID
 export const upItem = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
+
         if (req.body.name) {
             const nameRegexr = RGXR.ITEM_NAME;
             if (!nameRegexr.test(req.body.name) || req.body.name.length < 2 || req.body.name.length > 30) {
@@ -150,6 +158,9 @@ export const upItem = async (req, res) => {
 // PUT - UPDATE DU STOCK LORS DE LA COMMANDE
 export const upStock = async(req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true})
         res.status(200).json({Message: "Stock mis à jour avec succès.", response})
     } catch (error) {
@@ -160,6 +171,9 @@ export const upStock = async(req, res) => {
 // DELETE
 export const deleteItem = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Item.findByIdAndDelete(req.params.id)
         res.status(200).json({ Message: "Item supprimé avec succès.", response })
 

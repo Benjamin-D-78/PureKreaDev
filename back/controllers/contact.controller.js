@@ -62,6 +62,9 @@ export const creationMessage = async (req, res) => {
 // GET ALL MESSAGES
 export const allMessage = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Contact.find().sort({ date: -1 });
         res.status(200).json(response);
     } catch (error) {
@@ -72,6 +75,9 @@ export const allMessage = async (req, res) => {
 // MESSAGE BY ID
 export const messageID = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Contact.findById(req.params.id);
         res.status(200).json(response);
     } catch (error) {
@@ -82,6 +88,9 @@ export const messageID = async (req, res) => {
 // UPDATE MESSAGE
 export const updateMessage = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         //  "req.params.id" : on récupère l'id du document qu'on veut metre à jour.
         //  "req.body" : contient les nouvelles données envoyées par le client dans le corps de la requête.
         //  "{new: true}" : C'est une option qui permet à la méthode de retourner le document mis à jour plutôt que l'original. Si on ne met pas cette option, la méthode retournera l'état du document avant la MAJ.
@@ -95,6 +104,9 @@ export const updateMessage = async (req, res) => {
 // DELETE MESSAGE
 export const deleteMessage = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Contact.findByIdAndDelete(req.params.id)
         res.status(200).json({ Message: "Message supprimé avec succès.", response })
     } catch (error) {

@@ -45,7 +45,7 @@ export const creationAbonne = async (req, res) => {
 
         const emailExistant = await Newsletter.findOne({ email: req.body.email});
         if (emailExistant) {
-            res.status(404).json({message: "Utilisateur déjà abonné."})
+            return res.status(404).json({message: "Utilisateur déjà abonné."})
         }
 
         await Newsletter.create(req.body);
@@ -59,6 +59,9 @@ export const creationAbonne = async (req, res) => {
 // GET ALL NEWSLETTER
 export const allAbonnes = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Newsletter.find().select("-password").sort({date: -1})
         if (response.length === 0) return res.status(404).json({message: "Aucune personne n'est abonnée."})
 
@@ -72,6 +75,9 @@ export const allAbonnes = async (req, res) => {
 // NEWSLETTER BY ID
 export const abonneID = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         const response = await Newsletter.findById(req.params.id)
         if (!response) return res.status(404).json({message: "Utilisateur non trouvé."})
         res.status(200).json({message: "Utilisateur abonné récupéré avec succès."})
@@ -84,6 +90,10 @@ export const abonneID = async (req, res) => {
 // UPDATE NEWSLETTER
 export const updateAbonne = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
+
         //  "req.params.id" : on récupère l'id du document qu'on veut metre à jour.
         //  "req.body" : contient les nouvelles données envoyées par le client dans le corps de la requête.
         //  "{new: true}" : C'est une option qui permet à la méthode de retourner le document mis à jour plutôt que l'original.
@@ -99,6 +109,9 @@ export const updateAbonne = async (req, res) => {
 // DELETE NEWSLETTER
 export const deleteAbonne = async (req, res) => {
     try {
+        if (req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        }
         await Newsletter.findByIdAndDelete(req.params.id)
         res.status(200).json({message: "Abonné supprimé avec succès."})
     } catch (error) {
