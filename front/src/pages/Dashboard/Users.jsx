@@ -18,6 +18,7 @@ const AjoutUtilisateur = () => {
         firstname: "",
         email: "",
         password: "",
+        repeatPassword: "",
         phone: "",
         adress: "",
         postal: "",
@@ -29,6 +30,7 @@ const AjoutUtilisateur = () => {
         firstname: "",
         email: "",
         password: "",
+        repeatPassword: "",
         phone: "",
         adress: "",
         postal: "",
@@ -63,10 +65,20 @@ const AjoutUtilisateur = () => {
             }
         }
 
-        const passwordRegexr = RGXR.PASSWORD;
-        if (utilisateur.password && !passwordRegexr.test(utilisateur.password)) {
-            messageError.password = ERROR.U_PASSWORD
-            isValid = false;
+        if (utilisateur.password) {
+            const passwordRegexr = RGXR.PASSWORD;
+            if (!passwordRegexr.test(utilisateur.password) || utilisateur.password.length < 8 || utilisateur.password.length > 40) {
+                messageError.password = ERROR.U_PASSWORD
+                isValid = false;
+            }
+        }
+
+        if (utilisateur.repeatPassword) {
+            const passwordRegexr = RGXR.PASSWORD;
+            if (!passwordRegexr.test(utilisateur.repeatPassword) || utilisateur.repeatPassword.length < 8 || utilisateur.repeatPassword.length > 40) {
+                messageError.password = ERROR.U_PASSWORD
+                isValid = false;
+            }
         }
 
         if (utilisateur.phone) {
@@ -118,7 +130,7 @@ const AjoutUtilisateur = () => {
             toast.error("Le formulaire n'est pas complété.");
             return;
         }
-        
+
         if (!formulaire()) return;
 
         if (utilisateur.password !== utilisateur.repeatPassword) {
