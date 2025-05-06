@@ -13,11 +13,9 @@ import axios from "axios"
 // SIGNUP
 export const inscription = async (req, res, next) => {
     try {
-        const { recaptchaToken, firstname, lastname, email, password,} = req.body
+        const userDashboard = req.body.dashboard
+        const { recaptchaToken, firstname, lastname, email, password, } = req.body
 
-        if (!recaptchaToken) {
-            return res.status(400).json({ message: "Le CAPTCHA est requis." });
-        }
         if (!firstname || !lastname || !email || !password) {
             return res.status(400).json({ message: "Tous les champs sont requis." })
         }
@@ -25,19 +23,24 @@ export const inscription = async (req, res, next) => {
             return res.status(403).json({ message: "Vous n'êtes pas autorisé à créer un compte administrateur." })
         }
 
-        // Vérification du token recaptcha via l'API de Google
-        const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
-            {
-                params: {
-                    secret: env.RECAPTCHA_SECRET_KEY,
-                    response: recaptchaToken,
-                },
+        if (!userDashboard) {
+            if (!recaptchaToken) {
+                return res.status(400).json({ message: "Le CAPTCHA est requis." });
             }
-        );
+            // Vérification du token recaptcha via l'API de Google
+            const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null,
+                {
+                    params: {
+                        secret: env.RECAPTCHA_SECRET_KEY,
+                        response: recaptchaToken,
+                    },
+                }
+            );
 
-        // On vérifie la validation recaptcha
-        if (!captcha.data.success) {
-            return res.status(400).json({ message: "Echec de la Vérification reCAPTCHA." });
+            // On vérifie la validation recaptcha
+            if (!captcha.data.success) {
+                return res.status(400).json({ message: "Echec de la Vérification reCAPTCHA." });
+            }
         }
 
         const firstnameRegexr = RGXR.PRENOM;
@@ -241,8 +244,8 @@ export const mdpModifie = async (req, res) => {
         const { token } = req.params;
         const { email, password, repeatPassword } = req.body;
 
-        if (!repeatPassword){
-            return res.status(400).json({message: "Veuillez saisir correctement tous les champs."})
+        if (!repeatPassword) {
+            return res.status(400).json({ message: "Veuillez saisir correctement tous les champs." })
         } else if (repeatPassword !== password) {
             return res.status(400).json({ message: "Les mots de passe ne correspondent pas" });
         }
@@ -331,8 +334,8 @@ export const connexion = async (req, res, next) => {
 // GET ALL USERS
 export const allUsers = async (req, res) => {
     try {
-        if (req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "Accès réservé à l'administrateur." })
         }
         const response = await userModel.find().select("-password");
         if (response.length === 0) {
@@ -462,10 +465,10 @@ export const upUser = async (req, res) => {
         if (adress) update.adress = adress
         if (postal) update.postal = postal
         if (town) update.town = town
-        if (req.body.role && req.user.role === "admin"){
+        if (req.body.role && req.user.role === "admin") {
             update.role = role
         }
-        
+
 
         // Mise à jour de l'utilisateur :
         await userModel.findByIdAndUpdate(
