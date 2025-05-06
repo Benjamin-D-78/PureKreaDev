@@ -6,7 +6,7 @@ export const creationCommande = async (req, res) => {
 
     const { userId, panier, comment, statut } = req.body;
     try {
-        if (req.user.id !== userId._id && req.user.role !== "admin"){
+        if (req.user.id !== userId && req.user.role !== "admin"){
             return res.status(403).json({message: "Accès refusé."})
         }
         if (comment) {
