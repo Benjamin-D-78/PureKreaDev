@@ -66,8 +66,8 @@ export const commandeID = async (req, res) => {
 // ALL COMMANDES BY ID USER
 export const commandeByUser = async (req, res) => {
     try {
-        if (req.user.role !== "admin"){
-            return res.status(403).json({message: "Accès réservé à l'administrateur."})
+        if (req.user.id !== userId && req.user.role !== "admin"){
+            return res.status(403).json({message: "Accès refusé."})
         }
         // On déclare un "objet de filtre" qui nous permet de récupérer uniquement les commandes associées à l'utilisateur concerné.
         const commandes = await Commande.find({ userId: req.user.id })
