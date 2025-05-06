@@ -468,7 +468,7 @@ export const upUser = async (req, res) => {
         if (postal) update.postal = postal
         if (town) update.town = town
         if (req.body.role && req.user.role === "admin") {
-            update.role = role
+            update.role = req.body.role
         }
 
 
