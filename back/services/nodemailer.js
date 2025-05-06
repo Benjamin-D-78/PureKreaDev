@@ -12,16 +12,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = async (user, verifieToken) => {
+export const sendEmail = async (donneesEmail, verificationToken) => {
 
-  const verificationURL = `https://pure-krea-benjamind.vercel.app/verification/${verifieToken}`;
+  const verificationURL = `https://pure-krea-benjamind.vercel.app/verification/${verificationToken}`;
 
   const mailData = {
     from: env.EMAIL_USER,  // Expéditeur (l'email de l'expéditeur)
-    to: user.email,  // Destinataire (l'email de l'utilisateur)
+    to: donneesEmail.email,  // Destinataire (l'email de l'utilisateur)
     subject: "PureKréa - Vérifiez votre email",  // Sujet de l'email
     html: `
-        <p>Bienvenue ${user.firstname} ${user.lastname}.</p>
+        <p>Bienvenue ${donneesEmail.firstname} ${donneesEmail.lastname}.</p>
         <p>Nous vous remercions pour votre inscription</p>
         <p>Cliquez sur ce bouton pour valider votre email :</p>
         <br />
@@ -40,13 +40,13 @@ export const sendEmail = async (user, verifieToken) => {
   }
 };
 
-export const resetMDP = async (user, verifieToken) => {
+export const resetMDP = async (donneesEmail, verificationToken) => {
 
-  const verificationURL = `https://pure-krea-benjamind.vercel.app/reset/${verifieToken}`;
+  const verificationURL = `https://pure-krea-benjamind.vercel.app/reset/${verificationToken}`;
 
   const reset = {
     from: env.EMAIL_USER,  // Expéditeur (l'email de l'utilisateur)
-    to: user.email,  // Destinataire (l'email de l'utilisateur)
+    to: donneesEmail.email,  // Destinataire (l'email de l'utilisateur)
     subject: "Réinitialisez votre mot de passe",  // Sujet de l'email
     html: `
         <p>Veuillez cliquer sur le bouton ci-dessous pour modifier votre mot de passe :</p>
@@ -64,7 +64,7 @@ export const resetMDP = async (user, verifieToken) => {
   };
 
   try {
-    const info = await transporter.sendMail(reset);
+    const info = await transporter.resetMDP(reset);
     console.log("Email envoyé :", info.response);
     console.log("Objet de l'email", reset.subject);
   } catch (error) {

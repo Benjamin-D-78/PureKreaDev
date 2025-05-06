@@ -76,8 +76,12 @@ export const inscription = async (req, res, next) => {
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-
-        await sendEmail(user, verificationToken);
+        const donneesEmail = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email
+        }
+        await sendEmail(donneesEmail, verificationToken);
 
         res.status(201).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
@@ -144,7 +148,12 @@ export const renvoieEmail = async (req, res, next) => {
         // La clé secrète qui permet de signer le token et donc de le sécuriser.
         // L'option d'expiration (24h).
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        await sendEmail(user, verificationToken);
+        const donneesEmail = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email
+        }
+        await sendEmail(donneesEmail, verificationToken);
         res.status(200).json({ message: "Nouveau mail de vérification envoyé." })
 
     } catch (error) {
@@ -191,7 +200,11 @@ export const mdpOublie = async (req, res) => {
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ email: rechercheUser.email }, env.TOKEN, { expiresIn: "1h" });
         // On envoi le mail à notre utilisateur avecle lien de vérification.
-        await resetMDP(rechercheUser, verificationToken);
+        const donneesEmail = {
+            email: rechercheUser.email
+        }
+        await resetMDP(donneesEmail, verificationToken);
+
         res.status(200).json({ message: "L'utilisateur a bien été créé et l'email envoyé." });
 
     } catch (error) {
@@ -228,7 +241,9 @@ export const mdpModifie = async (req, res) => {
         const { token } = req.params;
         const { email, password, repeatPassword } = req.body;
 
-        if (repeatPassword !== password) {
+        if (!repeatPassword){
+            return res.status(400).json({message: "Veuillez saisir correctement tous les champs."})
+        } else if (repeatPassword !== password) {
             return res.status(400).json({ message: "Les mots de passe ne correspondent pas" });
         }
 
