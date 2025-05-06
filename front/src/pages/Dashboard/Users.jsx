@@ -137,11 +137,11 @@ const AjoutUtilisateur = () => {
             toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
             return;
         }
-
+        const {repeatPassword, ...reste} = utilisateur
 
         if (URL.USER_INSCRIPTION) {
             try {
-                const response = await axiosInstance.post(URL.USER_INSCRIPTION, utilisateur)
+                const response = await axiosInstance.post(URL.USER_INSCRIPTION, reste)
                 console.log(response)
                 if (response.status === 201) {
                     toast.success("Utilisateur ajouté avec succès.", { autoClose: 1000 })
