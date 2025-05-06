@@ -118,19 +118,19 @@ export const upItem = async (req, res) => {
         }
         if (req.body.category) {
             const categoryRegexr = RGXR.ITEM_CATEGORY;
-            if (!categoryRegexr.test(req.body.category) || req.body.category < 2000 || req.body.category > 9999) {
+            if (!categoryRegexr.test(req.body.category) || req.body.category.length < 1 || req.body.category.length > 4) {
                 return res.status(400).json({ Message: "4 chiffres attendus." });
             }
         }
         if (req.body.stock) {
             const stockRegexr = RGXR.ITEM_STOCK;
-            if (!stockRegexr.test(req.body.stock) || req.body.stock < 1 || req.body.stock > 999) {
+            if (!stockRegexr.test(req.body.stock) || req.body.stock.length < 1 || req.body.stock.length > 3) {
                 return res.status(400).json({ Message: "Entre 1 et 6 caractères attendus chiffres attendus." });
             }
         }
         if (req.body.price) {
             const priceRegexr = RGXR.ITEM_PRICE;
-            if (!priceRegexr.test(req.body.price) || req.body.price < 1 || req.body.price > 999) {
+            if (!priceRegexr.test(req.body.price) || req.body.price.length < 1 || req.body.price.length > 7) {
                 return res.status(400).json({ Message: "Entre 1 et 7 caractères attendus." });
             }
         }
