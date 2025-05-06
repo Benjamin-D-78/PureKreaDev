@@ -141,6 +141,7 @@ const AjoutUtilisateur = () => {
 
         if (URL.USER_INSCRIPTION) {
             try {
+                console.log("avant : ", reste);
                 const response = await axiosInstance.post(URL.USER_INSCRIPTION, {reste, dashboard: true})
                 console.log(response)
                 if (response.status === 201) {

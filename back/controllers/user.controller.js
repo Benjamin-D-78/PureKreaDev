@@ -13,6 +13,8 @@ import axios from "axios"
 // SIGNUP
 export const inscription = async (req, res, next) => {
     try {
+        console.log(req.body);
+        
         const userDashboard = req.body.dashboard
         const { recaptchaToken, firstname, lastname, email, password, } = req.body
 
