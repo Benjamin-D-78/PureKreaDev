@@ -141,7 +141,7 @@ export const PanierProvider = ({ children }) => {
                             toast.error("Le stock maximum a été atteint pour cet article.", { autoClose: 1000 })
                         }
                     } else {
-                        nouveauPanier.push({ ...product, quantite: 1 });
+                        nouveauPanier.push({ ...product, quantite: 1 }); // Je copie le produit en question et y ajoute la quantité à 1
                     }
                 } else {
                     nouveauPanier.push({ ...product, quantite: 1 });
@@ -156,7 +156,7 @@ export const PanierProvider = ({ children }) => {
 
     const videPanier = () => {
         setPanier([]);
-        const userId = auth ? auth._id : null; // Si auth existe, on extrait l'ID que l'on stocke dans userId, puis on supprime son panier.
+        const userId = auth ? auth._id : null;
         if (userId) {
             localStorage.removeItem(`panier${userId}`)
         }
@@ -164,8 +164,6 @@ export const PanierProvider = ({ children }) => {
 
     const validerCommande = async () => {
         try {
-
-            // On vérifie que le panier n'est pas vide.
             if (panier.length === 0) {
                 toast.error("Votre panier est vide. Veuillez ajouter des articles pour pouvoir passer commande.");
                 return;
@@ -181,7 +179,7 @@ export const PanierProvider = ({ children }) => {
 
             // On calcule le prix total du panier en ajoutant le prix total pour chaque article
             const panierTotal = panier.map(item => ({
-                ...item, // Pour chaque item du tableau "panier" on retourne un nouvel objet. Comme ça on garde toutes les prop's originales sans les modifier.
+                ...item, // Pour chaque item du tableau "panier" on retourne un nouvel objet. Comme ça on garde toutes les propriétés originales sans les modifier.
                 totalPrice: item.price * item.quantite  // Pour chaque item on ajoute une propriété "totalPrice" qui calcule le prix de l'article multiplié par la quantité.
             }));
 
@@ -192,7 +190,7 @@ export const PanierProvider = ({ children }) => {
 
             // On créé notre objet de commande à envoyer à notre back.
             const commandeData = {
-                userId: auth._id,  // ID de l'utilisateur
+                userId: auth._id,
                 panier: panierTotal.map(item => ({
                     itemId: item._id,
                     name: item.name,
@@ -200,7 +198,7 @@ export const PanierProvider = ({ children }) => {
                     quantity: item.quantite,
                     totalPrice: item.totalPrice // On ajoute le prix total calculé pour l'article
                 })),
-                total: prixTotal,  // On indique le prix total de la commande.
+                total: prixTotal,  // prix total de la commande.
                 comment: commentaire,
                 statut: "En attente"
             };
