@@ -20,15 +20,17 @@ export const PanierProvider = ({ children }) => {
     const [commentaire, setCommentaire] = useState("");
     const [idCommande, setIdCommande] = useState("");
 
+    // RECUPERATION DU PANIER DANS LE LOCAL STORAGE
     useEffect(() => {
         const loadPanier = async () => {
             try {
                 const userId = auth ? auth._id : null
 
                 if (userId) {
-                    const panierJSON = await localStorage.getItem(`panier${userId}`); // On récupère les données stockées dans le localStorage sous la clé "panier", puis on vérifie si les données existent dans le localStorage.
+                    // On récupère les données stockées dans le localStorage sous la clé "panier", puis on vérifie si les données existent dans le localStorage.
+                    const panierJSON = await localStorage.getItem(`panier${userId}`);
                     if (panierJSON !== null) {
-                        const panierStorage = JSON.parse(panierJSON); // On convertit les données en objet JavaScript.
+                        const panierStorage = JSON.parse(panierJSON); // On convertit les données (chaîne de caractères) en objet JS.
                         setPanier(panierStorage);
                     }
                 }
@@ -40,6 +42,7 @@ export const PanierProvider = ({ children }) => {
     }, [auth])
 
 
+    // CALCUL DU PRIX TOTAL DU PANIER A CHAQUE MODIFICATION DU PANIER
     useEffect(() => {
         let total = 0;
         panier.forEach(item => {
@@ -56,22 +59,23 @@ export const PanierProvider = ({ children }) => {
 
 
 
-    // On sauvegarde le panier dans le localStorage :
+    // CREATION DU PANIER DANS LE LOCALSTORAGE
     const sauvegardePanier = debounce((nouveauPanier) => {
         const userId = auth ? auth._id : null // On récupère l'ID de l'utilisateur depuis le contexte
         if (userId) {
-            localStorage.setItem(`panier${userId}`, JSON.stringify(nouveauPanier))
+            localStorage.setItem(`panier${userId}`, JSON.stringify(nouveauPanier)) // on converti l'objet JS en chaîne de carac' au format json car le localstorage ne stocke que des chaînes de caractères
         }
-    }, 1000);
+    }, 1000); // On sauvegarde le panier qu'après X millisecondes sans modification
 
 
+    // TOTAL D'ARTICLES AU PANIER
     const totalArticle = () => {
         let totalArticle = 0;
         panier.forEach(item => totalArticle += item.quantite);
         return totalArticle;
     }
 
-
+    // PRIX TOTAL
     const prixParQuantite = (price, quantity) => {
         const resultat = price * quantity
         return parseFloat(resultat.toFixed(2))
@@ -80,7 +84,7 @@ export const PanierProvider = ({ children }) => {
 
     const incremente = (index) => {
         const nouveauPanier = [...panier]
-        nouveauPanier[index].quantite++
+        nouveauPanier[index].quantite++ //index fait référence à l'index dans le tableau panier
         setPanier(nouveauPanier)
         sauvegardePanier(nouveauPanier)
     }
@@ -95,16 +99,18 @@ export const PanierProvider = ({ children }) => {
         }
     }
 
+    // CHANGEMENT DE QUANTITE
     const changerQuantite = (index, nouvelleQuantite) => {
         const nouveauPanier = [...panier];
-        nouveauPanier[index].quantite = nouvelleQuantite; // Met à jour la quantité de l'article
-        setPanier(nouveauPanier); // Mettre à jour le state
+        nouveauPanier[index].quantite = nouvelleQuantite;
+        setPanier(nouveauPanier);
         sauvegardePanier(nouveauPanier);
     }
 
+    // RETIRER UN ARTICLE
     const retirerArticle = (index) => {
         const nouveauPanier = [...panier]
-        nouveauPanier.splice(index, 1)
+        nouveauPanier.splice(index, 1) // litérallement : "supprimer 1 élément à l'index (l'item) donné"
         setPanier(nouveauPanier)
         sauvegardePanier(nouveauPanier)
     }
@@ -206,19 +212,19 @@ export const PanierProvider = ({ children }) => {
                 // console.log(response)
                 const id = response.data._id
 
-                // for (let item of panier) {
-                //     try {
-                //         const majStock = await axiosInstance.put(`${URL.ITEM_STOCK}/${item._id}`, {stock: item.stock - item.quantite})
-                //         // if(majStock.status === 200){
-                //         //     console.log("Stock des items mis à jour avec succès.")
-                //         // }
-                //     } catch (error) {
-                //         console.error("Erreur lors de la mise à jour du stock : ", item.name, error)
-                //     }
-                // }
+                for (let item of panier) {
+                    try {
+                        const majStock = await axiosInstance.put(`${URL.ITEM_STOCK}/${item._id}`, {stock: item.stock - item.quantite})
+                        // if(majStock.status === 200){
+                        //     console.log("Stock des items mis à jour avec succès.")
+                        // }
+                    } catch (error) {
+                        console.error("Erreur lors de la mise à jour du stock : ", item.name, error)
+                    }
+                }
                 setPanier([]) // On vide le panier
 
-                // On supprimer le panier dans le localStorage pour l'utilisateur
+                // On supprime le panier dans le localStorage pour l'utilisateur
                 const userId = auth ? auth._id : null
                 if (userId) {
                     localStorage.removeItem(`panier${userId}`)
@@ -233,6 +239,7 @@ export const PanierProvider = ({ children }) => {
         }
     };
 
+    // REDIRECTION SUR LA PAGE DE CONFIRMATION
     useEffect(() => {
         if (idCommande) {
             // On s'assure ensuite que le localStorage est bien vide avant de rediriger, d'où le temps de latence avec SetTimeOut. On attend 500 millisecondes.
@@ -242,7 +249,7 @@ export const PanierProvider = ({ children }) => {
                 setIdCommande("");
             }, 500)
         }
-    }, [idCommande, navigate])
+    }, [idCommande, navigate]) // On précise navigate par précaution, pour éviter des comportaments innatendus lors d'une MAJ de navigate. (en gros : sinon ça bug)
 
 
 

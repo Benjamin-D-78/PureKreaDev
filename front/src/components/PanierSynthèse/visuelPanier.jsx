@@ -22,10 +22,6 @@ const PanierTotal = () => {
   const [utilisateur, setUtilisateur] = useState({
     firstname: "",
     lastname: "",
-    adress: "",
-    postal: "",
-    town: "",
-    phone: ""
   });
 
   const [selection, setSelection] = useState("")
@@ -37,7 +33,7 @@ const PanierTotal = () => {
 
   const navigate = useNavigate();
 
-  // On créer une fonction pour gérer le changement de sélection dans le select.
+  // On crée une fonction pour gérer le changement de sélection dans le select.
   const select = (event) => {
     const value = event.target.value
     setSelection(value)
@@ -114,19 +110,17 @@ const PanierTotal = () => {
               value={article.quantite}
               // on appelle onChange a chaque fois qu'une nouvelle quantité est choisie dans le select.
               // index sert à identifier quel article doit être modifié.
-              // event.target.value cible na nouvelle quantité choisie convertie en nombre entier avec parseInt.
-              onChange={(event) => changerQuantite(index, parseInt(event.target.value, 10))}
+              onChange={(event) => changerQuantite(index, parseInt(event.target.value, 10))} // 10 pour 2 chiffres après la virgule
             >
-              {/* On créé des options de quantité allant de 1 à la quantité que j'ai en stock */}
-              {/* On créé un tableau vide de longueur égale à la valeur en stock. */}
-              {/* "..." = spread operator. On itère le tableau à chaque valeur du stock, c'est ce qui nous permet (avec article.stock) d'avoir le tableau avec des valeurs égales aux valeur qu'il y a en stock */}
-              {/* "_" est une convention pour dire que l'on a pas besoin de la valeur de l'élément puisquelle est "undefined". */}
-              {[...Array(article.stock)].map((_, qte) => (
-                <option key={qte} value={qte + 1}> {/* value={qte + 1} correspond à la quantité disponible à choisir. */}
+              {/* On créé un tableau vide (...Array) dans lequel on va ajouter le stock du produit (dynamiquement) et que l'on va mapper. */}
+              {/* "_" est une convention pour dire que l'on a pas besoin de la valeur de l'élément puisque les éléments du tableau sont "undefined" à la base. */}
+              {[...Array(article.stock)].map((_, qte) => ( 
+                <option key={qte} value={qte + 1}> {/* {qte + 1} correspond à la quantité disponible à choisir. */}
                   {qte + 1}
                 </option>
               ))}
             </select>
+            
             {/* Ici on multiplie le prix par la quantité avec la fonction "prixParQuantite" définie dans notre PanierContext */}
             <p className={visuelPanier.prixArticle}>{prixParQuantite(article.price, article.quantite)} €</p>
             <div className={visuelPanier.contientIconeSuppression}>
