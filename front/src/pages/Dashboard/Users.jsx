@@ -98,7 +98,7 @@ const AjoutUtilisateur = () => {
         if (URL.USER_INSCRIPTION) {
             try {
                 const response = await axiosInstance.post(URL.USER_INSCRIPTION, { ...utilisateur, dashboard: true })
-                console.log(response)
+                // console.log(response)
                 if (response.status === 201) {
                     toast.success("Utilisateur ajouté avec succès.", { autoClose: 1000 })
                 }

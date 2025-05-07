@@ -29,8 +29,8 @@ const TestFormulaire = () => {
     });
 
     const carteCompletee = (event) => {
-        // On vérifie si le champ est complet ou la carte valide.
-        if (event.complete) {
+        // On vérifie si le champ est complet ou la carte valide
+        if (event.complete) { // "complete" vient de CardElement
             setPaiementValide(true)
         } else {
             setPaiementValide(false)
@@ -59,23 +59,19 @@ const TestFormulaire = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (!paiementValide) {
+            toast.error("Vous devez renseigner vos informations de carte bancaire pour valider la commande.")
+            return
+        }
+
         // on créé ici une méthode de paiement
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error, paymentMethod } = await stripe.createPaymentMethod({ // "createPaymentMethod" retourne les objets "error" et "paymentMethod"
             type: "card",
-            card: elements.getElement(CardElement), // On récupère cette méthode de paiement avec le getElement
+            card: elements.getElement(CardElement), // On pointe sur le champ contenant les infos saisies par l'utilisateur
         });
         if (!error) {
-            // On génère grâce à paymentMethod un paiement qui sera en fait un Token. Ce token sera à envoyer au backend pour réaliser le paiement.
-            // console.log("Token généré : ", paymentMethod)
-            // on envoie le token au back
-
-            const derniersChiffres = paymentMethod.card.last4;
-            if (derniersChiffres !== "4242") {
-                toast.error("Le numéro de carte doit être '4242 4242 4242 4242'")
-                return;
-            }
-
             try {
+            // On génère grâce à paymentMethod un paiement qui sera en fait un Token. Le token est envoyé au back pour réaliser le paiement.
                 const { id } = paymentMethod;
                 const response = await axiosInstance.post(URL.CHARGEMENT, {
                     montant: prixTotal * 100,
@@ -91,6 +87,7 @@ const TestFormulaire = () => {
             }
         } else {
             console.log(error.message)
+            return
         }
     }
 
@@ -112,7 +109,6 @@ const TestFormulaire = () => {
                         options={{ hidePostalCode: true }}
                         onChange={carteCompletee}
                         className='bg-white rounded-md max-w-[30rem] mx-auto' />
-                    <p className='text-[#FFA500] max-w-[30rem] mx-auto'>Veuillez indiquer : 4242 4242 4242 4242</p>
                     <div className='flex justify-center align-items-center flex-column'>
                         <button
                             disabled={!paiementValide}

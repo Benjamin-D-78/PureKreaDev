@@ -11,13 +11,13 @@ export const paiementStripe = async (req, res) => {
             amount: montant,
             currency: "EUR",
             description: "Paiement réceptionné.",
-            payment_method: id,
-            confirm: true,
+            payment_method: id, // l'id envoyé depuis le client
+            confirm: true, // Strip essaie d'exécuter le paiement
             return_url: "http://localhost:8000"
         })
         res.status(201).json({
             Message: "Paiement réalisé avec succès.", 
-            success: true,
+            success: true, // pour indiuer au client que le paiement s'est bien passé
             clientSecret: paiement.client_secret}) // "client_secret" est une clé qui permet de finaliser le paiement côté client, après qu'il a été créé. Cette clé est envoyée au front, où elle est utilisée pour finaliser le paiement en appelant l'API Stripe côté client. (c'est une sécurité).
         
     } catch (error) {

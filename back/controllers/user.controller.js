@@ -13,8 +13,6 @@ import axios from "axios"
 // SIGNUP
 export const inscription = async (req, res, next) => {
     try {
-        console.log(req.body);
-        
         const userDashboard = req.body.dashboard
         const { recaptchaToken, firstname, lastname, email, password, } = req.body
 
@@ -71,20 +69,12 @@ export const inscription = async (req, res, next) => {
         // Plus il y en a, plus c'est lent et donc mieux c'est.
         const hashedMDP = await bcrypt.hash(password, 10)
         const user = await userModel.create({
-            firstname,
-            lastname,
-            email,
-            password: hashedMDP,
-            isVerified: false,
-            role: "user"
+            firstname, lastname, email, password: hashedMDP, isVerified: false, role: "user"
         });
 
         // On créé un token spécial qui va servir à vérifier l'email.
         const verificationToken = jwt.sign({ id: user._id }, env.TOKEN, { expiresIn: "24h" });
-        const donneesEmail = {
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email
+        const donneesEmail = {firstname: user.firstname, lastname: user.lastname, email: user.email
         }
         await sendEmail(donneesEmail, verificationToken);
 
@@ -436,7 +426,6 @@ export const upUser = async (req, res) => {
 
         const response = await userModel.findById(req.params.id);
         if (!response) return res.status(404).json({ Message: "Utilisateur non trouvé." });
-
         if (req.user.id !== response._id.toString() && req.user.role !== "admin") {
             return res.status(403).json({ Message: "Accès refusé : vous n'êtes pas l'utilisateur concerné." })
         }
@@ -446,16 +435,11 @@ export const upUser = async (req, res) => {
             if (!ancienMDP) {
                 return res.status(400).json({ Message: "Le mot de passe actuel est requis." })
             }
-
             const correspond = await bcrypt.compare(ancienMDP, response.password);
             if (!correspond) {
                 return res.status(400).json({ Message: "Le mot de passe actuel est incorrect." })
             }
-
-            // 10 est le facteur de coût. C'est le nombre d'itération sur le mot de passe avant qu'il soit hashé.
-            // Plus il y en a, plus c'est lent et donc mieux c'est.
             hashedPassword = await bcrypt.hash(password, 10);
-            // password = hashedPassword
         }
 
         const update = {}
@@ -470,7 +454,6 @@ export const upUser = async (req, res) => {
         if (req.body.role && req.user.role === "admin") {
             update.role = req.body.role
         }
-
 
         // Mise à jour de l'utilisateur :
         await userModel.findByIdAndUpdate(
