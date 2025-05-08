@@ -116,11 +116,11 @@ const TestFormulaire = () => {
                         </button>
                         <Link
                             className='border-1 border-[#C6E60F]  text-white rounded-md font-marko rounded-xl mb-[2rem]'
-                            to={{ pathname: "/" }}
                             onClick={() => {
                                 setCommentaire("")
                                 setValidation(false)
-                            }}>
+                            }}
+                            to={{ pathname: "/" }}>
                             <button className='w-[12rem] h-[2.5rem] font-marko text-[1.4rem]'>Abandonner</button></Link>
                     </div>
                 </form>
