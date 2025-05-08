@@ -22,7 +22,9 @@ const CommandeUpdate = () => {
   useEffect(() => {
     const commandeById = async () => {
       try {
-        const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)        
+        const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
+        console.log(response.data);
+        
         setCommande(response.data)
 
       } catch (error) {
