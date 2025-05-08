@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const commandeSchema = mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     panier: [{
-        itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
+        itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item", required: true },
         name: { type: String, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true },
@@ -13,8 +13,9 @@ const commandeSchema = mongoose.Schema({
     comment: {type: String, required: false, default: ""},
     statut: { type: String, 
         enum: ["En attente", "Validée", "Refusée", "Annulée", "Expédiée"],
-        default: 'En attente' },
-    date: { type: Date, default: Date.now }
+        default: "En attente" },
+    date: { type: Date, default: Date.now },
+    verification: {type: Boolean, required: true, default: false}
 });
 
-export default mongoose.model('Commande', commandeSchema);
+export default mongoose.model("Commande", commandeSchema);

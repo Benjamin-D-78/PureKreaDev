@@ -4,11 +4,16 @@ import { RGXR } from "../utils/regex.js";
 
 export const creationCommande = async (req, res) => {
 
-    const { userId, panier, comment, statut } = req.body;
+    const { userId, panier, comment, statut, verification } = req.body;
     try {
         if (req.user.id !== userId && req.user.role !== "admin") {
             return res.status(403).json({ message: "Accès refusé." })
         }
+
+        if (!verification){
+            return res.status(400).json({message: "Vous devez acceptez nos CGV pour passer une commande."})
+        }
+
         if (comment) {
             const contentRegexr = RGXR.CONTENT;
             if (!contentRegexr.test(comment) || comment.length < 3 || comment.length > 500) {
@@ -25,7 +30,8 @@ export const creationCommande = async (req, res) => {
             panier, // les articles qu'on a mis dans le panier
             prixTotal, // Le prix total de tous les articles dans le panier
             comment, // Le commentaire éventuel.
-            statut
+            statut,
+            verification: true
         });
 
         const commandeEnregistree = await nouvelleCommande.save(); // On sauvegarde la commande

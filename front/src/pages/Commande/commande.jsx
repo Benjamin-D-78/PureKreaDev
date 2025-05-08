@@ -27,8 +27,8 @@ const Commande = () => {
 
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext)
-  const { validerCommande, prixParQuantite, totalArticle, panier, prixTotal, commentaire, setCommentaire } = useContext(PanierContext)
-  const [checkboxCochee, setCheckboxCochee] = useState(false)
+  const { prixParQuantite, totalArticle, panier, prixTotal, commentaire, setCommentaire, verification, setVerification } = useContext(PanierContext)
+  // const [checkboxCochee, setCheckboxCochee] = useState(false)
 
   const [utilisateur, setUtilisateur] = useState({
     firstname: "",
@@ -41,7 +41,7 @@ const Commande = () => {
 
 
   const handleCheckbox = () => {
-    setCheckboxCochee(!checkboxCochee)
+    setVerification(!verification)
   }
 
   const verifieInformations = () => {
@@ -52,7 +52,7 @@ const Commande = () => {
   const informationsManquantes = verifieInformations();
 
   const errorValidation = () => {
-    if (!checkboxCochee || informationsManquantes) {
+    if (!verification || informationsManquantes) {
       toast.error("Vous devez compléter vos informations et cocher nos CGV pour valider la commande.")
     } else if (panier.length === 0) {
       toast.error("Votre panier est vide.")

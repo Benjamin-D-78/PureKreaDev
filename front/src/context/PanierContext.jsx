@@ -18,6 +18,7 @@ export const PanierProvider = ({ children }) => {
     const [panier, setPanier] = useState([]);
     const [prixTotal, setPrixTotal] = useState(0);
     const [commentaire, setCommentaire] = useState("");
+    const [verification, setVerification] = useState(false)
     const [idCommande, setIdCommande] = useState("");
 
     // RECUPERATION DU PANIER DANS LE LOCAL STORAGE
@@ -172,6 +173,11 @@ export const PanierProvider = ({ children }) => {
                 return;
             }
 
+            if (!verification){
+                toast.error("Vous devez accepter nos CGV pour pouvoir passer commande.");
+                return;
+            }
+
             if (commentaire) {
                 const regexComment = RGXR.CONTENT
                 if (!regexComment.test(commentaire) || commentaire.length < 2 || commentaire.length > 500) {
@@ -203,7 +209,8 @@ export const PanierProvider = ({ children }) => {
                 })),
                 total: prixTotal,  // prix total de la commande.
                 comment: commentaire,
-                statut: "En attente"
+                statut: "En attente",
+                verification: true
             };
 
             const response = await axiosInstance.post(URL.COMMANDE_CREATION, commandeData);
@@ -255,7 +262,7 @@ export const PanierProvider = ({ children }) => {
 
 
     return (
-        <PanierContext.Provider value={{ incremente, decremente, ajouterArticle, retirerArticle, prixParQuantite, totalArticle, changerQuantite, videPanier, validerCommande, setCommentaire, setPanier, setIdCommande, panier, prixTotal }} >
+        <PanierContext.Provider value={{ incremente, decremente, ajouterArticle, retirerArticle, prixParQuantite, totalArticle, changerQuantite, videPanier, validerCommande, commentaire, setCommentaire, verification, setVerification, setPanier, setIdCommande, panier, prixTotal }} >
             {children}
         </PanierContext.Provider>
     )
