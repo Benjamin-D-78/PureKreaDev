@@ -26,25 +26,25 @@ const CommandeUpdate = () => {
         console.log(response.data);
         
         setCommande(response.data)
-        const data = response.data
+        // const data = response.data
 
-        // On créé un nouveau tableau upPanier qui est une version mise à jour de data.panier.
-        // Chaque élément "item" est modifié pour inclure le champ calculé "totalPrice"
-        const upPanier = data.panier.map(item => ({
-          ...item,
-          totalPrice: item.price * item.quantity
-        }));
+        // // On créé un nouveau tableau upPanier qui est une version mise à jour de data.panier.
+        // // Chaque élément "item" est modifié pour inclure le champ calculé "totalPrice"
+        // const upPanier = data.panier.map(item => ({
+        //   ...item,
+        //   totalPrice: item.price * item.quantity
+        // }));
 
-        // On réduit les valeurs des totalPrice des articles à un seul prix total global :
-        const upPrixTotal = upPanier.reduce((total, item) => total + item.totalPrice, 0);
+        // // On réduit les valeurs des totalPrice des articles à un seul prix total global :
+        // const upPrixTotal = upPanier.reduce((total, item) => total + item.totalPrice, 0);
 
-        // On met le state commande à jour 
-        // "...data" permet de conserver toutes les autres propriétés de la commande d'origine sans les écraser.
-        setCommande({
-          ...data,
-          panier: upPanier, // On incorpore les informations de upPanier
-          prixTotal: upPrixTotal
-        })
+        // // On met le state commande à jour 
+        // // "...data" permet de conserver toutes les autres propriétés de la commande d'origine sans les écraser.
+        // setCommande({
+        //   ...data,
+        //   panier: upPanier, // On incorpore les informations de upPanier
+        //   prixTotal: upPrixTotal
+        // })
 
 
       } catch (error) {
