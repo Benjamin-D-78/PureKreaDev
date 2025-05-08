@@ -217,7 +217,13 @@ const Commande = () => {
                 </button>
               </div>
               <div className={commande.contientBtnValidation2}>
-                <Link to={{ pathname: "/" }}><button className={commande.btnValidation2}>Revenir au panier</button></Link>
+                <Link
+                  to={{ pathname: "/" }}
+                  onClick={() => {
+                    setCommentaire("")
+                    setVerification(false)
+                  }}>
+                  <button className={commande.btnValidation2}>Revenir au panier</button></Link>
               </div>
             </div>
           </div>

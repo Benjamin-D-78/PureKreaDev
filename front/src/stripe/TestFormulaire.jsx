@@ -17,7 +17,7 @@ const TestFormulaire = () => {
     const [loading, setLoading] = useState(true)
     const [paiementValide, setPaiementValide] = useState(false)
     const elements = useElements();
-    const { prixTotal, panier, validerCommande } = useContext(PanierContext);
+    const { prixTotal, panier, validerCommande, setCommentaire, setValidation } = useContext(PanierContext);
     const { auth } = useContext(AuthContext)
     const [utilisateur, setUtilisateur] = useState({
         firstname: "",
@@ -71,7 +71,7 @@ const TestFormulaire = () => {
         });
         if (!error) {
             try {
-            // On génère grâce à paymentMethod un paiement qui sera en fait un Token. Le token est envoyé au back pour réaliser le paiement.
+                // On génère grâce à paymentMethod un paiement qui sera en fait un Token. Le token est envoyé au back pour réaliser le paiement.
                 const { id } = paymentMethod;
                 const response = await axiosInstance.post(URL.CHARGEMENT, {
                     montant: prixTotal * 100,
@@ -114,7 +114,14 @@ const TestFormulaire = () => {
                             disabled={!paiementValide}
                             className='bg-[#C6E60F] mb-[1rem] w-[12rem] h-[2.5rem] font-marko text-[1.4rem] rounded-xl mt-[4rem]'>Payer
                         </button>
-                        <Link className='border-1 border-[#C6E60F]  text-white rounded-md font-marko rounded-xl mb-[2rem]' to={{ pathname: "/" }}><button className='w-[12rem] h-[2.5rem] font-marko text-[1.4rem]'>Abandonner</button></Link>
+                        <Link
+                            className='border-1 border-[#C6E60F]  text-white rounded-md font-marko rounded-xl mb-[2rem]'
+                            to={{ pathname: "/" }}
+                            onClick={() => {
+                                setCommentaire("")
+                                setValidation(false)
+                            }}>
+                            <button className='w-[12rem] h-[2.5rem] font-marko text-[1.4rem]'>Abandonner</button></Link>
                     </div>
                 </form>
             </div>
