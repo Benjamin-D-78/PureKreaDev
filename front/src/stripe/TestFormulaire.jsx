@@ -115,7 +115,7 @@ const TestFormulaire = () => {
                             className='bg-[#C6E60F] mb-[1rem] w-[12rem] h-[2.5rem] font-marko text-[1.4rem] rounded-xl mt-[4rem]'>Payer
                         </button>
                         <Link
-                            className='border-1 border-[#C6E60F] w-[12rem] h-[2.5rem] text-white rounded-md font-marko text-[1.4rem] text-center no-underline rounded-xl mb-[2rem]'
+                            className='flex justify-center items-center border-1 border-[#C6E60F] w-[12rem] h-[2.5rem] text-white rounded-md font-marko text-[1.4rem] no-underline rounded-xl mb-[2rem]'
                             onClick={() => {
                                 setCommentaire("")
                                 setValidation(false)
