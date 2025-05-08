@@ -44,7 +44,7 @@ const Boutique = () => {
                 try {
                     const response = await axiosInstance.get(URL.ITEM_ALL);
 
-                    if (Array.isArray(response.data)) {
+                    if (Array.isArray(response.data)) { // "isArray" est une méthode spécifique de Array
                         setItems(response.data);
                     }
                     setLoading(false)
@@ -209,9 +209,7 @@ const Boutique = () => {
                         </div>
                     </div>
                     <div className={boutique.conteneurCartes}>
-                        {/* On appelle ici la fonction de filtrage pour les items en fonction de l'opti,on sélectionnée. */}
-                        {/* {console.log(filtreItems)} */}
-                        {/* {console.log(filtreItems.slice(0, itemsAffiches))} */}
+                        {/* On appelle ici la fonction de filtrage pour les items en fonction de l'opti,on sélectionnée */}
                         {/* SLice 0 car on commence à afficher à partir de l'item 0 */}
                         {filtreItems?.filter(item => item.stock > 0).slice(0, itemsAffiches).map(item => (
                             <div className={boutique.carte} key={item._id}>

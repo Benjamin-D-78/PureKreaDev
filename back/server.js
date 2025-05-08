@@ -51,7 +51,7 @@ app.use("/api/paiement", paiementRoutes)
 app.use("/api/contact", messageRoutes)
 app.use("/api/abonnement", abonneRoutes)
 
-// SERVER
+// CONNEXION AU SERVER
 app.listen(PORT, () => {
     console.log(`Ecoute sur le port : ${PORT}`);
 })

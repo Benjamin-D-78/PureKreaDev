@@ -59,15 +59,10 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-
-
     const deconnexion = () => {
-        setIsLoading(true)
-        setAuth(null) // Réinitialise le state à "null"
-
-        localStorage.removeItem("auth") // Supprime les infos de l'utilisateur du localStorage.
+        setAuth(null)
+        localStorage.removeItem("auth")
         navigate("/")
-        setIsLoading(false)
     }
 
     return (

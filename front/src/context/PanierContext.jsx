@@ -47,7 +47,7 @@ export const PanierProvider = ({ children }) => {
         let total = 0;
         panier.forEach(item => {
             const itemPrice = parseFloat(item.price);
-            const itemQuantite = parseInt(item.quantite, 10); // 10 pour deux chiffres après la virgule
+            const itemQuantite = parseInt(item.quantite, 10); // 10 pour "0 à 9"
 
             // On vérifie que nos données soient des nombres valides.
             if (!isNaN(itemPrice) && !isNaN(itemQuantite)) {
@@ -60,8 +60,8 @@ export const PanierProvider = ({ children }) => {
 
 
     // CREATION DU PANIER DANS LE LOCALSTORAGE
-    const sauvegardePanier = debounce((nouveauPanier) => {
-        const userId = auth ? auth._id : null // On récupère l'ID de l'utilisateur depuis le contexte
+    const sauvegardePanier = debounce((nouveauPanier) => { // "debounce" sert à retarder l'exécution de la fonction "sauvegardePanier" jusqu’à ce qu’il n’y ait plus de nouvelles modifications pendant (ici) 1 seconde.
+        const userId = auth ? auth._id : null
         if (userId) {
             localStorage.setItem(`panier${userId}`, JSON.stringify(nouveauPanier)) // on converti l'objet JS en chaîne de carac' au format json car le localstorage ne stocke que des chaînes de caractères
         }
@@ -110,7 +110,7 @@ export const PanierProvider = ({ children }) => {
     // RETIRER UN ARTICLE
     const retirerArticle = (index) => {
         const nouveauPanier = [...panier]
-        nouveauPanier.splice(index, 1) // litérallement : "supprimer 1 élément à l'index (l'item) donné"
+        nouveauPanier.splice(index, 1) // litérallement : "supprime 1 élément à l'index (l'item) donné"
         setPanier(nouveauPanier)
         sauvegardePanier(nouveauPanier)
     }
