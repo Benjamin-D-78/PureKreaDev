@@ -116,6 +116,7 @@ export const PanierProvider = ({ children }) => {
     }
 
 
+    // AJOUTER UN ARTICLE
     const ajouterArticle = async (product) => {
         try {
             if (!auth) {
@@ -154,6 +155,7 @@ export const PanierProvider = ({ children }) => {
         }
     }
 
+    // VIDER LE PANIER
     const videPanier = () => {
         setPanier([]);
         const userId = auth ? auth._id : null;
@@ -162,6 +164,7 @@ export const PanierProvider = ({ children }) => {
         }
     }
 
+    // VALIDER LA COMMANDE
     const validerCommande = async () => {
         try {
             if (panier.length === 0) {

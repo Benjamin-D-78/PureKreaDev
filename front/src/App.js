@@ -20,6 +20,7 @@ import PrendreRendezVous from './pages/PrendreRendez-Vous/PrendreRendezVous';
 import ModaleCookies from './components/ModaleCookies/ModaleCookies';
 import Reset from './pages/Utilisateurs/Reset';
 import VerificationMDP from './pages/Verification/VerificationMDP';
+import Testi from './pages/PrendreRendez-Vous/Testi';
 
 import Layout from './components/Layout';
 import RoutesPubliques from './components/RoutesPubliques';
@@ -55,6 +56,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/nous-connaitre" element={<NousConnaitre />} />
           <Route path="/rendez-vous" element={<PrendreRendezVous />} />
+          <Route path="/testi" element={<Testi />} />
           <Route path="*" element={<NotFound />} />  {/* Page NotFound */}
         </Route>
 
