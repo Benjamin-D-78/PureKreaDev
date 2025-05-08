@@ -222,8 +222,7 @@ const Commande = () => {
                   onClick={() => {
                     setCommentaire("")
                     setVerification(false)
-                  }}>
-                  <button className={commande.btnValidation2}>Revenir au panier</button></Link>
+                  }}>Revenir au panier</Link>
               </div>
             </div>
           </div>
