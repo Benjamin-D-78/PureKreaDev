@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true)
         try {
             const authData = localStorage.getItem("auth") // On récupère les données de l'utilisateur depuis le localStorage
-            setAuth(authData ? JSON.parse(authData) : null)
+            setAuth(authData ? JSON.parse(authData) : null) // On convertit les données (chaîne de caractères) en objet JS.
             setIsLoading(false)
         } catch (error) {
             console.log(error.message)
@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }) => {
             }
         } else {
             toast.error("Veuillez réessayer plus tard.", { autoClose: 3000 })
-
         }
     }
 

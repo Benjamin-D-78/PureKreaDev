@@ -162,7 +162,7 @@ function UpdateUsers() {
     if (utilisateur.role !== "") updateUser.role = utilisateur.role
 
     const userAuth = localStorage.getItem("auth");
-    const auth = userAuth && JSON.parse(userAuth)
+    const auth = userAuth && JSON.parse(userAuth) // On convertit les données (chaîne de caractères) en objet JS.
 
     if (auth.role === "admin")
       if (URL.USER_UPDATE) {

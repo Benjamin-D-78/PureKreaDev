@@ -27,6 +27,7 @@ const CommandeUpdate = () => {
 
       } catch (error) {
         console.error("Erreur lors de la recherche de la commande", error);
+        console.log("Erreur lors de la recherche de la commande", error);
       }
     };
     commandeById()

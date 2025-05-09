@@ -151,7 +151,7 @@ const UpdateItems = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        if (name.startsWith("img")) { // On vérifie que la chaîne de caractère commence bien par "img"
+        if (name.startsWith("img")) { // On vérifie que la chaîne de caractère commence bien par "img" grpace à "startsWith"
             setItem(prev => ({
                 ...prev, // Garde toutes les propriétés précédentes
                 picture: { ...prev.picture, [name]: value }

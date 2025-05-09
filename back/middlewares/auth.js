@@ -15,7 +15,8 @@ export const Token = (req, res, next) => {
         if(err) {
             return next(newError(403, "Token non valide."))
         }
-    req.user = user;
+    req.user = user; // On ajoute la propriété "user" à l'objet "req"
+    // On assigne ensuite la valeur de la variable "user" à la propriété "user" que l'objet "req"
     next();
 
 })}
