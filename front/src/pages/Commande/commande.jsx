@@ -156,7 +156,12 @@ const Commande = () => {
                     </div>
                   </div>
                   <div className={commande.contientBtnMInfo}>
-                    <Link to={{ pathname: `/monprofil/${utilisateur._id}` }}><button className={commande.btnModifierInformations}>Modifier mes informations</button></Link>
+                    <Link
+                      to={{ pathname: `/monprofil/${utilisateur._id}` }}
+                      onClick={() => {
+                        setCommentaire("")
+                        setVerification(false)
+                      }}>Modifier mes informations</Link>
                   </div>
                 </div>
               </div>
