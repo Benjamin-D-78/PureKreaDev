@@ -221,9 +221,9 @@ const MonProfil = () => {
                 // console.log(response)
                 if (response.status === 200) {
                     toast.success("Profil mis à jour avec succès.", { autoClose: 3000 });
-                    const updateAuth = { ...auth, ...response.data } //On incorpore les nouvelles données dans le auth, sinon ça écrase le auth déjà existant et le remet à zéro.
-                    setAuth(updateAuth);
-                    localStorage.setItem("auth", JSON.stringify(updateAuth)); // on met à jour le localStorage en convertissant l'objet updateAuth en chaîne de caractères.
+                    // const updateAuth = { ...auth, ...response.data } //On incorpore les nouvelles données dans le auth, sinon ça écrase le auth déjà existant et le remet à zéro.
+                    // setAuth(updateAuth);
+                    // localStorage.setItem("auth", JSON.stringify(updateAuth)); // on met à jour le localStorage en convertissant l'objet updateAuth en chaîne de caractères.
 
                 }
             } catch (error) {
