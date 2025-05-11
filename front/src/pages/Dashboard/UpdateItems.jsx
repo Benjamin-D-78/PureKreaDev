@@ -50,7 +50,7 @@ const UpdateItems = () => {
 
     useEffect(() => {
         const itemById = async () => {
-            if (auth && auth.role === "admin") {
+            if (auth && auth.role === "admin" && id) {
                 if (URL.ITEM_BY_ID) {
                     try {
                         const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
@@ -64,7 +64,7 @@ const UpdateItems = () => {
         }
         itemById();
     }, [auth, id])
-    
+
 
     const formulaire = () => {
         const messageError = {};

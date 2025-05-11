@@ -44,7 +44,7 @@ function UpdateUsers() {
 
   useEffect(() => {
     const userById = async () => {
-      if (auth && auth.role === "admin") {
+      if (auth && auth.role === "admin" && id) {
         if (URL.USER_BY_ID) {
           try {
             const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true });

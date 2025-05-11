@@ -15,7 +15,7 @@ const CommandeUtilisateur = () => {
 
   useEffect(() => {
     const userById = async () => {
-      if (auth && auth.role === "admin") {
+      if (auth && auth.role === "admin" && id) {
         try {
           const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`)
           setUtilisateur(response.data)

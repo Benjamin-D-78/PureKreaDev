@@ -23,7 +23,7 @@ const CommandeUpdate = () => {
 
   useEffect(() => {
     const commandeById = async () => {
-      if (auth && auth.role === "admin") {
+      if (auth && auth.role === "admin" && id) {
         try {
           const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
           setCommande(response.data)
