@@ -15,19 +15,23 @@ const Messages = () => {
 
 
     const allMessages = async () => {
-        if (auth && auth.role === "admin") {
-            try {
-                const response = await axiosInstance.get(URL.MESSAGE_ALL)
-                if (Array.isArray(response.data)) {
-                    setMessages(response.data)
-                }
-            } catch (error) {
-                console.log("Erreur lors du chargement des messages.", error)
-                setError(error.message)
+
+        try {
+            const response = await axiosInstance.get(URL.MESSAGE_ALL)
+            if (Array.isArray(response.data)) {
+                setMessages(response.data)
             }
+        } catch (error) {
+            console.log("Erreur lors du chargement des messages.", error)
+            setError(error.message)
         }
+
     };
-    useEffect(() => { allMessages() }, [])
+    useEffect(() => {
+        if (auth && auth.role === "admin") {
+            allMessages()
+        }
+    }, [auth])
 
 
     const updateStatut = async (id, statut) => {

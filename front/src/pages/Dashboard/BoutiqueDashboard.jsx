@@ -37,18 +37,21 @@ const Items = () => {
 
 
     const depart = async () => {
-        if (auth && auth.role === "admin") {
-            try {
-                const response = await axiosInstance.get(URL.ITEM_ALL);
-                if (Array.isArray(response.data)) {
-                    setItems(response.data)
-                }
-            } catch (error) {
-                setError(error.message);
+        try {
+            const response = await axiosInstance.get(URL.ITEM_ALL);
+            if (Array.isArray(response.data)) {
+                setItems(response.data)
             }
+        } catch (error) {
+            setError(error.message);
         }
     };
-    useEffect(() => { depart() }, []);
+    useEffect(() => {
+        if (auth && auth.role === "admin") {
+            depart()
+        }
+    }, [auth]);
+
 
     if (error) return <> <p>{error}</p> </>;
 

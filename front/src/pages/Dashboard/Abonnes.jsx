@@ -11,23 +11,27 @@ const Abonnes = () => {
 
   const [abonnes, setAbonnes] = useState([]);
   const [error, setError] = useState(null);
-  const {auth} = useContext(AuthContext)
+  const { auth } = useContext(AuthContext)
 
 
   const allAbonnes = async () => {
-    if (auth && auth.role === "admin") {
-      try {
-        const response = await axiosInstance.get(URL.ABONNE_ALL)
-        if (Array.isArray(response.data)) {
-          setAbonnes(response.data)
-        }
-      } catch (error) {
-        console.log("Erreur lors du chargement des abonnés.", error)
-        setError(error.message);
+
+    try {
+      const response = await axiosInstance.get(URL.ABONNE_ALL)
+      if (Array.isArray(response.data)) {
+        setAbonnes(response.data)
       }
+    } catch (error) {
+      console.log("Erreur lors du chargement des abonnés.", error)
+      setError(error.message);
     }
+
   };
-  useEffect(() => { allAbonnes() }, [])
+  useEffect(() => {
+    if (auth && auth.role === "admin") {
+      allAbonnes()
+    }
+  }, [auth])
 
 
   const updateAbonne = async (id, statut) => {
