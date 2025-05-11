@@ -48,6 +48,24 @@ const UpdateItems = () => {
         },
     })
 
+    useEffect(() => {
+        const itemById = async () => {
+            if (auth && auth.role === "admin") {
+                if (URL.ITEM_BY_ID) {
+                    try {
+                        const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
+                        // console.log(response.data)
+                        setItem(response.data)
+                    } catch (error) {
+                        console.error("Erreur lors de la recherche de l'item.", error.message)
+                    }
+                }
+            };
+        }
+        itemById();
+    }, [auth, id])
+    
+
     const formulaire = () => {
         const messageError = {};
         let isValid = true;
@@ -133,25 +151,6 @@ const UpdateItems = () => {
         setError(messageError);
         return isValid;
     }
-
-    useEffect(() => {
-        if (auth && auth.role === "admin") {
-            const itemById = async () => {
-                if (URL.ITEM_BY_ID) {
-                    try {
-                        const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
-                        // console.log(response.data)
-                        setItem(response.data)
-                    } catch (error) {
-                        console.error("Erreur lors de la recherche de l'item.", error.message)
-                    }
-                }
-            };
-            itemById();
-        }
-    }, [auth, id])
-
-
 
     const handleChange = (event) => {
         const { name, value } = event.target;

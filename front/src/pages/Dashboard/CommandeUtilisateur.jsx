@@ -14,8 +14,8 @@ const CommandeUtilisateur = () => {
   const auth = userAuth && JSON.parse(userAuth);
 
   useEffect(() => {
-    if (auth && auth.role === "admin") {
-      const userById = async () => {
+    const userById = async () => {
+      if (auth && auth.role === "admin") {
         try {
           const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`)
           setUtilisateur(response.data)
@@ -23,8 +23,8 @@ const CommandeUtilisateur = () => {
           console.error("Erreur lors de la recherche de l'utilisateur.")
         }
       };
-      userById();
     }
+    userById();
   }, [auth, id])
 
   return (

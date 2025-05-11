@@ -22,8 +22,8 @@ const CommandeUpdate = () => {
   })
 
   useEffect(() => {
-    if (auth && auth.role === "admin") {
-      const commandeById = async () => {
+    const commandeById = async () => {
+      if (auth && auth.role === "admin") {
         try {
           const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
           setCommande(response.data)
@@ -33,8 +33,8 @@ const CommandeUpdate = () => {
           console.log("Erreur lors de la recherche de la commande", error);
         }
       };
-      commandeById()
     }
+    commandeById()
   }, [auth, id])
 
 
