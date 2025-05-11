@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import items from "../Dashboard/css/items.module.css"
 import { toast } from 'react-toastify'
@@ -10,8 +11,7 @@ import { URL } from '../../utils/constantes'
 const CommandeUpdate = () => {
 
   const { id } = useParams();
-  const userAuth = localStorage.getItem("auth");
-  const auth = userAuth && JSON.parse(userAuth);
+  const {auth} = useContext(AuthContext)
   const navigate = useNavigate();
   const [commande, setCommande] = useState({
     userId: "",
@@ -23,7 +23,7 @@ const CommandeUpdate = () => {
 
   useEffect(() => {
     const commandeById = async () => {
-      if (auth && auth.role === "admin" && id) {
+      if (auth && auth.role === "admin") {
         try {
           const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
           setCommande(response.data)

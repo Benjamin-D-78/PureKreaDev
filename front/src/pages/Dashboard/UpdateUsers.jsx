@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 
@@ -14,8 +15,8 @@ import items from "../Dashboard/css/items.module.css"
 function UpdateUsers() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const userAuth = localStorage.getItem("auth");
-  const auth = userAuth && JSON.parse(userAuth);
+  const { auth } = useContext(AuthContext)
+
 
   // const [ancienMDP, setAncienMDP] = useState("");
   // const [newMDP, setNewMDP] = useState("");
@@ -44,7 +45,7 @@ function UpdateUsers() {
 
   useEffect(() => {
     const userById = async () => {
-      if (auth && auth.role === "admin" && id) {
+      if (auth && auth.role === "admin") {
         if (URL.USER_BY_ID) {
           try {
             const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true });

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext';
 import { useParams } from 'react-router-dom'
 import items from "../Dashboard/css/items.module.css"
 
@@ -10,12 +11,12 @@ const CommandeUtilisateur = () => {
 
   const { id } = useParams();
   const [utilisateur, setUtilisateur] = useState({});
-  const userAuth = localStorage.getItem("auth");
-  const auth = userAuth && JSON.parse(userAuth);
+  const {auth} = useContext(AuthContext)
+
 
   useEffect(() => {
     const userById = async () => {
-      if (auth && auth.role === "admin" && id) {
+      if (auth && auth.role === "admin") {
         try {
           const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`)
           setUtilisateur(response.data)

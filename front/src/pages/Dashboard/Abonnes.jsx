@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import supprimer from "../../images/Icones/supprimer.png"
 import { toast } from 'react-toastify'
@@ -10,8 +11,8 @@ const Abonnes = () => {
 
   const [abonnes, setAbonnes] = useState([]);
   const [error, setError] = useState(null);
-  const userAuth = localStorage.getItem("auth");
-  const auth = userAuth && JSON.parse(userAuth);
+  const {auth} = useContext(AuthContext)
+
 
   const allAbonnes = async () => {
     if (auth && auth.role === "admin") {

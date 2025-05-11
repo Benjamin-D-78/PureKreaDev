@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import items from "./css/items.module.css"
@@ -12,9 +13,9 @@ import { ERROR } from '../../utils/error'
 const UpdateItems = () => {
 
     const { id } = useParams();
+    const { auth } = useContext(AuthContext)
     const navigate = useNavigate();
-    const userAuth = localStorage.getItem("auth");
-    const auth = userAuth && JSON.parse(userAuth);
+
 
     const images = ["img", "img2"]
     const [item, setItem] = useState({
@@ -50,7 +51,7 @@ const UpdateItems = () => {
 
     useEffect(() => {
         const itemById = async () => {
-            if (auth && auth.role === "admin" && id) {
+            if (auth && auth.role === "admin") {
                 if (URL.ITEM_BY_ID) {
                     try {
                         const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)

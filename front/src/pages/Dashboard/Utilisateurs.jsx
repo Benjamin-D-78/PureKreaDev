@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
 import boutique_dashboard from "./css/boutique_dashboard.module.css"
 import { toast } from 'react-toastify'
@@ -16,8 +17,7 @@ import AjoutUtilisateur from './Users'
 
 const Utilisateurs = () => {
 
-  const userAuth = localStorage.getItem("auth");
-  const auth = userAuth && JSON.parse(userAuth);
+  const { auth } = useContext(AuthContext)
   const [users, setUsers] = useState([])
   const [error, setError] = useState(null)
 

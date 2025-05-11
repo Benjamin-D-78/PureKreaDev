@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-// EXTERNALISATION
+// CENTRALISATION
 import { URL } from '../../utils/constantes';
 import axiosInstance from '../../utils/axiosInstance';
 
@@ -19,8 +20,8 @@ const CommandeDashboard = () => {
 
   const [commandes, setCommandes] = useState([]);
   const [error, setError] = useState(null);
-  const userAuth = localStorage.getItem("auth");
-  const auth = userAuth && JSON.parse(userAuth);
+  const { auth } = useContext(AuthContext)
+
 
   const deleteCommande = async (id) => {
     if (auth && auth.role === "admin") {
