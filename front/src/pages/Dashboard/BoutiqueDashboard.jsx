@@ -47,10 +47,10 @@ const Items = () => {
         }
     };
     useEffect(() => {
-        if (auth && auth.role === "admin") {
+        // if (auth && auth.role === "admin") {
             depart()
-        }
-    }, [auth]);
+        // }
+    }, []);
 
 
     if (error) return <> <p>{error}</p> </>;
