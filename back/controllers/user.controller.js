@@ -307,7 +307,7 @@ export const connexion = async (req, res, next) => {
         const tokenUser = jwt.sign({ id: rechercheUser._id, role: rechercheUser.role }, env.TOKEN, { expiresIn: "24h" })
 
         // "_doc" est l'objet renvoyé par mongoose, contenant plein de propriétés.
-        const { password: _, ...reste } = rechercheUser._doc
+        // const { password: _, ...reste } = rechercheUser._doc
 
         // Envoi du token sous forme de cookie HTTPonly, alors qu'avant le MDP était stocké dans le local storage.
         res.cookie("access_token", tokenUser, {
@@ -315,7 +315,7 @@ export const connexion = async (req, res, next) => {
             secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
             sameSite: "None", // Protège des attaques CSRF // Lex // Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
-        }).status(200).json(reste) // Renvoie les données en réponse à l'exception du MDP.
+        }).status(200).json(rechercheUser.id) // Renvoie les données en réponse à l'exception du MDP.
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)

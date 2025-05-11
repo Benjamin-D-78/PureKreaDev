@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true);
         if (URL.USER_CONNEXION) {
             try {
+                // data et status = destructuration de la réponse retournée par l'appel API.
                 const { data, status } = await axiosInstance.post(URL.USER_CONNEXION, dataForm, { withCredentials: true })
                 if (status === 200) {
                     // JSON.Stringify car le localStorage ne peux stocker que des chaînes de caractères.

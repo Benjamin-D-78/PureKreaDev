@@ -103,6 +103,7 @@ const Boutique = () => {
 
     // JE CREE UN FILTRE DYNAMIQUE EN TEMPS REEL, QUI FILTRE LES VALEURS CONTENUES DANS "ITEMS" DANS UN TABLEAU
     // EN FONCTION DE CE QUI EST SELECTIONNE DANS LE SELECT ET STOCKE DANS "selectionCollection", "selectionLargeur", etc.
+    // On applique plusieurs valeur de filtrage conditionnelles
     const filtreItems = Array.isArray(items) ? items.filter(item => {
 
         const testCollection = selectionCollection ? item.category === Number(selectionCollection) : true; // "true" = accepte tout
