@@ -315,7 +315,7 @@ export const connexion = async (req, res, next) => {
             secure: true, // A mettre sur "true" lors d'une mis een ligne du site.
             sameSite: "None", // Protège des attaques CSRF // Lex // Passer "sameSite" en "Strict" le jour où je met mon site en ligne.
             maxAge: 24 * 60 * 60 * 1000 // 24h en millisecondes.
-        }).status(200).json(rechercheUser.id) // Renvoie les données en réponse à l'exception du MDP.
+        }).status(200).json({id: rechercheUser.id})
 
     } catch (error) {
         console.log("Echec total lors de la tentative de connexion : ", error)
