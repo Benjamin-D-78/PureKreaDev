@@ -14,33 +14,38 @@ const Items = () => {
 
     const [items, setItems] = useState([])
     const [error, setError] = useState(null)
-
+    const userAuth = localStorage.getItem("auth");
+    const auth = userAuth && JSON.parse(userAuth);
 
     const deleteItem = async (id) => {
-        try {
-            const response = await axiosInstance.delete(`${URL.ITEM_DELETE}/${id}`);
+        if (auth && auth.role === "admin") {
+            try {
+                const response = await axiosInstance.delete(`${URL.ITEM_DELETE}/${id}`);
 
-            if (response.status === 200) {
-                console.log(response.data)
-                toast.success("Item supprimé avec succès.", { autoClose: 1000 });
-                setItems((prevItems) => prevItems.filter((item) => item._id !== id));
-            } // On met à jour le state local en retirant de la liste l'item supprimé.
-        } catch (error) {
-            console.log("Erreur lors de la suppression de l'item", error);
-            toast.error("Erreur lors de la suppression de l'item", { autoClose: 3000 })
+                if (response.status === 200) {
+                    console.log(response.data)
+                    toast.success("Item supprimé avec succès.", { autoClose: 1000 });
+                    setItems((prevItems) => prevItems.filter((item) => item._id !== id));
+                } // On met à jour le state local en retirant de la liste l'item supprimé.
+            } catch (error) {
+                console.log("Erreur lors de la suppression de l'item", error);
+                toast.error("Erreur lors de la suppression de l'item", { autoClose: 3000 })
 
+            }
         }
     };
 
 
     const depart = async () => {
-        try {
-            const response = await axiosInstance.get(URL.ITEM_ALL);
-            if (Array.isArray(response.data)) {
-                setItems(response.data)
+        if (auth && auth.role === "admin") {
+            try {
+                const response = await axiosInstance.get(URL.ITEM_ALL);
+                if (Array.isArray(response.data)) {
+                    setItems(response.data)
+                }
+            } catch (error) {
+                setError(error.message);
             }
-        } catch (error) {
-            setError(error.message);
         }
     };
     useEffect(() => { depart() }, []);

@@ -10,16 +10,20 @@ const Messages = () => {
 
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
+    const userAuth = localStorage.getItem("auth");
+    const auth = userAuth && JSON.parse(userAuth);
 
     const allMessages = async () => {
-        try {
-            const response = await axiosInstance.get(URL.MESSAGE_ALL)
-            if (Array.isArray(response.data)) {
-                setMessages(response.data)
+        if (auth && auth.role === "admin") {
+            try {
+                const response = await axiosInstance.get(URL.MESSAGE_ALL)
+                if (Array.isArray(response.data)) {
+                    setMessages(response.data)
+                }
+            } catch (error) {
+                console.log("Erreur lors du chargement des messages.", error)
+                setError(error.message)
             }
-        } catch (error) {
-            console.log("Erreur lors du chargement des messages.", error)
-            setError(error.message)
         }
     };
     useEffect(() => { allMessages() }, [])
@@ -49,17 +53,18 @@ const Messages = () => {
 
 
     const deleteMessage = async (id) => {
-        try {
-            const response = await axiosInstance.delete(`${URL.MESSAGE_DELETE}/${id}`)
-            if (response.status === 200) {
-                console.log(response.data)
-                toast.success("Message supprimé avec succès.", { autoClose: 1000 })
-                setMessages((prevMessages) => prevMessages.filter((message) => message._id !== id))
+        if (auth && auth.role === "admin") {
+            try {
+                const response = await axiosInstance.delete(`${URL.MESSAGE_DELETE}/${id}`)
+                if (response.status === 200) {
+                    console.log(response.data)
+                    toast.success("Message supprimé avec succès.", { autoClose: 1000 })
+                    setMessages((prevMessages) => prevMessages.filter((message) => message._id !== id))
+                }
+            } catch (error) {
+                console.log("Erreur lors de la suppression du message.", error)
+                toast.error("Erreur lors de la suppression du message.", { autoClose: 3000 })
             }
-        } catch (error) {
-            console.log("Erreur lors de la suppression du message.", error)
-            toast.error("Erreur lors de la suppression du message.", { autoClose: 3000 })
-
         }
     }
 

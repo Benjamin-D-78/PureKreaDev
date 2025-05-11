@@ -10,18 +10,22 @@ const CommandeUtilisateur = () => {
 
   const { id } = useParams();
   const [utilisateur, setUtilisateur] = useState({});
+  const userAuth = localStorage.getItem("auth");
+  const auth = userAuth && JSON.parse(userAuth);
 
   useEffect(() => {
-    const userById = async () => {
-      try {
-        const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`)
-        setUtilisateur(response.data)
-      } catch (error) {
-        console.error("Erreur lors de la recherche de l'utilisateur.")
-      }
-    };
-    userById();
-  }, [id])
+    if (auth && auth.role === "admin") {
+      const userById = async () => {
+        try {
+          const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`)
+          setUtilisateur(response.data)
+        } catch (error) {
+          console.error("Erreur lors de la recherche de l'utilisateur.")
+        }
+      };
+      userById();
+    }
+  }, [auth, id])
 
   return (
     <div>

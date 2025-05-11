@@ -10,54 +10,62 @@ const Abonnes = () => {
 
   const [abonnes, setAbonnes] = useState([]);
   const [error, setError] = useState(null);
+  const userAuth = localStorage.getItem("auth");
+  const auth = userAuth && JSON.parse(userAuth);
 
   const allAbonnes = async () => {
-    try {
-      const response = await axiosInstance.get(URL.ABONNE_ALL)
-      if (Array.isArray(response.data)) {
-        setAbonnes(response.data)
+    if (auth && auth.role === "admin") {
+      try {
+        const response = await axiosInstance.get(URL.ABONNE_ALL)
+        if (Array.isArray(response.data)) {
+          setAbonnes(response.data)
+        }
+      } catch (error) {
+        console.log("Erreur lors du chargement des abonnés.", error)
+        setError(error.message);
       }
-    } catch (error) {
-      console.log("Erreur lors du chargement des abonnés.", error)
-      setError(error.message);
     }
   };
   useEffect(() => { allAbonnes() }, [])
 
 
   const updateAbonne = async (id, statut) => {
-    try {
-      const response = await axiosInstance.put(`${URL.ABONNE_UPDATE}/${id}`, { statut })
-      console.log(response);
-      if (response.status === 200) {
-        // Avec prevMessages on récupère la valeur précédente du state messages avant la MAJ. C'est l'état actuel de message au moment où on appelle la fonction.
-        setAbonnes((prevAbonnes) =>
-          prevAbonnes.map((abonnes) =>
-            // Si l'ID du message (message._id) correspond à l'ID (id), alors on modifie le message en mettant à jour la propriété statut avec la valeur response.data.statut
-            // "...message" : on copie toutes les autres propriétés de l'objet message sans les modifier.
-            abonnes._id === id ? { ...abonnes, statut: response.data.statut } : abonnes
-          )
-        );
-        toast.success("Statut mis à jour avec succès.", { autoClose: 1000 });
+    if (auth && auth.role === "admin") {
+      try {
+        const response = await axiosInstance.put(`${URL.ABONNE_UPDATE}/${id}`, { statut })
+        console.log(response);
+        if (response.status === 200) {
+          // Avec prevMessages on récupère la valeur précédente du state messages avant la MAJ. C'est l'état actuel de message au moment où on appelle la fonction.
+          setAbonnes((prevAbonnes) =>
+            prevAbonnes.map((abonnes) =>
+              // Si l'ID du message (message._id) correspond à l'ID (id), alors on modifie le message en mettant à jour la propriété statut avec la valeur response.data.statut
+              // "...message" : on copie toutes les autres propriétés de l'objet message sans les modifier.
+              abonnes._id === id ? { ...abonnes, statut: response.data.statut } : abonnes
+            )
+          );
+          toast.success("Statut mis à jour avec succès.", { autoClose: 1000 });
+        }
+      } catch (error) {
+        console.log("Erreur lors de la mise à jour de l'abonné.", error)
+        toast.error("Erreur lors de la mise à jour de l'abonné.", { autoClose: 3000 });
       }
-    } catch (error) {
-      console.log("Erreur lors de la mise à jour de l'abonné.", error)
-      toast.error("Erreur lors de la mise à jour de l'abonné.", { autoClose: 3000 });
     }
   }
 
 
   const deleteAbonne = async (id) => {
-    try {
-      const response = await axiosInstance.delete(`${URL.ABONNE_DELETE}/${id}`)
-      if (response.status === 200) {
-        console.log(response.data)
-        toast.success("Abonné supprimé avec succès.", { autoClose: 1000 })
-        setAbonnes((prevAbonnes) => prevAbonnes.filter((abonne) => abonne._id !== id))
+    if (auth && auth.role === "admin") {
+      try {
+        const response = await axiosInstance.delete(`${URL.ABONNE_DELETE}/${id}`)
+        if (response.status === 200) {
+          console.log(response.data)
+          toast.success("Abonné supprimé avec succès.", { autoClose: 1000 })
+          setAbonnes((prevAbonnes) => prevAbonnes.filter((abonne) => abonne._id !== id))
+        }
+      } catch (error) {
+        console.log("Erreur lors de la suppression de l'abonné.", error)
+        toast.error("Erreur lors de la suppression de l'abonné.", { autoClose: 3000 })
       }
-    } catch (error) {
-      console.log("Erreur lors de la suppression de l'abonné.", error)
-      toast.error("Erreur lors de la suppression de l'abonné.", { autoClose: 3000 })
     }
   }
 

@@ -12,6 +12,9 @@ import { ERROR } from "../../utils/error";
 
 const AjoutUtilisateur = () => {
 
+    const userAuth = localStorage.getItem("auth");
+    const auth = userAuth && JSON.parse(userAuth);
+
     const [utilisateur, setUtilisateur] = useState({
         // Obligé de demander si les valeurs sont là sinon je suis embêté par l'erreur des input incontrôllés.
         lastname: "",
@@ -81,35 +84,37 @@ const AjoutUtilisateur = () => {
 
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        if (auth && auth.role === "admin") {
+            event.preventDefault();
 
-        if (utilisateur.lastname === "" || utilisateur.firstname === "" || utilisateur.email === "" || utilisateur.password === "") {
-            toast.error("Le formulaire n'est pas complété.");
-            return;
-        }
+            if (utilisateur.lastname === "" || utilisateur.firstname === "" || utilisateur.email === "" || utilisateur.password === "") {
+                toast.error("Le formulaire n'est pas complété.");
+                return;
+            }
 
-        if (!formulaire()) return;
+            if (!formulaire()) return;
 
-        if (utilisateur.password !== utilisateur.repeatPassword) {
-            toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
-            return;
-        }
+            if (utilisateur.password !== utilisateur.repeatPassword) {
+                toast.error("Les mots de passe ne sont pas identiques.", { autoClose: 3000 })
+                return;
+            }
 
-        if (URL.USER_INSCRIPTION) {
-            try {
-                const response = await axiosInstance.post(URL.USER_INSCRIPTION, { ...utilisateur, dashboard: true })
-                // console.log(response)
-                if (response.status === 201) {
-                    toast.success("Utilisateur ajouté avec succès.", { autoClose: 1000 })
-                }
-            } catch (error) {
-                if (error.response?.status === 400) {
-                    console.log("Certains des champs obligatoires sont vides.", error.message)
-                    toast.error("Certains des champs obligatoires sont vides.", { autoClose: 3000 })
-                }
-                if (error.response?.status === 500) {
-                    console.log("Echec de l'ajout de l'utilisateur.", error.message)
-                    toast.error("Echec de l'ajout de l'utilisateur.", { autoClose: 3000 })
+            if (URL.USER_INSCRIPTION) {
+                try {
+                    const response = await axiosInstance.post(URL.USER_INSCRIPTION, { ...utilisateur, dashboard: true })
+                    // console.log(response)
+                    if (response.status === 201) {
+                        toast.success("Utilisateur ajouté avec succès.", { autoClose: 1000 })
+                    }
+                } catch (error) {
+                    if (error.response?.status === 400) {
+                        console.log("Certains des champs obligatoires sont vides.", error.message)
+                        toast.error("Certains des champs obligatoires sont vides.", { autoClose: 3000 })
+                    }
+                    if (error.response?.status === 500) {
+                        console.log("Echec de l'ajout de l'utilisateur.", error.message)
+                        toast.error("Echec de l'ajout de l'utilisateur.", { autoClose: 3000 })
+                    }
                 }
             }
         }

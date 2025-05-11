@@ -14,6 +14,8 @@ import items from "../Dashboard/css/items.module.css"
 function UpdateUsers() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const userAuth = localStorage.getItem("auth");
+  const auth = userAuth && JSON.parse(userAuth);
 
   // const [ancienMDP, setAncienMDP] = useState("");
   // const [newMDP, setNewMDP] = useState("");
@@ -41,27 +43,29 @@ function UpdateUsers() {
   })
 
   useEffect(() => {
-    const userById = async () => {
-      if (URL.USER_BY_ID) {
-        try {
-          const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true });
-          setUtilisateur({
-            firstname: response.data.firstname || "",
-            lastname: response.data.lastname || "",
-            email: response.data.email || "",
-            phone: response.data.phone || "",
-            adress: response.data.adress || "",
-            postal: response.data.postal || "",
-            town: response.data.town || "",
-            role: response.data.role || "",
-          });
-        } catch (error) {
-          console.error("Erreur lors de la recherche de l'utilisateur.", error.message);
+    if (auth && auth.role === "admin") {
+      const userById = async () => {
+        if (URL.USER_BY_ID) {
+          try {
+            const response = await axiosInstance.get(`${URL.USER_BY_ID}/${id}`, { withCredentials: true });
+            setUtilisateur({
+              firstname: response.data.firstname || "",
+              lastname: response.data.lastname || "",
+              email: response.data.email || "",
+              phone: response.data.phone || "",
+              adress: response.data.adress || "",
+              postal: response.data.postal || "",
+              town: response.data.town || "",
+              role: response.data.role || "",
+            });
+          } catch (error) {
+            console.error("Erreur lors de la recherche de l'utilisateur.", error.message);
+          }
         }
-      }
-    };
-    userById();
-  }, [id]);
+      };
+      userById();
+    }
+  }, [auth, id]);
 
 
 

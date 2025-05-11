@@ -16,15 +16,13 @@ import AjoutUtilisateur from './Users'
 
 const Utilisateurs = () => {
 
+  const userAuth = localStorage.getItem("auth");
+  const auth = userAuth && JSON.parse(userAuth);
   const [users, setUsers] = useState([])
   const [error, setError] = useState(null)
 
-
   const deleteUser = async (id) => {
-    const userAuth = localStorage.getItem("auth");
-    const auth = userAuth && JSON.parse(userAuth);
-
-    if (auth.role === "admin") {
+    if (auth && auth.role === "admin") {
       try {
         const response = await axiosInstance.delete(`${URL.USER_DELETE}/${id}`, { withCredentials: true })
         if (response.status === 200) {
@@ -40,14 +38,16 @@ const Utilisateurs = () => {
   }
 
   const depart = async () => {
-    try {
-      const response = await axiosInstance.get(URL.USER_ALL, { withCredentials: true });
-      setUsers(response.data);
-    } catch (error) {
-      console.log("Erreur lors du chargement des utilisateurs.", error)
-      setError(error.message)
-    }
-  };
+    if (auth && auth.role === "admin") {
+      try {
+        const response = await axiosInstance.get(URL.USER_ALL, { withCredentials: true });
+        setUsers(response.data);
+      } catch (error) {
+        console.log("Erreur lors du chargement des utilisateurs.", error)
+        setError(error.message)
+      }
+    };
+  }
   useEffect(() => { depart() }, []);
 
   if (error) return <> <p>{error}</p> </>;

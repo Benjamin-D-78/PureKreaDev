@@ -19,18 +19,17 @@ const CommandeDashboard = () => {
 
   const [commandes, setCommandes] = useState([]);
   const [error, setError] = useState(null);
+  const userAuth = localStorage.getItem("auth");
+  const auth = userAuth && JSON.parse(userAuth);
 
   const deleteCommande = async (id) => {
-    const userAuth = localStorage.getItem("auth");
-    const auth = userAuth && JSON.parse(userAuth);
-
-    if (auth.role === "admin") {
+    if (auth && auth.role === "admin") {
       try {
         const response = await axiosInstance.delete(`${URL.COMMANDE_DELETE}/${id}`, { withCredentials: true })
         if (response.status === 200) {
           console.log(response)
           toast.success("Commande supprimée avec succès.", { autoClose: 1000 })
-          setCommandes((prevCommandes) => prevCommandes.filter((user) => commandes._id !== id))
+          setCommandes((prevCommandes) => prevCommandes.filter((commande) => commande._id !== id))
           // On met à jour le state local en retirant de la liste la commande supprimée.
         }
       } catch (error) {
@@ -41,14 +40,16 @@ const CommandeDashboard = () => {
   }
 
   const depart = async () => {
-    try {
-      const response = await axiosInstance.get(URL.COMMANDE_ALL)
-      if (Array.isArray(response.data)) {
-        setCommandes(response.data)
+    if (auth && auth.role === "admin") {
+      try {
+        const response = await axiosInstance.get(URL.COMMANDE_ALL)
+        if (Array.isArray(response.data)) {
+          setCommandes(response.data)
+        }
+      } catch (error) {
+        console.log("Erreur lors du chargement des commandes.", error)
+        setError(error.message)
       }
-    } catch (error) {
-      console.log("Erreur lors du chargement des commandes.", error)
-      setError(error.message)
     }
   };
   useEffect(() => { depart() }, [])
@@ -78,14 +79,14 @@ const CommandeDashboard = () => {
                     {item.name}
                     <br />
                   </div>))}
-                  </td>
+              </td>
               <td className={boutique_dashboard.autresTD}>
                 {commande.panier.map(item => (
                   <div key={item.itemId}>
                     {item.quantity}
                     <br />
                   </div>))}
-                  </td>
+              </td>
               <td className={boutique_dashboard.autresTD}>{commande.prixTotal} €</td>
               <td className={boutique_dashboard.autresTDcache}>{commande._id}</td>
               <td className={boutique_dashboard.autresTDcache}>{commande.comment}</td>

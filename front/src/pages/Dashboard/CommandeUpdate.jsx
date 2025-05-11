@@ -10,6 +10,8 @@ import { URL } from '../../utils/constantes'
 const CommandeUpdate = () => {
 
   const { id } = useParams();
+  const userAuth = localStorage.getItem("auth");
+  const auth = userAuth && JSON.parse(userAuth);
   const navigate = useNavigate();
   const [commande, setCommande] = useState({
     userId: "",
@@ -20,18 +22,20 @@ const CommandeUpdate = () => {
   })
 
   useEffect(() => {
-    const commandeById = async () => {
-      try {
-        const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
-        setCommande(response.data)
+    if (auth && auth.role === "admin") {
+      const commandeById = async () => {
+        try {
+          const response = await axiosInstance.get(`${URL.COMMANDE_BY_ID}/${id}`)
+          setCommande(response.data)
 
-      } catch (error) {
-        console.error("Erreur lors de la recherche de la commande", error);
-        console.log("Erreur lors de la recherche de la commande", error);
-      }
-    };
-    commandeById()
-  }, [id])
+        } catch (error) {
+          console.error("Erreur lors de la recherche de la commande", error);
+          console.log("Erreur lors de la recherche de la commande", error);
+        }
+      };
+      commandeById()
+    }
+  }, [auth, id])
 
 
   // SI LE STATUT EST CHANGE, ON VA LE VOIR DYNAMIQUEMENT
@@ -75,7 +79,7 @@ const CommandeUpdate = () => {
     event.preventDefault();
 
     // On envoie la commande mise à jour en conservant les propriétés déjà existantes sans qu'elles écrasées.
-    const updateCommande = {...commande}
+    const updateCommande = { ...commande }
     // console.log("Réponse avant envoie", updateCommande)
 
     try {

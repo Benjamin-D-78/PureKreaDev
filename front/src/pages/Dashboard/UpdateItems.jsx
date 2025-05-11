@@ -13,6 +13,8 @@ const UpdateItems = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
+    const userAuth = localStorage.getItem("auth");
+    const auth = userAuth && JSON.parse(userAuth);
 
     const images = ["img", "img2"]
     const [item, setItem] = useState({
@@ -133,19 +135,21 @@ const UpdateItems = () => {
     }
 
     useEffect(() => {
-        const itemById = async () => {
-            if (URL.ITEM_BY_ID) {
-                try {
-                    const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
-                    // console.log(response.data)
-                    setItem(response.data)
-                } catch (error) {
-                    console.error("Erreur lors de la recherche de l'item.", error.message)
+        if (auth && auth.role === "admin") {
+            const itemById = async () => {
+                if (URL.ITEM_BY_ID) {
+                    try {
+                        const response = await axiosInstance.get(`${URL.ITEM_BY_ID}/${id}`)
+                        // console.log(response.data)
+                        setItem(response.data)
+                    } catch (error) {
+                        console.error("Erreur lors de la recherche de l'item.", error.message)
+                    }
                 }
-            }
-        };
-        itemById();
-    }, [id])
+            };
+            itemById();
+        }
+    }, [auth, id])
 
 
 
@@ -177,8 +181,8 @@ const UpdateItems = () => {
                 const response = await axiosInstance.put(`${URL.ITEM_UPDATE}/${id}`, item);
                 console.log(response)
                 // if (response.status === 200) {
-                    navigate("/dashboard/items")
-                    toast.success("Item mis à jour avec succès.", { autoClose: 1000 })
+                navigate("/dashboard/items")
+                toast.success("Item mis à jour avec succès.", { autoClose: 1000 })
                 // }
             } catch (error) {
                 console.error("Erreur lors de la mise à jour de l'item : ", error);
@@ -232,8 +236,8 @@ const UpdateItems = () => {
                         pattern={PATTERN.ITEM_WIDTH}
                         onInput={(event) => {
                             event.target.value = event.target.value.replace(ONINPUT.I_WIDTH, '')
-                        }} 
-                        />
+                        }}
+                    />
                     {error.width && <span className={items.spanError}>{error.width}</span>}
 
                     <label htmlFor="color">Couleur :</label>
@@ -308,8 +312,8 @@ const UpdateItems = () => {
                         pattern={PATTERN.ITEM_CATEGORY}
                         onInput={(event) => {
                             event.target.value = event.target.value.replace(ONINPUT.I_CATEGORY, '')
-                        }} 
-                        />
+                        }}
+                    />
                     {error.category && <span className={items.spanError}>{error.category}</span>}
 
                     <label htmlFor="stock">Stock :</label>
@@ -328,8 +332,8 @@ const UpdateItems = () => {
                         pattern={PATTERN.ITEM_STOCK}
                         onInput={(event) => {
                             event.target.value = event.target.value.replace(ONINPUT.I_STOCK, '')
-                        }} 
-                        />
+                        }}
+                    />
                     {error.stock && <span className={items.spanError}>{error.stock}</span>}
 
                     <label htmlFor="price">Prix :</label>
@@ -349,8 +353,8 @@ const UpdateItems = () => {
                         pattern={PATTERN.ITEM_PRICE}
                         onInput={(event) => {
                             event.target.value = event.target.value.replace(ONINPUT.I_PRICE, '')
-                        }} 
-                        />
+                        }}
+                    />
                     {error.price && <span className={items.spanError}>{error.price}</span>}
 
                     {images?.map((imgName, index) => (
